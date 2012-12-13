@@ -21,9 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="Login"></activity>
         <activity android:name="ListContainer"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity android:name="DashboardDesignActivity"></activity>
+        <activity android:name="login.Login"></activity>
     </application>
 
 </manifest>

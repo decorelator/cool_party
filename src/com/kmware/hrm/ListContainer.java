@@ -1,6 +1,7 @@
 package com.kmware.hrm;
 
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 public class ListContainer extends Activity implements OnClickListener {
 
+	public static String LOGTAG = ListContainer.class.getSimpleName();
+	
 	Button iv_People;
 	Button iv_Project;
 	Button iv_Positions;
@@ -33,6 +36,9 @@ public class ListContainer extends Activity implements OnClickListener {
 	}
 
 	private void init() {
+
+		
+
 		iv_People = (Button) findViewById(R.id.ivPeople);
 		iv_People.setOnClickListener(this);
 		iv_Project = (Button) findViewById(R.id.ivProjects);
@@ -42,10 +48,9 @@ public class ListContainer extends Activity implements OnClickListener {
 		iv_Interviews = (Button) findViewById(R.id.ivInterviews);
 		iv_Interviews.setOnClickListener(this);
 		iv_subTitle = (ImageView) findViewById(R.id.ivTitle);
-		iv_subTitle.setImageResource(R.drawable.cat_people);
 		tv_subTitle = (TextView) findViewById(R.id.tvConteinerTitle);
-		tv_subTitle.setText(iv_People.getText());
 		// создаем адаптер
+		getExtra();
 		fillData();
 		listAdapter = new CustomContainerAdapter(this, dataList);
 
@@ -54,10 +59,32 @@ public class ListContainer extends Activity implements OnClickListener {
 		lvConteiner.setAdapter(listAdapter);
 	}
 
+	private void getExtra(){
+		Bundle extras = getIntent().getExtras();
+
+		if (extras != null) {
+			try{
+			tv_subTitle.setText(extras.getString(Extras.DASHBOARD_INTENT));
+			}catch(Exception e){
+				
+				e.printStackTrace();
+			}
+			if (iv_People.getText().equals(tv_subTitle.getText())) {
+				iv_subTitle.setImageResource(R.drawable.cat_people);
+			} else if (iv_Project.getText().equals(tv_subTitle.getText())) {
+				iv_subTitle.setImageResource(R.drawable.cat_project);
+			} else if (iv_Positions.getText().equals(tv_subTitle.getText())) {
+				iv_subTitle.setImageResource(R.drawable.cat_position);
+			} else {
+				iv_subTitle.setImageResource(R.drawable.cat_intervies);
+			}
+		}
+	}
 	// генерируем данные для адаптера
 	void fillData() {
 		for (int i = 1; i <= 20; i++) {
-			dataList.add(new ContainerRow("Worker " + i, "" + i * 1000));
+			dataList.add(new ContainerRow("" + tv_subTitle.getText() + " " + i,
+					"" + i * 1000));
 		}
 	}
 
@@ -90,6 +117,6 @@ public class ListContainer extends Activity implements OnClickListener {
 		iv_Positions.setVisibility(View.VISIBLE);
 		iv_Interviews.setVisibility(View.VISIBLE);
 		findViewById(id).setVisibility(View.GONE);
-		tv_subTitle.setText(((Button)findViewById(id)).getText());
+		tv_subTitle.setText(((Button) findViewById(id)).getText());
 	}
 }

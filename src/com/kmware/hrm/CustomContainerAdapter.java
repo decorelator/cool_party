@@ -9,6 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class CustomContainerAdapter extends BaseAdapter {
+	
+	public static String LOGTAG = CustomContainerAdapter.class.getSimpleName();
+	
 	Context ctx;
 	  LayoutInflater lInflater;
 	  ArrayList<ContainerRow> objects;

@@ -1,5 +1,6 @@
 package com.kmware.hrm;
 
+import login.Login;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.app.Activity;
@@ -7,6 +8,8 @@ import android.content.Intent;
 
 public class SplashScreen extends Activity {
 
+	public static String LOGTAG = SplashScreen.class.getSimpleName();
+	
 	private long splashTime = 3000;
 
 	@Override

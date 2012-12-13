@@ -1,0 +1,36 @@
+<!-- Your package folder -->
+<com.kmware.hrm.DashboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:background="#f8f9fe" >
+    <!--  People Button -->
+    <Button
+        android:id="@+id/btn_people"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/cat_people"
+        android:text="@string/cat_people" />
+ 
+    <!--  Projects Button -->
+    <Button
+        android:id="@+id/btn_projects"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/cat_project"
+        android:text="@string/cat_projects" />
+ 
+    <!--  Positions Button -->
+    <Button
+        android:id="@+id/btn_positions"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/cat_position"
+        android:text="@string/cat_positions" />
+ 
+    <!--  Interviews Button -->
+    <Button
+        android:id="@+id/btn_interviews"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/cat_intervies"
+        android:text="@string/cat_interviews" />
+ 
+</com.kmware.hrm.DashboardLayout>
