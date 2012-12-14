@@ -13,18 +13,21 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
-        <activity
-            android:name="com.kmware.hrm.SplashScreen"
-            >
+        <activity android:name="com.kmware.hrm.SplashScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ListContainer"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
-        <activity android:name="DashboardDesignActivity"></activity>
-        <activity android:name="login.Login"></activity>
+        <activity
+            android:name="ListContainer"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity android:name="DashboardDesignActivity" >
+        </activity>
+        <activity android:name="login.Login" >
+        </activity>
     </application>
 
 </manifest>

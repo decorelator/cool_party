@@ -1,83 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_NavigationButton"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:weightSum="3" >
+    android:layout_gravity="top"
+    >
 
     <Button
-        android:id="@+id/ivPeople"
+        android:id="@+id/iv_People"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:background="@drawable/selector_categiry"
         android:drawableLeft="@drawable/cat_people"
         android:text="@string/cat_people"
-        android:visibility="gone" />
-    <!--
-        <ImageView
-        android:id="@+id/ivPeople"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/cat_people"
-        android:background="@drawable/selector_categiry"
-        android:visibility="gone" />
-    -->
-
-    <Button
-        android:id="@+id/ivProjects"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/selector_categiry"
-        android:drawableLeft="@drawable/cat_project"
-        android:text="@string/cat_projects" />
-    <!--
-        <ImageView
-        android:id="@+id/ivProjects"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/cat_project"
-        android:background="@drawable/selector_categiry" />
-    -->
-
-    <Button
-        android:id="@+id/ivPositions"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/selector_categiry"
-        android:drawableLeft="@drawable/cat_position"
-        android:text="@string/cat_positions" />
-
-    <!--
-         <ImageView
-        android:id="@+id/ivPositions"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/cat_position"
-        android:background="@drawable/selector_categiry" />
-    -->
-
-    <Button
-        android:id="@+id/ivInterviews"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/selector_categiry"
-        android:drawableLeft="@drawable/cat_intervies"
-        android:text="@string/cat_interviews" />
-
-    <!--
-         <ImageView
-        android:id="@+id/ivInterviews"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/cat_intervies" 
-        android:background="@drawable/selector_categiry"/>    -->
+        android:textColor="@color/text_color_light"
+        style="@style/text_size.description"/>
 
 </LinearLayout>

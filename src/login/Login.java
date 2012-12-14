@@ -1,10 +1,11 @@
 package login;
 
 
+import view.MessageToast;
+
 import com.kmware.hrm.DashboardDesignActivity;
+import com.kmware.hrm.Extras;
 import com.kmware.hrm.R;
-import com.kmware.hrm.R.id;
-import com.kmware.hrm.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -44,20 +45,21 @@ public class Login extends Activity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
+		
 		switch (v.getId()){
 		
 		case R.id.btnLogin:
-			//PASSWORD
 			if (checkLogin().equals(LOGIN_ADMIN))
 			{
 			Intent intent = new Intent(this, DashboardDesignActivity.class);
 			startActivity(intent);
-			}
-			else{
-				Intent intent = new Intent(this, DashboardDesignActivity.class);
-				startActivity(intent);	
-			}
 			finish();
+			}
+			else if (checkLogin().equals(LOGIN_GUEST)){
+				Intent intent = new Intent(this, DashboardDesignActivity.class);
+				//startActivity(intent);	
+			}
+			//finish();
 			break;	
 			
 		
@@ -66,7 +68,13 @@ public class Login extends Activity implements OnClickListener{
 	}
 	
 	private String checkLogin(){
-		
+		if (et_Login.getText().toString().trim().length() == 0){
+			MessageToast.showError(getApplicationContext(), getResources().getString(R.string.err_login));
+			return Extras.EMPTY_STRING;
+		}
+		if (!et_Login.getText().toString().trim().equals(LOGIN_ADMIN)){
+			return LOGIN_GUEST;
+		}
 	return 	LOGIN_ADMIN;
 	}
 	

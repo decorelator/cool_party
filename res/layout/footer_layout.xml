@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/FooterBar" >
-    <TextView android:text="@string/app_name_full"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:textColor="@color/text_color_light"
-            android:gravity="center"
-            android:background="@color/mane_blue"/>
-</LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="center"
+        android:text="@string/app_name_full"
+        android:textColor="@color/text_color_light" />
+
+</RelativeLayout>

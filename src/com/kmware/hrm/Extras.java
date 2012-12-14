@@ -7,7 +7,7 @@ import java.util.TimeZone;
 public class Extras {
 
 	public static String LOGTAG = Extras.class.getSimpleName();
-
+ 
 	public static final int ID_UNKNOWN = -1;
 	public static final int ONEDAY_PER_MILLISECONDS = 86400000;
 	public static final int ONEMINUTE_PER_MILLISECONDS = 60000;
@@ -23,6 +23,7 @@ public class Extras {
 	public static final String DASH = " - ";
 
 	public static final DecimalFormat floatFormat = new DecimalFormat("0.00");
+	
 	public static final String DASHBOARD_INTENT = "dashboard";
 
 }
