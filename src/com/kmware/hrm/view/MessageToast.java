@@ -1,4 +1,4 @@
-package view;
+package com.kmware.hrm.view;
 
 
 import com.kmware.hrm.R;

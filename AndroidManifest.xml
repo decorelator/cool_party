@@ -26,8 +26,9 @@
         </activity>
         <activity android:name="DashboardDesignActivity" >
         </activity>
-        <activity android:name="login.Login" >
+        <activity android:name=".login.Login" >
         </activity>
+        <activity android:name=".preferences.PrefActivity"></activity>
     </application>
 
 </manifest>

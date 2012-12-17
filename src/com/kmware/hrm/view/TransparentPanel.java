@@ -1,4 +1,4 @@
-package view;
+package com.kmware.hrm.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
