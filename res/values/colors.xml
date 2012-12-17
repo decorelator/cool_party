@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <color name="mane_blue">#002B5C</color> 
-   <color name="mane_orange">#F58426</color> 
-   <color name="actionbar_orange">#ff9a46</color> 
-   <color name="text_color_light">#848484</color> 
+
+    <color name="mane_blue">#002B5C</color>
+    <color name="mane_orange">#F58426</color>
+    <color name="actionbar_orange">#ff9a46</color>
+    <color name="text_color_light">#848484</color>
+    <!-- ACTIONBAR -->
+    <color name="actionbar_separator">#8B1A1A</color>
+    <color name="actionbar_title">#FFFFFF</color>
+    <color name="actionbar_background_start">#F58426</color>
+    <color name="actionbar_background_end">#F2A76A</color>
+    <color name="actionbar_background_item_pressed_start">#FF7F00</color>
+    <color name="actionbar_background_item_pressed_end">#EE7600</color>
+
 </resources>

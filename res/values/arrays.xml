@@ -14,5 +14,13 @@
         <item>3</item>
         <item>4</item>
     </integer-array>
+    <string-array name="pref_theme">
+        <item >Blue</item>
+        <item >Orange</item>
+    </string-array>
+    <string-array name="pref_theme_values">
+        <item >1</item>
+        <item >2</item>
+    </string-array>
 
 </resources>
