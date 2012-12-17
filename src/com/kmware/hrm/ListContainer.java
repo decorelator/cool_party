@@ -2,7 +2,8 @@ package com.kmware.hrm;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
+import model.BaseModel;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +15,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ListContainer extends Activity implements OnClickListener {
+public class ListContainer extends ZActivity implements OnClickListener {
 
 	public static String LOGTAG = ListContainer.class.getSimpleName();
 	
@@ -27,13 +28,14 @@ public class ListContainer extends Activity implements OnClickListener {
 	EditText tv_Search;
 	LinearLayout ll_NavigationButtons;
 
-	ArrayList<ContainerRow> dataList = new ArrayList<ContainerRow>();
+	ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
 	CustomContainerAdapter listAdapter;
 
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_container);
+		super.onCreate(savedInstanceState);
+		setTitle("list", R.drawable.cat_people);
 		init();
 
 	}
@@ -92,8 +94,8 @@ public class ListContainer extends Activity implements OnClickListener {
 		getExtra();
 		createNavigationButtons(R.id.iv_People);
 		fillData();
-		listAdapter = new CustomContainerAdapter(this, dataList);
-
+		listAdapter = new CustomContainerAdapter(this, dataList, R.layout.list_container_row);
+		
 		// настраиваем список
 		ListView lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		lv_Conteiner.setAdapter(listAdapter);
@@ -123,7 +125,7 @@ public class ListContainer extends Activity implements OnClickListener {
 	// генерируем данные для адаптера
 	void fillData() {
 		for (int i = 1; i <= 20; i++) {
-			dataList.add(new ContainerRow("" + tv_subTitle.getText() + " " + i,
+			dataList.add(new BaseModel(i,
 					"" + i * 1000));
 		}
 	}

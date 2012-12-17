@@ -48,6 +48,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
     private ImageButton mHomeBtn;
     private RelativeLayout mHomeLayout;
     private ProgressBar mProgress;
+    private ImageView mIcon;
 
     public ActionBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -67,6 +68,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
         
         mProgress = (ProgressBar) mBarView.findViewById(R.id.actionbar_progress);
 
+        mIcon = (ImageView) mBarView.findViewById(R.id.icon);
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.ActionBar);
         CharSequence title = a.getString(R.styleable.ActionBar_title);
@@ -116,6 +118,10 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     public void setTitle(int resid) {
         mTitleView.setText(resid);
+    }
+
+    public void setTitleIco(int resid) {
+        mIcon.setImageResource(resid);
     }
 
     /**
@@ -272,18 +278,18 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 
     public static class IntentAction extends AbstractAction {
         private Context mContext;
-        private Intent mIntent;
+        private OnClickListener mAtion;
 
-        public IntentAction(Context context, Intent intent, int drawable) {
+        public IntentAction(Context context, OnClickListener action, int drawable) {
             super(drawable);
             mContext = context;
-            mIntent = intent;
+            mAtion = action;
         }
 
         @Override
         public void performAction(View view) {
             try {
-               mContext.startActivity(mIntent); 
+               mAtion.onClick(view);
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(mContext,
                         mContext.getText(R.string.actionbar_activity_not_found),

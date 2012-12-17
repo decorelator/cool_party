@@ -14,17 +14,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class DashboardDesignActivity extends Activity implements
+public class DashboardDesignActivity extends ZActivity implements
 		OnClickListener {
 
 	public static String LOGTAG = DashboardDesignActivity.class.getSimpleName();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dashboard_layout);
-		createActionBar();
+		super.onCreate(savedInstanceState);
+		final Intent i = new Intent(this, PrefActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		addprefBarBtn(R.drawable.act_pref, new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startActivity(i);
+				
+			}
+		});
+
 		init();
 
 	}
@@ -78,23 +89,4 @@ public class DashboardDesignActivity extends Activity implements
 
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuItem mi = menu.add(0, 1, 0, "Preferences");
-		mi.setIntent(new Intent(this, PrefActivity.class));
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	private void createActionBar() {
-		ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-		actionBar.setTitle(R.string.home);
-		actionBar.addAction(new IntentAction(this, DashboardDesignActivity
-				.createIntent(this), R.drawable.act_pref));
-
-	}
-
-	public static Intent createIntent(Context context) {
-		Intent i = new Intent(context, PrefActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		return i;
-	}
 }

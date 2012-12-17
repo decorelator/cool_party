@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
     android:orientation="vertical">
 
     <!-- Include Action Bar -->
 
-    <com.kmware.hrm.actionbar.ActionBar
-        android:id="@+id/actionbar"
-        style="@style/ActionBar" />
+ 
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -28,7 +27,7 @@
             android:inputType="textPassword"
             android:textColor="@color/text_color_light" 
             android:layout_margin="5sp"/>
-
+
         <EditText
             android:id="@+id/etLogin"
             style="@style/main_blue"
@@ -36,11 +35,13 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/etPassword"
             android:layout_alignLeft="@+id/etPassword"
+            android:layout_alignRight="@+id/etPassword"
             android:background="@drawable/edt_login_blue"
             android:ems="10"
             android:hint="@string/user_name"
-            android:textColor="@color/text_color_light"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:text="admin"
+            android:textColor="@color/text_color_light" />
 
         <Button
             android:id="@+id/btnLogin"
