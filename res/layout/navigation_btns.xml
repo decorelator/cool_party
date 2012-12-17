@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="3" 
+    android:layout_gravity="top"
+    >
+
+    <Button
+        android:id="@+id/iv_People"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/selector_categiry"
+        android:drawableLeft="@drawable/cat_people"
+        android:text="@string/cat_people"
+        android:visibility="gone" 
+        android:textColor="@color/text_color_light"
+        style="@style/text_size.description"/>
+    <!--
+        <ImageView
+        android:id="@+id/ivPeople"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/cat_people"
+        android:background="@drawable/selector_categiry"
+        android:visibility="gone" />
+    -->
+
+    <Button
+        android:id="@+id/iv_Projects"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/selector_categiry"
+        android:drawableLeft="@drawable/cat_project"
+        android:text="@string/cat_projects" 
+        android:textColor="@color/text_color_light"
+        style="@style/text_size.description"/>
+    <!--
+        <ImageView
+        android:id="@+id/ivProjects"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/cat_project"
+        android:background="@drawable/selector_categiry" />
+    -->
+
+    <Button
+        android:id="@+id/iv_Positions"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/selector_categiry"
+        android:drawableLeft="@drawable/cat_position"
+        android:text="@string/cat_positions" 
+        android:textColor="@color/text_color_light"
+        style="@style/text_size.description"/>
+
+    <!--
+         <ImageView
+        android:id="@+id/ivPositions"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/cat_position"
+        android:background="@drawable/selector_categiry" />
+    -->
+
+    <Button
+        android:id="@+id/iv_Interviews"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/selector_categiry"
+        android:drawableLeft="@drawable/cat_intervies"
+        android:text="@string/cat_interviews"
+        android:textColor="@color/text_color_light"
+        style="@style/text_size.description" />
+
+    <!--
+         <ImageView
+        android:id="@+id/ivInterviews"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/cat_intervies" 
+        android:background="@drawable/selector_categiry"/>    -->
+
+</LinearLayout>
