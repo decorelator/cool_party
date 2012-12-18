@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/mane_orange" >
+    android:background="@color/mane_blue"
+    android:orientation="horizontal" >
 
     <EditText
         android:id="@+id/etSearch"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
+        android:drawableRight="@android:drawable/ic_menu_search"
         android:ems="10"
         android:singleLine="true" >
-
-        <requestFocus />
     </EditText>
 
-    <ImageView
-        android:id="@+id/ivSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@android:drawable/ic_menu_search" />
 
-</RelativeLayout>
+</LinearLayout>

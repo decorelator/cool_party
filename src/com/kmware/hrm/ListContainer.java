@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.BaseModel;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 public class ListContainer extends ZActivity implements OnClickListener {
 
 	public static String LOGTAG = ListContainer.class.getSimpleName();
+	private static final int RES_EDIT = 1;
+	
 	
 	Button iv_People;
 	Button iv_Project;
@@ -28,6 +31,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	EditText tv_Search;
 	LinearLayout ll_NavigationButtons;
 
+	private String extra;
 	ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
 	CustomContainerAdapter listAdapter;
 
@@ -36,49 +40,60 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		setContentView(R.layout.list_container);
 		super.onCreate(savedInstanceState);
 		setTitle("list", R.drawable.cat_people);
+
+		addprefBarBtn(android.R.drawable.ic_menu_search, new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (findViewById(R.id.filter_menu).isShown())
+					((LinearLayout) findViewById(R.id.filter_menu))
+							.setVisibility(View.GONE);
+				else
+					((LinearLayout) findViewById(R.id.filter_menu))
+							.setVisibility(View.VISIBLE);
+
+			}
+		});
+		addprefBarBtn(android.R.drawable.ic_input_add, new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				
+				if (extra.equals(getResources().getString(R.string.cat_people))) {
+					intent = new Intent(ListContainer.this, EditPeople.class);
+				}
+				if (extra.equals(getResources()
+						.getString(R.string.cat_projects))) {
+					intent = new Intent(ListContainer.this, EditPeople.class);
+				}
+				if (extra.equals(getResources().getString(
+						R.string.cat_positions))) {
+					intent = new Intent(ListContainer.this, EditPeople.class);
+				}
+				if (extra.equals(getResources().getString(
+						R.string.cat_interviews))) {
+					intent = new Intent(ListContainer.this, EditPeople.class);
+				}
+				
+				startActivityForResult(intent, RES_EDIT);
+			}
+		});
 		init();
 
 	}
 
-	private void createNavigationButtons(int id){
+	private void createNavigationButtons(int id) {
 		// Создание LayoutParams c шириной и высотой по содержимому
-		LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-		
-		// Создание LayoutParams c шириной и высотой по содержимому
-//	      LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
-//	          wrapContent, wrapContent);
-//	      // переменная для хранения значения выравнивания
-//	      // по умолчанию пусть будет LEFT
-//	      int btnGravity = Gravity.LEFT;
-//	      // определяем, какой RadioButton "чекнут" и 
-//	      // соответственно заполняем btnGravity 
-//	      switch (rgGravity.getCheckedRadioButtonId()) {
-//	      case R.id.rbLeft:
-//	        btnGravity = Gravity.LEFT;
-//	        break;
-//	      case R.id.rbCenter:
-//	        btnGravity = Gravity.CENTER_HORIZONTAL;
-//	        break;
-//	      case R.id.rbRight:
-//	        btnGravity = Gravity.RIGHT;
-//	        break;
-//	      }
-//	      // переносим полученное значение выравнивания в LayoutParams
-//	      lParams.gravity = btnGravity;
-//
-//	      // создаем Button, пишем текст и добавляем в LinearLayout
-//	      Button btnNew = new Button(this);
-//	      btnNew.setText(etName.getText().toString());
-//	      ll_NavigationButtons.addView(btnNew, lParams);
-		
-		
+		LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
 	}
-	
+
 	private void init() {
 
-		
 		ll_NavigationButtons = (LinearLayout) findViewById(R.id.ll_NavigationButtons);
-		
+
 		iv_People = (Button) findViewById(R.id.iv_People);
 		iv_People.setOnClickListener(this);
 		iv_Project = (Button) findViewById(R.id.iv_Projects);
@@ -87,46 +102,37 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		iv_Positions.setOnClickListener(this);
 		iv_Interviews = (Button) findViewById(R.id.iv_Interviews);
 		iv_Interviews.setOnClickListener(this);
-		iv_subTitle = (ImageView) findViewById(R.id.iv_Title);
-		tv_subTitle = (TextView) findViewById(R.id.tv_ConteinerTitle);
-		// создаем адаптер
-		
+
 		getExtra();
+
 		createNavigationButtons(R.id.iv_People);
 		fillData();
-		listAdapter = new CustomContainerAdapter(this, dataList, R.layout.list_container_row);
-		
+		listAdapter = new CustomContainerAdapter(this, dataList,
+				R.layout.list_container_row);
+
 		// настраиваем список
 		ListView lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		lv_Conteiner.setAdapter(listAdapter);
 	}
 
-	private void getExtra(){
+	private void getExtra() {
 		Bundle extras = getIntent().getExtras();
 
 		if (extras != null) {
-			try{
-			tv_subTitle.setText(extras.getString(Extras.DASHBOARD_INTENT));
-			}catch(Exception e){
-				
+			try {
+				extra = extras.getString(Extras.DASHBOARD_INTENT);
+			} catch (Exception e) {
+
 				e.printStackTrace();
 			}
-			if (iv_People.getText().equals(tv_subTitle.getText())) {
-				iv_subTitle.setImageResource(R.drawable.cat_people);
-			} else if (iv_Project.getText().equals(tv_subTitle.getText())) {
-				iv_subTitle.setImageResource(R.drawable.cat_project);
-			} else if (iv_Positions.getText().equals(tv_subTitle.getText())) {
-				iv_subTitle.setImageResource(R.drawable.cat_position);
-			} else {
-				iv_subTitle.setImageResource(R.drawable.cat_intervies);
-			}
+			
 		}
 	}
+
 	// генерируем данные для адаптера
 	void fillData() {
 		for (int i = 1; i <= 20; i++) {
-			dataList.add(new BaseModel(i,
-					"" + i * 1000));
+			dataList.add(new BaseModel(i, "" + i * 1000));
 		}
 	}
 
@@ -134,31 +140,49 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.iv_People:
-			iv_subTitle.setImageResource(R.drawable.cat_people);
+			// iv_subTitle.setImageResource(R.drawable.cat_people);
+			extra = getResources().getString(R.string.cat_people);
 			setVisability(R.id.iv_People);
 			break;
 		case R.id.iv_Projects:
-			iv_subTitle.setImageResource(R.drawable.cat_project);
+			// iv_subTitle.setImageResource(R.drawable.cat_project);
+			extra = getResources().getString(R.string.cat_projects);
 			setVisability(R.id.iv_Projects);
 			break;
 		case R.id.iv_Positions:
-			iv_subTitle.setImageResource(R.drawable.cat_position);
+			// iv_subTitle.setImageResource(R.drawable.cat_position);
+			extra = getResources().getString(R.string.cat_positions);
 			setVisability(R.id.iv_Positions);
 			break;
 		case R.id.iv_Interviews:
-			iv_subTitle.setImageResource(R.drawable.cat_intervies);
+			extra = getResources().getString(R.string.cat_interviews);
+			// iv_subTitle.setImageResource(R.drawable.cat_intervies);
 			setVisability(R.id.iv_Interviews);
 			break;
 		}
 
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode){
+      	
+  		case RES_EDIT:
+  			
+ 				if (resultCode == RESULT_OK){
+ 					listAdapter.notifyDataSetChanged ();
+  				}
+  			break;
+	}	
+	}
+	
 	protected void setVisability(int id) {
 		iv_People.setVisibility(View.VISIBLE);
 		iv_Project.setVisibility(View.VISIBLE);
 		iv_Positions.setVisibility(View.VISIBLE);
 		iv_Interviews.setVisibility(View.VISIBLE);
 		findViewById(id).setVisibility(View.GONE);
-		tv_subTitle.setText(((Button) findViewById(id)).getText());
+		
 	}
 }

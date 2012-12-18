@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- COMMON -->
     <string-array name="category">
-        <item>People</item>
-        <item>Projects</item>
-        <item>Positions</item>
-        <item>Interviews</item>
+        <item>@string/cat_people</item>
+        <item>@string/cat_positions</item>
+        <item>@string/cat_projects</item>
+        <item>@string/cat_interviews</item>
     </string-array>
 
     <integer-array name="category_value">
@@ -14,6 +15,8 @@
         <item>3</item>
         <item>4</item>
     </integer-array>
+    
+    <!-- PREFERENCES -->
     <string-array name="pref_theme">
         <item >Blue</item>
         <item >Orange</item>
@@ -21,6 +24,16 @@
     <string-array name="pref_theme_values">
         <item >1</item>
         <item >2</item>
+    </string-array>
+    
+    <!-- EDIT PEOPLE -->
+    <string-array name="people_status">
+        <item>@string/people_candidate</item>
+        <item>@string/people_employee</item>
+    </string-array>
+    <string-array name="people_status_value">
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
 </resources>

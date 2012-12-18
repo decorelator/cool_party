@@ -24,6 +24,7 @@ public class Extras {
 
 	public static final DecimalFormat floatFormat = new DecimalFormat("0.00");
 	
-	public static final String DASHBOARD_INTENT = "dashboard";
-
+	public static final String DASHBOARD_INTENT = "dashboard_intent";
+	public static final String EDIT_INTENT = "edit_intent";
+	public static final String ADD_INTENT = "add_intent";
 }
