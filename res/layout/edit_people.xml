@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
 
     <TextView
@@ -14,7 +14,7 @@
 
     <Spinner
         android:id="@+id/sp_people_status"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:entries="@array/people_status"
         android:prompt="@string/people_status"
@@ -28,7 +28,7 @@
 
     <EditText
         android:id="@+id/edt_people_name"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName" >
@@ -44,7 +44,7 @@
 
     <Spinner
         android:id="@+id/sp_people_position"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:listitem="@android:layout/simple_spinner_item" />
 
@@ -106,7 +106,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_people_employee"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/rl_people_contacts" >
 

@@ -2,12 +2,14 @@ package com.kmware.hrm;
 
 import android.app.ExpandableListActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
-
 
 public class EditPeople extends ZActivity {
 
@@ -21,9 +23,9 @@ public class EditPeople extends ZActivity {
 	EditText edt_Skype;
 	EditText edt_EmployeeDate;
 	ExpandableListView expl_Projects;
-	
+
 	private String extra;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.edit_people);
@@ -43,17 +45,14 @@ public class EditPeople extends ZActivity {
 	}
 
 	private void init() {
-		
+
 		sp_Status = (Spinner) findViewById(R.id.sp_people_status);
-		
-//		if (sp_Status.getSelectedItem().toString().equals(getResources().getString(R.string.people_employee))){
-//			findViewById(R.id.rl_people).setVisibility(View.VISIBLE);
-//		}
-		if (sp_Status.getSelectedItemPosition() == 2)
-				{
-			findViewById(R.id.rl_people).setVisibility(View.VISIBLE);
-		}
-		
+
+		// if
+		// (sp_Status.getSelectedItem().toString().equals(getResources().getString(R.string.people_employee))){
+		// findViewById(R.id.rl_people).setVisibility(View.VISIBLE);
+		// }
+
 		edt_Name = (EditText) findViewById(R.id.edt_people_name);
 		sp_Position = (Spinner) findViewById(R.id.sp_people_position);
 		edt_Email = (EditText) findViewById(R.id.edt_people_email);
@@ -61,9 +60,25 @@ public class EditPeople extends ZActivity {
 		edt_Skype = (EditText) findViewById(R.id.edt_people_skype);
 		edt_EmployeeDate = (EditText) findViewById(R.id.edt_people_date_in);
 		expl_Projects = (ExpandableListView) findViewById(R.id.exl_people_projects);
-		
+
+		sp_Status.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				if (arg2 == 1) {
+					findViewById(R.id.rl_people).setVisibility(View.VISIBLE);
+				}
+				Log.v(LOGTAG, "spinn "+arg2);
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+
+			}
+		});
 	}
-	
+
 	private void getExtra() {
 		Bundle extras = getIntent().getExtras();
 
@@ -73,12 +88,12 @@ public class EditPeople extends ZActivity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			
+
 		}
 	}
-	private void save(){
-		
+
+	private void save() {
+
 	}
 
 }
