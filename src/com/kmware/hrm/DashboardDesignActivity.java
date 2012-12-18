@@ -1,24 +1,17 @@
 package com.kmware.hrm;
 
 import com.kmware.hrm.preferences.PrefActivity;
-import com.kmware.hrm.actionbar.ActionBar;
-import com.kmware.hrm.actionbar.ActionBar.Action;
-import com.kmware.hrm.actionbar.ActionBar.IntentAction;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class DashboardDesignActivity extends ZActivity implements
 		OnClickListener {
 
+	
 	public static String LOGTAG = DashboardDesignActivity.class.getSimpleName();
 
 	@Override
@@ -35,7 +28,7 @@ public class DashboardDesignActivity extends ZActivity implements
 				
 			}
 		});
-
+		
 		init();
 
 	}
