@@ -3,7 +3,7 @@
     android:id="@+id/root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" android:weightSum="1" >
 
     <!-- Include Action Bar -->
 
@@ -13,8 +13,8 @@
 
     <!-- Include Fragmented dashboard -->
 
-    <include layout="@layout/fragment_layout" />
-
+    <include layout="@layout/fragment_layout" android:layout_width="fill_parent" android:layout_height="1dip" android:layout_weight="0.3" />
+<LinearLayout android:layout_width="fill_parent" android:layout_height="1dip" android:weightSum="0.7"></LinearLayout>
     <!-- Include Footer -->
 
     <include layout="@layout/footer_layout" />
