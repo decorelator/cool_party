@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" 
-    android:orientation="vertical">
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <!-- Include Action Bar -->
-
- 
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -21,13 +19,13 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_margin="5sp"
             android:background="@drawable/edt_login_blue"
             android:ems="10"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textColor="@color/text_color_light" 
-            android:layout_margin="5sp"/>
-
+            android:textColor="@color/text_color_light" />
+
         <EditText
             android:id="@+id/etLogin"
             style="@style/main_blue"
@@ -51,9 +49,8 @@
             android:layout_alignRight="@+id/etPassword"
             android:layout_below="@+id/etPassword"
             android:background="@drawable/selector_button_logon"
-            android:text="@string/logon"
-            android:minHeight="40sp" />
-
+            android:minHeight="40sp"
+            android:text="@string/logon" />
     </RelativeLayout>
 
     <include layout="@layout/footer_layout" />

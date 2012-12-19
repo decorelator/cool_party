@@ -1,10 +1,14 @@
 package com.kmware.hrm;
 
+import java.util.ArrayList;
+
+import model.BaseModel;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -59,7 +63,16 @@ public class EditPeople extends ZActivity {
 		edt_Skype = (EditText) findViewById(R.id.edt_people_skype);
 		edt_EmployeeDate = (EditText) findViewById(R.id.edt_people_date_in);
 		lv_Projects = (ListView) findViewById(R.id.lv_people_projects);
-
+		lv_Projects.getEmptyView();
+		
+		ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
+		for (int i = 1; i <= 10; i++) {
+			dataList.add(new BaseModel(i, "Project " + i * 1000));
+		}
+		ArrayAdapter<BaseModel> listAdapter = new CustomContainerAdapter(this, dataList,
+				android.R.layout.simple_list_item_1);
+		
+		lv_Projects.setAdapter(listAdapter);
 		sp_Status.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override

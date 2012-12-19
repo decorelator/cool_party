@@ -6,11 +6,9 @@ import com.kmware.hrm.actionbar.ActionBar;
 
 import model.BaseModel;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -27,7 +25,6 @@ public class EditProject extends ZActivity {
 	EditText edt_StartDate;
 	EditText edt_EndDate;
 	ListView lv_Employee;
-	Button btn_Hide;
 	
 	private String extra;
 	
@@ -64,40 +61,6 @@ public class EditProject extends ZActivity {
 		edt_StartDate = (EditText) findViewById(R.id.edt_project_start_date);
 		edt_EndDate = (EditText) findViewById(R.id.edt_project_end_date);
 		lv_Employee = (ListView) findViewById(R.id.lv_project_employee);
-		btn_Hide = (Button) findViewById(R.id.btn_project_hide_info);
-		if (findViewById(R.id.ll_project_info).isShown())
-		{
-			btn_Hide.setCompoundDrawablesWithIntrinsicBounds(0, 0,android.R.drawable.arrow_down_float, 0);
-			btn_Hide.setText(getResources().getString(R.string.project_contacts));
-			findViewById(R.id.ll_project_employee).setVisibility(View.VISIBLE);
-		}else{
-			btn_Hide.setCompoundDrawablesWithIntrinsicBounds(0, 0,android.R.drawable.arrow_up_float, 0);
-			
-			btn_Hide.setText(getResources().getString(R.string.project_employments));
-			findViewById(R.id.ll_project_employee).setVisibility(View.GONE);
-		}
-		
-		btn_Hide.setOnClickListener(new OnClickListener() {
-		
-			@Override
-			public void onClick(View v) {
-				if (findViewById(R.id.ll_project_info).isShown())
-				{
-					findViewById(R.id.ll_project_info).setVisibility(View.GONE);
-					btn_Hide.setCompoundDrawablesWithIntrinsicBounds(0, 0,android.R.drawable.arrow_down_float, 0);
-					btn_Hide.setText(getResources().getString(R.string.project_contacts));
-					findViewById(R.id.ll_project_employee).setVisibility(View.VISIBLE);
-				}else
-				{ 
-					findViewById(R.id.ll_project_info).setVisibility(View.VISIBLE);
-					btn_Hide.setCompoundDrawablesWithIntrinsicBounds(0, 0,android.R.drawable.arrow_up_float, 0);
-					
-					btn_Hide.setText(getResources().getString(R.string.project_employments));
-					findViewById(R.id.ll_project_employee).setVisibility(View.GONE);
-				}
-				
-			}
-		});
 		sp_Status.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override

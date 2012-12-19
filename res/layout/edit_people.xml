@@ -4,161 +4,170 @@
     android:id="@+id/root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/tv_people_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/people_status" />
-
-    <Spinner
-        android:id="@+id/sp_people_status"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/people_status"
-        android:prompt="@string/people_status"
-        tools:listitem="@android:layout/simple_spinner_item" />
-
-    <TextView
-        android:id="@+id/tv_people_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/people_name" />
-
-    <EditText
-        android:id="@+id/edt_people_name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:singleLine="true" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/tv_people_position"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/people_position" />
-
-    <Spinner
-        android:id="@+id/sp_people_position"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@android:layout/simple_spinner_item" />
+    android:orientation="vertical"
+    android:weightSum="2" >
 
     <ScrollView
+        android:id="@+id/scrl_people"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
 
-        <RelativeLayout
-            android:id="@+id/rl_people"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone" >
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_people_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/people_status" />
+
+            <Spinner
+                android:id="@+id/sp_people_status"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/people_status"
+                android:prompt="@string/people_status"
+                tools:listitem="@android:layout/simple_spinner_item" />
+
+            <TextView
+                android:id="@+id/tv_people_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/people_name" />
+
+            <EditText
+                android:id="@+id/edt_people_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:singleLine="true" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/tv_people_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/people_position" />
+
+            <Spinner
+                android:id="@+id/sp_people_position"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@android:layout/simple_spinner_item" />
 
             <RelativeLayout
-                android:id="@+id/rl_people_contacts"
+                android:id="@+id/rl_people"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="fill_parent" >
 
-                <TextView
-                    android:id="@+id/tv_people_contacts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:text="@string/people_contacts" />
-
-                <EditText
-                    android:id="@+id/edt_people_tel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/edt_people_email"
-                    android:ems="10"
-                    android:hint="@string/people_tel"
-                    android:inputType="phone"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/edt_people_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/tv_people_contacts"
-                    android:ems="10"
-                    android:hint="@string/people_email"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/edt_people_skype"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/edt_people_tel"
-                    android:ems="10"
-                    android:hint="@string/people_skype"
-                    android:singleLine="true" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_people_employee"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_below="@+id/rl_people_contacts" >
-
-                <EditText
-                    android:id="@+id/edt_people_date_in"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/tv_people_date_start"
-                    android:ems="10"
-                    android:inputType="date"
-                    android:singleLine="true" />
-
-                <TextView
-                    android:id="@+id/tv_people_date_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/edt_people_date_in"
-                    android:layout_alignBottom="@+id/edt_people_date_in"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/people_date_in" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout1"
+                <RelativeLayout
+                    android:id="@+id/rl_people_contacts"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/tv_people_projects"
-                    android:orientation="vertical" >
+                    android:layout_height="wrap_content" >
 
-                    <ListView
-                        android:id="@+id/lv_people_projects"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" >
-                    </ListView>
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_people_contacts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/people_contacts" />
 
-                <TextView
-                    android:id="@+id/tv_people_projects"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignRight="@+id/tv_people_date_start"
-                    android:layout_below="@+id/edt_people_date_in"
-                    android:text="@string/people_projects" />
+                    <EditText
+                        android:id="@+id/edt_people_tel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/edt_people_email"
+                        android:ems="10"
+                        android:hint="@string/people_tel"
+                        android:inputType="phone"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/edt_people_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/tv_people_contacts"
+                        android:ems="10"
+                        android:hint="@string/people_email"
+                        android:inputType="textEmailAddress"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/edt_people_skype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/edt_people_tel"
+                        android:ems="10"
+                        android:hint="@string/people_skype"
+                        android:singleLine="true" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_people_employee"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/rl_people_contacts" >
+
+                    <EditText
+                        android:id="@+id/edt_people_date_in"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/tv_people_date_start"
+                        android:ems="10"
+                        android:inputType="date"
+                        android:singleLine="true" />
+
+                    <TextView
+                        android:id="@+id/tv_people_date_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/edt_people_date_in"
+                        android:layout_alignBottom="@+id/edt_people_date_in"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/people_date_in" />
+                </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/mane_orange" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_people_projects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/people_projects" />
+
+        <ListView
+            android:id="@+id/lv_people_projects"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </ListView>
+    </LinearLayout>
 
 </LinearLayout>
