@@ -15,9 +15,10 @@
         android:background="@drawable/selector_categiry"
         android:drawableLeft="@drawable/cat_people"
         android:text="@string/cat_people"
-        android:visibility="gone" 
+        android:visibility="visible" 
         android:textColor="@color/text_color_light"
-        style="@style/text_size.description"/>
+        style="@style/text_size.description"
+        android:tag="4"/>
     <!--
         <ImageView
         android:id="@+id/ivPeople"
@@ -38,7 +39,8 @@
         android:drawableLeft="@drawable/cat_project"
         android:text="@string/cat_projects" 
         android:textColor="@color/text_color_light"
-        style="@style/text_size.description"/>
+        style="@style/text_size.description"
+        android:tag="0"/>
     <!--
         <ImageView
         android:id="@+id/ivProjects"
@@ -58,7 +60,8 @@
         android:drawableLeft="@drawable/cat_position"
         android:text="@string/cat_positions" 
         android:textColor="@color/text_color_light"
-        style="@style/text_size.description"/>
+        style="@style/text_size.description"
+        android:tag="1"/>
 
     <!--
          <ImageView
@@ -79,7 +82,8 @@
         android:drawableLeft="@drawable/cat_intervies"
         android:text="@string/cat_interviews"
         android:textColor="@color/text_color_light"
-        style="@style/text_size.description" />
+        style="@style/text_size.description"
+        android:tag="2" />
 
     <!--
          <ImageView
