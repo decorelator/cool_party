@@ -65,7 +65,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 				}
 				if (extra.equals(getResources()
 						.getString(R.string.cat_projects))) {
-					intent = new Intent(ListContainer.this, EditPeople.class);
+					intent = new Intent(ListContainer.this, EditProject.class);
 				}
 				if (extra.equals(getResources().getString(
 						R.string.cat_positions))) {

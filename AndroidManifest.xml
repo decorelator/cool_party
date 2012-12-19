@@ -30,6 +30,7 @@
         </activity>
         <activity android:name=".preferences.PrefActivity"></activity>
         <activity android:name="EditPeople"></activity>
+        <activity android:name="EditProject"></activity>
     </application>
 
 </manifest>

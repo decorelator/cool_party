@@ -46,8 +46,26 @@
     <string name="people_contacts">Contacts</string>
     <string name="people_email">E-mail</string>
     <string name="people_skype">Skype</string>
-    <string name="people_tel">Telephone</string>
+    <string name="people_tel">Phone</string>
     <string name="people_status">Status</string>
     <string name="people_candidate">Candidate</string>
     <string name="people_employee">Employee</string>
+    
+    <!-- PROJECT -->
+    <string name="project_name">Project name</string>
+    <string name="project_contacts">Contact details</string>
+    <string name="project_email">E-mail</string>
+    <string name="project_skype">Skype</string>
+    <string name="projecte_tel">Phone</string>
+    <string name="project_start_date">Start date</string>
+    <string name="project_end_date">End date</string>
+    <string name="project_employments">Employmentes</string>
+    <string name="project_status">Status</string>
+    
+    <!-- STATUS -->
+    <string name="status_expected">Expected</string>
+    <string name="status_open">Open</string>
+    <string name="status_close">Close</string>
+    <string name="status_compleded">Completed</string>
+    <string name="status_delayed">Delayed</string>
 </resources>
