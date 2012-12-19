@@ -3,20 +3,49 @@
     android:id="@+id/root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:background="@color/backDash"
+    android:orientation="vertical"
+    android:weightSum="1" >
 
     <!-- Include Action Bar -->
 
-<!--     <com.kmware.hrm.actionbar.ActionBar -->
-<!--         android:id="@+id/actionbar" -->
-<!--         style="@style/ActionBar" /> -->
+
+    <!-- <com.kmware.hrm.actionbar.ActionBar -->
+    <!-- android:id="@+id/actionbar" -->
+    <!-- style="@style/ActionBar" /> -->
+
 
     <!-- Include Fragmented dashboard -->
 
-    <include layout="@layout/fragment_layout" />
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_weight="0.5"
+        layout="@layout/fragment_layout" />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:layout_weight="0.5"
+        android:orientation="vertical"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/caption_back3" />
+
+        <ListView
+            android:id="@+id/dashList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ffd470"
+            android:cacheColorHint="#00000000"
+            android:listSelector="#00000000" >
+        </ListView>
+    </LinearLayout>
     <!-- Include Footer -->
-
-    <include layout="@layout/footer_layout" />
 
 </LinearLayout>
