@@ -50,6 +50,8 @@
     <string name="people_status">Status</string>
     <string name="people_candidate">Candidate</string>
     <string name="people_employee">Employee</string>
+    <string name="people_add">Add people</string>
+    <string name="people_edit">Edit people</string>
     
     <!-- PROJECT -->
     <string name="project_name">Project name</string>
@@ -61,6 +63,8 @@
     <string name="project_end_date">End date</string>
     <string name="project_employments">Employmentes</string>
     <string name="project_status">Status</string>
+    <string name="project_add">Add project</string>
+    <string name="project_edit">Edit project</string>
     
     <!-- STATUS -->
     <string name="status_expected">Expected</string>

@@ -1,9 +1,5 @@
 package com.kmware.hrm;
 
-import java.util.ArrayList;
-
-import model.BaseModel;
-
 import com.kmware.hrm.preferences.PrefActivity;
 
 import android.content.Intent;
@@ -11,12 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 
 public class DashboardDesignActivity extends ZActivity implements
 		OnClickListener {
 
-	
 	public static String LOGTAG = DashboardDesignActivity.class.getSimpleName();
 
 	@Override
@@ -26,14 +20,14 @@ public class DashboardDesignActivity extends ZActivity implements
 		final Intent i = new Intent(this, PrefActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		addprefBarBtn(R.drawable.act_pref, new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				startActivity(i);
-				
+
 			}
 		});
-		
+
 		init();
 
 	}
@@ -57,24 +51,24 @@ public class DashboardDesignActivity extends ZActivity implements
 		btn_projects.setOnClickListener(this);
 		btn_position.setOnClickListener(this);
 		btn_interview.setOnClickListener(this);
-		
-		ListView dash = (ListView) findViewById(R.id.dashList);
-		ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
-		for (int i = 1; i <= 20; i++) {
-			dataList.add(new BaseModel(i, "" + i * 1000));
-		}
-		CustomContainerAdapter listAdapter = new CustomContainerAdapter(this, dataList,
-				R.layout.list_container_row);
 
-		// настраиваем список
-		
-		dash.setAdapter(listAdapter);
+		// ListView dash = (ListView) findViewById(R.id.dashList);
+		// ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
+		// for (int i = 1; i <= 20; i++) {
+		// dataList.add(new BaseModel(i, "" + i * 1000));
+		// }
+		// CustomContainerAdapter listAdapter = new CustomContainerAdapter(this,
+		// dataList,
+		// R.layout.list_container_row);
+		//
+		// // настраиваем список
+		//
+		// dash.setAdapter(listAdapter);
 
 	}
-	
+
 	void fillData() {
 	}
-
 
 	@Override
 	public void onClick(View v) {
