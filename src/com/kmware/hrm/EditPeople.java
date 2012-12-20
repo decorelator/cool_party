@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -25,6 +27,7 @@ public class EditPeople extends ZActivity {
 	EditText edt_Skype;
 	EditText edt_EmployeeDate;
 	ListView lv_Projects;
+	LinearLayout ll_listview;
 
 	private String extra;
 
@@ -32,23 +35,53 @@ public class EditPeople extends ZActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.edit_people);
 		super.onCreate(savedInstanceState);
+		getExtra();
+		if (extra.toString().length() != 0) {
+			setTitle(getResources().getString(R.string.people_edit),
+					android.R.drawable.ic_input_add);
+			addprefBarBtn(android.R.drawable.arrow_down_float,
+					new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							ll_listview = (LinearLayout) findViewById(R.id.ll_people_listview);
+							if (ll_listview.isShown()) {
+								ll_listview.setVisibility(View.GONE);
+
+							} else {
+								ll_listview.setVisibility(View.VISIBLE);
+								paramOfLayout();
+							}
+						}
+
+					});
+		} else {
+			setTitle(getResources().getString(R.string.people_add),
+					android.R.drawable.ic_input_add);
+			addprefBarBtn(android.R.drawable.arrow_down_float,
+					new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							ll_listview = (LinearLayout) findViewById(R.id.ll_people_listview);
+							if (ll_listview.isShown()) {
+								ll_listview.setVisibility(View.GONE);
+
+							} else {
+								ll_listview.setVisibility(View.VISIBLE);
+								paramOfLayout();
+							}
+						}
+
+					});
+		}
+
 		addprefBarBtn(android.R.drawable.ic_menu_save, new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				setResult(RESULT_OK);
 				save();
-				finish();
 			}
 		});
-		getExtra();
-		
-		 if (extra.toString().length() != 0 ){
-			 setTitle(getResources().getString(R.string.people_edit),android.R.drawable.ic_input_add);
-		 } else{
-			 setTitle(getResources().getString(R.string.people_add),android.R.drawable.ic_input_add);
-		 }
-		 
+
 		init();
 
 	}
@@ -64,14 +97,14 @@ public class EditPeople extends ZActivity {
 		edt_EmployeeDate = (EditText) findViewById(R.id.edt_people_date_in);
 		lv_Projects = (ListView) findViewById(R.id.lv_people_projects);
 		lv_Projects.getEmptyView();
-		
+
 		ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
 		for (int i = 1; i <= 10; i++) {
 			dataList.add(new BaseModel(i, "Project " + i * 1000));
 		}
-		ArrayAdapter<BaseModel> listAdapter = new CustomContainerAdapter(this, dataList,
-				android.R.layout.simple_list_item_1);
-		
+		ArrayAdapter<BaseModel> listAdapter = new CustomContainerAdapter(this,
+				dataList, android.R.layout.simple_list_item_1);
+
 		lv_Projects.setAdapter(listAdapter);
 		sp_Status.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -84,6 +117,7 @@ public class EditPeople extends ZActivity {
 					break;
 				case 1:
 					findViewById(R.id.rl_people).setVisibility(View.VISIBLE);
+					paramOfLayout();
 					break;
 				}
 			}
@@ -121,8 +155,19 @@ public class EditPeople extends ZActivity {
 		}
 	}
 
-	private void save() {
+	private void paramOfLayout() {
+		ll_listview = (LinearLayout) findViewById(R.id.ll_people_listview);
+		if (findViewById(R.id.rl_people).isShown()) {
+			LayoutParams param = new LinearLayout.LayoutParams(
+					LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 0.5f);
+			findViewById(R.id.scrl_people).setLayoutParams(param);
+			ll_listview.setLayoutParams(param);
+		}
+	}
 
+	private void save() {
+		setResult(RESULT_OK);
+		finish();
 	}
 
 }

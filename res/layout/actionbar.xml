@@ -87,7 +87,8 @@
                 android:scrollHorizontally="true"
                 android:textColor="@color/actionbar_title"
                 android:textSize="16dip"
-                android:textStyle="bold" />
+                android:textStyle="bold" 
+                android:layout_toRightOf="@+id/actionbar_home"/>
 
             <ImageView
                 android:id="@+id/icon"

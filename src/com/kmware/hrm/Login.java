@@ -1,15 +1,8 @@
 package com.kmware.hrm;
 
 import com.kmware.hrm.R;
-import com.kmware.hrm.actionbar.ActionBar;
-import com.kmware.hrm.actionbar.ActionBar.IntentAction;
-import com.kmware.hrm.preferences.PrefActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -54,10 +47,11 @@ public class Login extends ZActivity implements OnClickListener {
 				startActivity(intent);
 				finish();
 			} else if (checkLogin().equals(LOGIN_GUEST)) {
-				Intent intent = new Intent(this, DashboardDesignActivity.class);
-				// startActivity(intent);
+				Intent intent = new Intent(this, InterviewGuest.class);
+				startActivity(intent);
+				finish();
 			}
-			// finish();
+
 			break;
 
 		}
@@ -66,13 +60,16 @@ public class Login extends ZActivity implements OnClickListener {
 
 	private String checkLogin() {
 		if (et_Login.getText().toString().trim().length() == 0) {
-			getDialog().showError(getApplicationContext(), getResources().getString(R.string.err_login));
+			getDialog().showError(getApplicationContext(),
+					getResources().getString(R.string.err_login));
 			return Extras.EMPTY_STRING;
 		}
-		if (!et_Login.getText().toString().trim().equals(LOGIN_ADMIN)) {
+		if (et_Login.getText().toString().trim().equals(LOGIN_ADMIN)) {
+			return LOGIN_ADMIN;
+		} else {
 			return LOGIN_GUEST;
+
 		}
-		return LOGIN_ADMIN;
 	}
 
 }

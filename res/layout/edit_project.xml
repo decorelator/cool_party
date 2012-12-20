@@ -4,144 +4,138 @@
     android:id="@+id/root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:weightSum="2" >
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrl_project"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
+        android:layout_height="wrap_content" >
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_project_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/project_name" />
+
+            <EditText
+                android:id="@+id/edt_project_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:singleLine="true" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/tv_project_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/project_status" />
+
+            <Spinner
+                android:id="@+id/sp_project_status"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/status"
+                android:prompt="@string/project_status"
+                tools:listitem="@android:layout/simple_spinner_item" />
+
+            <EditText
+                android:id="@+id/edt_project_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/project_email"
+                android:inputType="textEmailAddress"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edt_project_tel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/projecte_tel"
+                android:inputType="phone"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/edt_project_skype"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/project_skype"
+                android:singleLine="true" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/tv_project_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/project_name" />
-
-                <EditText
-                    android:id="@+id/edt_project_name"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:singleLine="true" >
-                </EditText>
-
-                <TextView
-                    android:id="@+id/tv_project_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/project_status" />
-
-                <Spinner
-                    android:id="@+id/sp_project_status"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/status"
-                    android:prompt="@string/project_status"
-                    tools:listitem="@android:layout/simple_spinner_item" />
-
-                <EditText
-                    android:id="@+id/edt_project_email"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/project_email"
-                    android:inputType="textEmailAddress"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/edt_project_tel"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/projecte_tel"
-                    android:inputType="phone"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/edt_project_skype"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/project_skype"
-                    android:singleLine="true" />
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2" >
 
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:weightSum="1" >
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_project_start_date"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
                         android:gravity="center_horizontal"
-                        android:orientation="vertical" >
+                        android:text="@string/project_start_date" />
 
-                        <TextView
-                            android:id="@+id/tv_project_start_date"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="@string/project_start_date" />
-
-                        <EditText
-                            android:id="@+id/edt_project_start_date"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="date" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <EditText
+                        android:id="@+id/edt_project_start_date"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:ems="10"
+                        android:inputType="date" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/tv_project_end_date"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:orientation="vertical" >
+                        android:text="@string/project_end_date" />
 
-                        <TextView
-                            android:id="@+id/tv_project_end_date"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="@string/project_end_date" />
-
-                        <EditText
-                            android:id="@+id/edt_project_end_date"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="date" />
-                    </LinearLayout>
+                    <EditText
+                        android:id="@+id/edt_project_end_date"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="date" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="@color/mane_orange" />
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/ll_project_employee"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="@color/mane_orange" />
 
         <TextView
             android:id="@+id/tv_project_employee"

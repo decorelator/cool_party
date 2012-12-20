@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import model.BaseModel;
 
-import android.R.integer;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,7 +31,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	Button iv_Interviews;
 	ImageView iv_subTitle;
 	TextView tv_subTitle;
-	EditText tv_Search;
+	EditText edt_Search;
 	LinearLayout ll_NavigationButtons;
 	LinearLayout parent;
 	private String extra;
@@ -72,11 +73,11 @@ public class ListContainer extends ZActivity implements OnClickListener {
 				}
 				if (extra.equals(getResources().getString(
 						R.string.cat_positions))) {
-					intent = new Intent(ListContainer.this, EditPeople.class);
+					intent = new Intent(ListContainer.this, EditPosition.class);
 				}
 				if (extra.equals(getResources().getString(
 						R.string.cat_interviews))) {
-					intent = new Intent(ListContainer.this, EditPeople.class);
+					intent = new Intent(ListContainer.this, EditInterview.class);
 				}
 				
 				startActivityForResult(intent, RES_EDIT);
@@ -113,6 +114,8 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		iv_Interviews.setOnClickListener(this);
 		iv_Interviews.setTag(2);
 
+		edt_Search = (EditText) findViewById(R.id.edt_Search);
+		
 		current= iv_People;
 		
 		parent = (LinearLayout) current.getParent();
@@ -127,6 +130,29 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		// настраиваем список
 		ListView lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		lv_Conteiner.setAdapter(listAdapter);
+		
+		edt_Search.addTextChangedListener(new TextWatcher() {
+			 
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+            	
+            	listAdapter.getFilter().filter(cs);
+            }
+ 
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                    int arg3) {
+                // TODO Auto-generated method stub
+ 
+            }
+ 
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+		
 	}
 
 	private void getExtra() {

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ZActivity extends Activity {
+	private final String LOGTAG = ZActivity.class.getSimpleName();
 	class MessageToast {
 		private final String LOGTAG = MessageToast.class.getSimpleName();
 
@@ -144,5 +146,12 @@ public class ZActivity extends Activity {
 		bar.setTitle(title);
 		bar.setTitleIco(drawable);
 	}
-
+	 protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		    super.onRestoreInstanceState(savedInstanceState);
+		    Log.d(LOGTAG, "onRestoreInstanceState");
+		  }
+	 protected void onSaveInstanceState(Bundle outState) {
+		    super.onSaveInstanceState(outState);
+		    Log.d(LOGTAG, "onSaveInstanceState");
+		  }
 }
