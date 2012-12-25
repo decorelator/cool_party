@@ -125,6 +125,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 				R.layout.list_container_row);
 
 		// настраиваем список
+		iv_Interviews.performClick();
 		ListView lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		lv_Conteiner.setAdapter(listAdapter);
 	}
