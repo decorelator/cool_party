@@ -10,11 +10,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -134,12 +134,48 @@ public class ZActivity extends Activity {
 //		return i;
 //	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
-		if (!showMenu) return super.onCreateOptionsMenu(menu);
-		MenuItem mi = menu.add(0, 1, 0, "Preferences");
-		mi.setIntent(new Intent(this, PrefActivity.class));
-		return super.onCreateOptionsMenu(menu);
-	}
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		if (!showMenu) return super.onCreateOptionsMenu(menu);
+//		MenuItem mi = menu.add(0, 1, 0, "Preferences");
+//		mi.setIntent(new Intent(this, PrefActivity.class));
+//		return super.onCreateOptionsMenu(menu);
+//	}
+	
+	// Initiating Menu XML file (menu.xml)
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.layout.menu, menu);
+        return true;
+    }
+ 
+    /**
+     * Event Handling for Individual menu item selected
+     * Identify single menu item by it's id
+     * */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {Intent intent;
+ 
+        switch (item.getItemId())
+        {
+        case R.id.menu_search:
+        	
+            Toast.makeText(ZActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
+            return true;
+ 
+ 
+        case R.id.menu_preferences:
+        	intent = new Intent(this, PrefActivity.class);
+            Toast.makeText(ZActivity.this, "Preferences is Selected", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            return true;
+ 
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }    
 	
 	public void setTitle(String title, int drawable)
 	{
@@ -154,4 +190,6 @@ public class ZActivity extends Activity {
 		    super.onSaveInstanceState(outState);
 		    Log.d(LOGTAG, "onSaveInstanceState");
 		  }
+	 
+	 
 }
