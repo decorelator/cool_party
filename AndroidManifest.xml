@@ -28,8 +28,25 @@
         </activity>
         <activity android:name="Login" >
         </activity>
-        <activity android:name=".preferences.PrefActivity"></activity>
-        <activity android:name="EditPeople"></activity>
+        <activity android:name=".preferences.PrefActivity" >
+        </activity>
+        <activity
+            android:name="EditPeople"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name="EditProject"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name="EditPosition"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name="EditInterview"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity android:name="InterviewGuest"></activity>
     </application>
 
 </manifest>

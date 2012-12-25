@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import model.BaseModel;
 
-import android.R.integer;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -21,16 +22,15 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 	public static String LOGTAG = ListContainer.class.getSimpleName();
 	private static final int RES_EDIT = 1;
-	private Button current; 
-	
-	
+	private Button current;
+
 	Button iv_People;
 	Button iv_Project;
 	Button iv_Positions;
 	Button iv_Interviews;
 	ImageView iv_subTitle;
 	TextView tv_subTitle;
-	EditText tv_Search;
+	EditText edt_Search;
 	LinearLayout ll_NavigationButtons;
 	LinearLayout parent;
 	private String extra;
@@ -49,11 +49,9 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			@Override
 			public void onClick(View v) {
 				if (findViewById(R.id.filter_menu).isShown())
-					((LinearLayout) findViewById(R.id.filter_menu))
-							.setVisibility(View.GONE);
+					((LinearLayout) findViewById(R.id.filter_menu)).setVisibility(View.GONE);
 				else
-					((LinearLayout) findViewById(R.id.filter_menu))
-							.setVisibility(View.VISIBLE);
+					((LinearLayout) findViewById(R.id.filter_menu)).setVisibility(View.VISIBLE);
 
 			}
 		});
@@ -62,23 +60,20 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
-				
+
 				if (extra.equals(getResources().getString(R.string.cat_people))) {
 					intent = new Intent(ListContainer.this, EditPeople.class);
 				}
-				if (extra.equals(getResources()
-						.getString(R.string.cat_projects))) {
-					intent = new Intent(ListContainer.this, EditPeople.class);
+				if (extra.equals(getResources().getString(R.string.cat_projects))) {
+					intent = new Intent(ListContainer.this, EditProject.class);
 				}
-				if (extra.equals(getResources().getString(
-						R.string.cat_positions))) {
-					intent = new Intent(ListContainer.this, EditPeople.class);
+				if (extra.equals(getResources().getString(R.string.cat_positions))) {
+					intent = new Intent(ListContainer.this, EditPosition.class);
 				}
-				if (extra.equals(getResources().getString(
-						R.string.cat_interviews))) {
-					intent = new Intent(ListContainer.this, EditPeople.class);
+				if (extra.equals(getResources().getString(R.string.cat_interviews))) {
+					intent = new Intent(ListContainer.this, EditInterview.class);
 				}
-				
+
 				startActivityForResult(intent, RES_EDIT);
 			}
 		});
@@ -88,8 +83,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 	private void createNavigationButtons(int id) {
 		// Создание LayoutParams c шириной и высотой по содержимому
-		LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
 	}
 
@@ -113,21 +107,50 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		iv_Interviews.setOnClickListener(this);
 		iv_Interviews.setTag(2);
 
-		current= iv_People;
-		
+
 		parent = (LinearLayout) current.getParent();
 		parent.removeView(current);
 		getExtra();
 
+		if (extra.equals(getResources().getString(R.string.cat_people)))
+			iv_People.performClick();
+		if (extra.equals(getResources().getString(R.string.cat_projects)))
+			iv_Project.performClick();
+		if (extra.equals(getResources().getString(R.string.cat_positions)))
+			iv_Positions.performClick();
+		if (extra.equals(getResources().getString(R.string.cat_interviews)))
+			iv_Interviews.performClick();
+
+		
 		createNavigationButtons(R.id.iv_People);
 		fillData();
-		listAdapter = new CustomContainerAdapter(this, dataList,
-				R.layout.list_container_row);
+		listAdapter = new CustomContainerAdapter(this, dataList, R.layout.list_container_row);
 
 		// настраиваем список
-		iv_Interviews.performClick();
 		ListView lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		lv_Conteiner.setAdapter(listAdapter);
+
+		edt_Search.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+				// When user changed the Text
+
+				listAdapter.getFilter().filter(cs);
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
+
 	}
 
 	private void getExtra() {
@@ -140,7 +163,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 
@@ -153,11 +176,10 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		
 
-		//l.removeView(current);
-		parent.addView(current,(Integer)v.getTag());
-		bar.setTitle(((Button)v).getText());
+		// l.removeView(current);
+		parent.addView(current, (Integer) v.getTag());
+		bar.setTitle(((Button) v).getText());
 		current.setTag(v.getTag());
 		switch (v.getId()) {
 		case R.id.iv_People:
@@ -176,7 +198,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			// iv_subTitle.setImageResource(R.drawable.cat_position);
 			bar.setTitleIco(R.drawable.cat_position);
 			extra = getResources().getString(R.string.cat_positions);
-			//setVisability(R.id.iv_Positions);
+			// setVisability(R.id.iv_Positions);
 			break;
 		case R.id.iv_Interviews:
 			bar.setTitleIco(R.drawable.cat_intervies);
@@ -186,30 +208,30 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			setVisability(R.id.iv_Interviews);
 			break;
 		}
-		current=(Button)v;
+		current = (Button) v;
 		parent.removeView(current);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode){
-      	
-  		case RES_EDIT:
-  			
- 				if (resultCode == RESULT_OK){
- 					listAdapter.notifyDataSetChanged ();
-  				}
-  			break;
-	}	
+		switch (requestCode) {
+
+		case RES_EDIT:
+
+			if (resultCode == RESULT_OK) {
+				listAdapter.notifyDataSetChanged();
+			}
+			break;
+		}
 	}
-	
+
 	protected void setVisability(int id) {
 		iv_People.setVisibility(View.VISIBLE);
 		iv_Project.setVisibility(View.VISIBLE);
 		iv_Positions.setVisibility(View.VISIBLE);
 		iv_Interviews.setVisibility(View.VISIBLE);
-		//findViewById(id).setVisibility(View.GONE);
-		
+		// findViewById(id).setVisibility(View.GONE);
+
 	}
 }
