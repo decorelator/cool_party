@@ -3,6 +3,7 @@ package com.kmware.hrm;
 import com.kmware.hrm.R;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -49,7 +50,9 @@ public class Login extends ZActivity implements OnClickListener {
 			} else if (checkLogin().equals(LOGIN_GUEST)) {
 				Intent intent = new Intent(this, InterviewGuest.class);
 				startActivity(intent);
-				finish();
+				//finish();
+				et_Login.setText("");
+				et_Password.setText("");
 			}
 
 			break;
@@ -72,4 +75,13 @@ public class Login extends ZActivity implements OnClickListener {
 		}
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if (keyCode == KeyEvent.KEYCODE_BACK) {
+	    	System.exit(0); 
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
+	
 }
