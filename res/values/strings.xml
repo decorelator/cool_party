@@ -30,13 +30,17 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <!-- APPLICATION MENU -->
+    <string name="menu_preferences">Preferences</string>
+    <string name="menu_search">Search</string>
+
     <!-- PEFERENCES -->
     <string name="pref_preferences">Preferences</string>
     <string name="pref_theme">Theme</string>
     <string name="pref_interface">Interface</string>
     <string name="pref_theme_summury">Theme description</string>
     <string name="pref_interface_summury">Interface description</string>
-    
+
     <!-- PEOPLE -->
     <string name="people_name">Name</string>
     <string name="people_position">Position</string>
@@ -52,7 +56,7 @@
     <string name="people_employee">Employee</string>
     <string name="people_add">Add people</string>
     <string name="people_edit">Edit people</string>
-    
+
     <!-- PROJECT -->
     <string name="project_name">Project name</string>
     <string name="project_contacts">Contact details</string>
@@ -65,14 +69,14 @@
     <string name="project_status">Status</string>
     <string name="project_add">Add project</string>
     <string name="project_edit">Edit project</string>
-    
+
     <!-- STATUS OF PROJECT -->
     <string name="status_expected">Expected</string>
     <string name="status_open">Open</string>
     <string name="status_close">Close</string>
     <string name="status_compleded">Completed</string>
     <string name="status_delayed">Delayed</string>
-    
+
     <!-- POSITION -->
     <string name="position_name">Position name</string>
     <string name="position_enter_name">Enter a position name</string>
@@ -80,8 +84,8 @@
     <string name="position_enter_description">Enter a description of position</string>
     <string name="position_add">Add position</string>
     <string name="position_edit">Edit position</string>
-    
-     <!-- INTERVIEW -->
+
+    <!-- INTERVIEW -->
     <string name="interview_project">Project</string>
     <string name="interview_interviewer">Name of interviewer</string>
     <string name="interview_position">Position</string>
@@ -90,8 +94,8 @@
     <string name="interview_description">Description</string>
     <string name="interview_add">Add interview</string>
     <string name="interview_edit">Edit interview</string>
-    
-    <!-- INTERVIEW GUEST-->
+
+    <!-- INTERVIEW GUEST -->
     <string name="guest_name">Name</string>
     <string name="guest_project">Project</string>
     <string name="guest_position">Position</string>
@@ -100,4 +104,5 @@
     <string name="guest_address">Address</string>
     <string name="guest_description">Description</string>
     <string name="guest_testAddr">Ukraine\nOdessa\nPushkinska str. 32\nOffice №2</string>
+
 </resources>

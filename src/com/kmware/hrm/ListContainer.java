@@ -107,7 +107,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		iv_Interviews.setOnClickListener(this);
 		iv_Interviews.setTag(2);
 
-
+		current = iv_People;
 		parent = (LinearLayout) current.getParent();
 		parent.removeView(current);
 		getExtra();
@@ -130,6 +130,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		ListView lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		lv_Conteiner.setAdapter(listAdapter);
 
+		edt_Search = (EditText) findViewById(R.id.edt_Search);
 		edt_Search.addTextChangedListener(new TextWatcher() {
 
 			@Override

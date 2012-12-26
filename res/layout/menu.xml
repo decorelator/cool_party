@@ -10,11 +10,11 @@
     <item
         android:id="@+id/menu_search"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Search"/>
+        android:title="@string/menu_search"/>
 
     <item
         android:id="@+id/menu_preferences"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Preferences"/>
+        android:title="@string/menu_preferences"/>
 
 </menu>
