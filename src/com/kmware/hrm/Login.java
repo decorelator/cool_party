@@ -69,10 +69,13 @@ public class Login extends ZActivity implements OnClickListener {
 		}
 		if (et_Login.getText().toString().trim().equals(LOGIN_ADMIN)) {
 			return LOGIN_ADMIN;
-		} else {
+		} else if (et_Login.getText().toString().trim().equals(LOGIN_GUEST)) {
 			return LOGIN_GUEST;
 
 		}
+		getDialog().showError(getApplicationContext(),
+				getResources().getString(R.string.err_login));
+		return Extras.EMPTY_STRING;
 	}
 
 	@Override
