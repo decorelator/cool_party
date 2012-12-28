@@ -43,15 +43,22 @@
 
     <!-- PEOPLE -->
     <string name="people_name">Name</string>
+    <string name="people_name_title">Name:</string>
     <string name="people_position">Position</string>
+    <string name="people_position_title">Position:</string>
     <string name="people_projects">Projects</string>
+     <string name="people_projects_title">Projects:</string>
     <string name="people_date_in">Employment date</string>
     <string name="people_date_out">Termination date</string>
     <string name="people_contacts">Contacts</string>
     <string name="people_email">E-mail</string>
+    <string name="people_email_title">E-mail:</string>
     <string name="people_skype">Skype</string>
+    <string name="people_skype_title">Skype:</string>
     <string name="people_tel">Phone</string>
+    <string name="people_tel_title">Phone:</string>
     <string name="people_status">Status</string>
+    <string name="people_info">Information:</string>
     <string name="people_candidate">Candidate</string>
     <string name="people_employee">Employee</string>
     <string name="people_add">Add people</string>
@@ -59,13 +66,20 @@
 
     <!-- PROJECT -->
     <string name="project_name">Project name</string>
+     <string name="project_name_title">Project name:</string>
     <string name="project_contacts">Contact details</string>
     <string name="project_email">E-mail</string>
+    <string name="project_email_title">E-mail:</string>
     <string name="project_skype">Skype</string>
-    <string name="projecte_tel">Phone</string>
+    <string name="project_skype_title">Skype:</string>
+    <string name="project_tel">Phone</string>
+    <string name="project_tel_title">Phone:</string>
     <string name="project_start_date">Start date</string>
+    <string name="project_start_date_title">Start date:</string>
     <string name="project_end_date">End date</string>
+    <string name="project_end_date_title">End date:</string>
     <string name="project_employments">Employmentes</string>
+    <string name="project_employments_title">Employmentes:</string>
     <string name="project_status">Status</string>
     <string name="project_add">Add project</string>
     <string name="project_edit">Edit project</string>

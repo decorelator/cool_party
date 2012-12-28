@@ -8,8 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -49,9 +53,11 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			@Override
 			public void onClick(View v) {
 				if (findViewById(R.id.filter_menu).isShown())
-					((LinearLayout) findViewById(R.id.filter_menu)).setVisibility(View.GONE);
+					((LinearLayout) findViewById(R.id.filter_menu))
+							.setVisibility(View.GONE);
 				else
-					((LinearLayout) findViewById(R.id.filter_menu)).setVisibility(View.VISIBLE);
+					((LinearLayout) findViewById(R.id.filter_menu))
+							.setVisibility(View.VISIBLE);
 
 			}
 		});
@@ -59,31 +65,58 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-
-				if (extra.equals(getResources().getString(R.string.cat_people))) {
-					intent = new Intent(ListContainer.this, EditPeople.class);
-				}
-				if (extra.equals(getResources().getString(R.string.cat_projects))) {
-					intent = new Intent(ListContainer.this, EditProject.class);
-				}
-				if (extra.equals(getResources().getString(R.string.cat_positions))) {
-					intent = new Intent(ListContainer.this, EditPosition.class);
-				}
-				if (extra.equals(getResources().getString(R.string.cat_interviews))) {
-					intent = new Intent(ListContainer.this, EditInterview.class);
-				}
-
-				startActivityForResult(intent, RES_EDIT);
+				// Intent intent = new Intent();
+				//
+				// if
+				// (extra.equals(getResources().getString(R.string.cat_people)))
+				// {
+				// intent = new Intent(ListContainer.this, EditPeople.class);
+				// }
+				// if
+				// (extra.equals(getResources().getString(R.string.cat_projects)))
+				// {
+				// intent = new Intent(ListContainer.this, EditProject.class);
+				// }
+				// if
+				// (extra.equals(getResources().getString(R.string.cat_positions)))
+				// {
+				// intent = new Intent(ListContainer.this, EditPosition.class);
+				// }
+				// if
+				// (extra.equals(getResources().getString(R.string.cat_interviews)))
+				// {
+				// intent = new Intent(ListContainer.this, EditInterview.class);
+				// }
+				if (extra.length() > 0)
+					startActivityForResult(intentCheck(extra), RES_EDIT);
 			}
 		});
 		init();
 
 	}
 
+	private Intent intentCheck(String extra) {
+		Intent intent = new Intent();
+
+		if (extra.equals(getResources().getString(R.string.cat_people))) {
+			intent = new Intent(ListContainer.this, EditPeople.class);
+		}
+		if (extra.equals(getResources().getString(R.string.cat_projects))) {
+			intent = new Intent(ListContainer.this, EditProject.class);
+		}
+		if (extra.equals(getResources().getString(R.string.cat_positions))) {
+			intent = new Intent(ListContainer.this, EditPosition.class);
+		}
+		if (extra.equals(getResources().getString(R.string.cat_interviews))) {
+			intent = new Intent(ListContainer.this, EditInterview.class);
+		}
+		return intent;
+	}
+
 	private void createNavigationButtons(int id) {
 		// Создание LayoutParams c шириной и высотой по содержимому
-		LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
 	}
 
@@ -121,10 +154,10 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		if (extra.equals(getResources().getString(R.string.cat_interviews)))
 			iv_Interviews.performClick();
 
-		
 		createNavigationButtons(R.id.iv_People);
 		fillData();
-		listAdapter = new CustomContainerAdapter(this, dataList, R.layout.list_container_row);
+		listAdapter = new CustomContainerAdapter(this, dataList,
+				R.layout.list_container_row);
 
 		// настраиваем список
 		ListView lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
@@ -134,14 +167,16 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		edt_Search.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+			public void onTextChanged(CharSequence cs, int arg1, int arg2,
+					int arg3) {
 				// When user changed the Text
 
 				listAdapter.getFilter().filter(cs);
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+			public void beforeTextChanged(CharSequence arg0, int arg1,
+					int arg2, int arg3) {
 				// TODO Auto-generated method stub
 
 			}
@@ -149,6 +184,26 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			@Override
 			public void afterTextChanged(Editable arg0) {
 				// TODO Auto-generated method stub
+			}
+		});
+
+		lv_Conteiner.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(ListContainer.this, People.class);
+				startActivity(intent);
+			}
+		});
+		lv_Conteiner.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+			//	if (extra != null) {
+					startActivityForResult(intentCheck(extra), RES_EDIT);
+					Log.e(LOGTAG, "Long");
+					return true;
+				//}
+		//		return false;
 			}
 		});
 

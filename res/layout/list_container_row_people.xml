@@ -8,15 +8,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
-
-        <ImageView
-            android:id="@+id/iv_people_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:src="@android:drawable/ic_menu_edit" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,6 +31,15 @@
                 android:text="Developer"
                  />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_people_status"
+            style="@style/textview_category"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="C"
+            android:background="@drawable/people_orange" />
+
     </RelativeLayout>
 
 </LinearLayout>
