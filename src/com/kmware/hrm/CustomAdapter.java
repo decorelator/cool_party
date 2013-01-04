@@ -13,10 +13,10 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-public class CustomContainerAdapter extends ArrayAdapter<BaseModel> implements
+public class CustomAdapter extends ArrayAdapter<BaseModel> implements
 		Filterable {
 
-	public static String LOGTAG = CustomContainerAdapter.class.getSimpleName();
+	public static String LOGTAG = CustomAdapter.class.getSimpleName();
 
 	Context ctx;
 	LayoutInflater lInflater;
@@ -24,7 +24,7 @@ public class CustomContainerAdapter extends ArrayAdapter<BaseModel> implements
 	private ArrayList<BaseModel> filterList;
 	private ListFilter filter;
 
-	CustomContainerAdapter(Context context, ArrayList<BaseModel> list,
+	CustomAdapter(Context context, ArrayList<BaseModel> list,
 			int layout) {
 		super(context, layout, list);
 		ctx = context;

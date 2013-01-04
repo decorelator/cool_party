@@ -1,4 +1,4 @@
-package model;
+package com.kmware.hrm.model;
 
 public class Switcher {
 	private int ico;
