@@ -2,7 +2,8 @@ package com.kmware.hrm;
 
 import java.util.ArrayList;
 
-import model.BaseModel;
+import com.kmware.hrm.model.BaseModel;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
