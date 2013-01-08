@@ -1,8 +1,8 @@
 package com.kmware.hrm;
 
 import java.util.ArrayList;
-
-import com.kmware.hrm.model.BaseModel;
+import com.kmware.hrm.model.People;
+import com.kmware.hrm.model.Project;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,23 +13,23 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-public class CustomAdapter extends ArrayAdapter<BaseModel> implements
+public class CustomProjectAdapter extends ArrayAdapter<Project> implements
 		Filterable {
 
-	public static String LOGTAG = CustomAdapter.class.getSimpleName();
+	public static String LOGTAG = CustomProjectAdapter.class.getSimpleName();
 
 	Context ctx;
 	LayoutInflater lInflater;
-	public ArrayList<BaseModel> objects;
-	private ArrayList<BaseModel> filterList;
+	public ArrayList<Project> objects;
+	private ArrayList<Project> filterList;
 	private ListFilter filter;
 
-	CustomAdapter(Context context, ArrayList<BaseModel> list,
+	CustomProjectAdapter(Context context, ArrayList<Project> list,
 			int layout) {
 		super(context, layout, list);
 		ctx = context;
 		objects = list;
-		filterList = new ArrayList<BaseModel>(list);
+		filterList = new ArrayList<Project>(list);
 		lInflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -41,14 +41,16 @@ public class CustomAdapter extends ArrayAdapter<BaseModel> implements
 		View view = convertView;
 		if (view == null) {
 			view = lInflater
-					.inflate(R.layout.list_container_row, parent, false);
+					.inflate(R.layout.list_container_row_project, parent, false);
 		}
 
-		BaseModel p = getItem(position);
+		Project p = getItem(position);
 
 		// заполняем View в пункте списка данными
-		((TextView) view.findViewById(R.id.tv_lv_Title)).setText("" + p.getId());
-		((TextView) view.findViewById(R.id.tv_lv_Description)).setText(p.getName());
+		((TextView) view.findViewById(R.id.tv_project_title)).setText(p.getProject());
+		((TextView) view.findViewById(R.id.tv_project_startdate)).setText(p.getsData());
+		((TextView) view.findViewById(R.id.tv_project_enddate)).setText(p.geteData());
+		((TextView) view.findViewById(R.id.tv_project_status)).setText(p.getCount());
 
 		return view;
 	}
@@ -70,10 +72,9 @@ public class CustomAdapter extends ArrayAdapter<BaseModel> implements
 			constraint = constraint.toString().toLowerCase();
 			FilterResults result = new FilterResults();
 			if (constraint != null && constraint.toString().length() > 0) {
-				ArrayList<BaseModel> founded = new ArrayList<BaseModel>();
-				for (BaseModel t : filterList) {
-					if (String.valueOf((t.getId())).contains(constraint)
-							|| t.getName().toLowerCase().contains(constraint))
+				ArrayList<Project> founded = new ArrayList<Project>();
+				for (Project t : filterList) {
+					if (String.valueOf((t.getName())).toLowerCase().contains(constraint))
 						founded.add(t);
 				}
 
@@ -91,7 +92,7 @@ public class CustomAdapter extends ArrayAdapter<BaseModel> implements
 		protected void publishResults(CharSequence charSequence,
 				FilterResults filterResults) {
 			clear();
-			for (BaseModel o : (ArrayList<BaseModel>) filterResults.values) {
+			for (Project o : (ArrayList<Project>) filterResults.values) {
 				add(o);
 			}
 			notifyDataSetChanged();

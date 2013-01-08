@@ -1,9 +1,7 @@
 package com.kmware.hrm;
 
 import java.util.ArrayList;
-
-import com.kmware.hrm.model.BaseModel;
-
+import com.kmware.hrm.model.People;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,23 +11,23 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-public class CustomPeopleAdapter extends ArrayAdapter<BaseModel> implements
+public class CustomPeopleAdapter extends ArrayAdapter<People> implements
 		Filterable {
 
 	public static String LOGTAG = CustomPeopleAdapter.class.getSimpleName();
 
 	Context ctx;
 	LayoutInflater lInflater;
-	public ArrayList<BaseModel> objects;
-	private ArrayList<BaseModel> filterList;
+	public ArrayList<People> objects;
+	private ArrayList<People> filterList;
 	private ListFilter filter;
 
-	CustomPeopleAdapter(Context context, ArrayList<BaseModel> list,
+	CustomPeopleAdapter(Context context, ArrayList<People> list,
 			int layout) {
 		super(context, layout, list);
 		ctx = context;
 		objects = list;
-		filterList = new ArrayList<BaseModel>(list);
+		filterList = new ArrayList<People>(list);
 		lInflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -41,14 +39,15 @@ public class CustomPeopleAdapter extends ArrayAdapter<BaseModel> implements
 		View view = convertView;
 		if (view == null) {
 			view = lInflater
-					.inflate(R.layout.list_container_row, parent, false);
+					.inflate(R.layout.list_container_row_people, parent, false);
 		}
 
-		BaseModel p = getItem(position);
+		People p = getItem(position);
 
 		// заполняем View в пункте списка данными
-		((TextView) view.findViewById(R.id.tvTitle)).setText("" + p.getId());
-		((TextView) view.findViewById(R.id.tvDescription)).setText(p.getName());
+		((TextView) view.findViewById(R.id.tv_people_title)).setText(p.getName());
+		((TextView) view.findViewById(R.id.tv_people_position)).setText(p.getPosition());
+		((TextView) view.findViewById(R.id.tv_people_status)).setText(p.getStatus());
 
 		return view;
 	}
@@ -70,10 +69,10 @@ public class CustomPeopleAdapter extends ArrayAdapter<BaseModel> implements
 			constraint = constraint.toString().toLowerCase();
 			FilterResults result = new FilterResults();
 			if (constraint != null && constraint.toString().length() > 0) {
-				ArrayList<BaseModel> founded = new ArrayList<BaseModel>();
-				for (BaseModel t : filterList) {
-					if (String.valueOf((t.getId())).contains(constraint)
-							|| t.getName().toLowerCase().contains(constraint))
+				ArrayList<People> founded = new ArrayList<People>();
+				for (People t : filterList) {
+					if (String.valueOf((t.getName())).toLowerCase().contains(constraint)
+							|| t.getPosition().toLowerCase().contains(constraint))
 						founded.add(t);
 				}
 
@@ -91,7 +90,7 @@ public class CustomPeopleAdapter extends ArrayAdapter<BaseModel> implements
 		protected void publishResults(CharSequence charSequence,
 				FilterResults filterResults) {
 			clear();
-			for (BaseModel o : (ArrayList<BaseModel>) filterResults.values) {
+			for (People o : (ArrayList<People>) filterResults.values) {
 				add(o);
 			}
 			notifyDataSetChanged();
