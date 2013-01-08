@@ -27,6 +27,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingRight">5dip</item>
     </style>
+     <style name="textview_interview_date">
+        <item name="android:layout_width">80dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingRight">5dip</item>
+         <item name="android:gravity">center_horizontal</item>
+    </style>
     
 
     <!-- TEXT -->

@@ -8,11 +8,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 public class ListContainer extends ZActivity implements OnClickListener {
 
 	public static String LOGTAG = ListContainer.class.getSimpleName();
+	private static final int RES_ADD = 0;
 	private static final int RES_EDIT = 1;
 	private Button current;
 
@@ -65,52 +69,13 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				// Intent intent = new Intent();
-				//
-				// if
-				// (extra.equals(getResources().getString(R.string.cat_people)))
-				// {
-				// intent = new Intent(ListContainer.this, EditPeople.class);
-				// }
-				// if
-				// (extra.equals(getResources().getString(R.string.cat_projects)))
-				// {
-				// intent = new Intent(ListContainer.this, EditProject.class);
-				// }
-				// if
-				// (extra.equals(getResources().getString(R.string.cat_positions)))
-				// {
-				// intent = new Intent(ListContainer.this, EditPosition.class);
-				// }
-				// if
-				// (extra.equals(getResources().getString(R.string.cat_interviews)))
-				// {
-				// intent = new Intent(ListContainer.this, EditInterview.class);
-				// }
+
 				if (extra.length() > 0)
 					startActivityForResult(intentCheck(extra), RES_EDIT);
 			}
 		});
 		init();
 
-	}
-
-	private Intent intentCheck(String extra) {
-		Intent intent = new Intent();
-
-		if (extra.equals(getResources().getString(R.string.cat_people))) {
-			intent = new Intent(ListContainer.this, EditPeople.class);
-		}
-		if (extra.equals(getResources().getString(R.string.cat_projects))) {
-			intent = new Intent(ListContainer.this, EditProject.class);
-		}
-		if (extra.equals(getResources().getString(R.string.cat_positions))) {
-			intent = new Intent(ListContainer.this, EditPosition.class);
-		}
-		if (extra.equals(getResources().getString(R.string.cat_interviews))) {
-			intent = new Intent(ListContainer.this, EditInterview.class);
-		}
-		return intent;
 	}
 
 	private void createNavigationButtons(int id) {
@@ -169,43 +134,28 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			@Override
 			public void onTextChanged(CharSequence cs, int arg1, int arg2,
 					int arg3) {
-				// When user changed the Text
-
 				listAdapter.getFilter().filter(cs);
 			}
 
 			@Override
 			public void beforeTextChanged(CharSequence arg0, int arg1,
 					int arg2, int arg3) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void afterTextChanged(Editable arg0) {
-				// TODO Auto-generated method stub
 			}
 		});
 
 		lv_Conteiner.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent intent = new Intent(ListContainer.this, People.class);
+				Intent intent = new Intent(ListContainer.this, PeopleInfo.class);
 				startActivity(intent);
 			}
 		});
-		lv_Conteiner.setOnLongClickListener(new OnLongClickListener() {
 
-			@Override
-			public boolean onLongClick(View v) {
-			//	if (extra != null) {
-					startActivityForResult(intentCheck(extra), RES_EDIT);
-					Log.e(LOGTAG, "Long");
-					return true;
-				//}
-		//		return false;
-			}
-		});
+		registerForContextMenu(lv_Conteiner);
 
 	}
 
@@ -290,4 +240,49 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		// findViewById(id).setVisibility(View.GONE);
 
 	}
+
+	private Intent intentCheck(String extra) {
+		Intent intent = new Intent();
+
+		if (extra.equals(getResources().getString(R.string.cat_people))) {
+			intent = new Intent(ListContainer.this, EditPeople.class);
+		}
+		if (extra.equals(getResources().getString(R.string.cat_projects))) {
+			intent = new Intent(ListContainer.this, EditProject.class);
+		}
+		if (extra.equals(getResources().getString(R.string.cat_positions))) {
+			intent = new Intent(ListContainer.this, EditPosition.class);
+		}
+		if (extra.equals(getResources().getString(R.string.cat_interviews))) {
+			intent = new Intent(ListContainer.this, EditInterview.class);
+		}
+		return intent;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_list_conteiner, menu);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+//		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+//				.getMenuInfo();
+
+		switch (item.getItemId()) {
+		case R.id.lv_row_edit:
+			Intent intent = new Intent();
+			intent = intentCheck(extra);
+			startActivityForResult(intent, RES_EDIT);
+			return true;
+		case R.id.lv_row_delete:
+			
+			return true;
+		}
+		return false;
+	}
+
 }

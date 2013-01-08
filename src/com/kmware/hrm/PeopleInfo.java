@@ -1,14 +1,11 @@
 package com.kmware.hrm;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class People extends ZActivity {
-	public static String LOGTAG = People.class.getSimpleName();
+public class PeopleInfo extends ZActivity {
+	public static String LOGTAG = PeopleInfo.class.getSimpleName();
 
 	TextView tv_People_Name;
 	TextView tv_People_Position;

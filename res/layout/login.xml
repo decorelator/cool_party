@@ -36,7 +36,6 @@
             android:layout_alignRight="@+id/etPassword"
             android:background="@drawable/edt_login_blue"
             android:ems="10"
-            android:text="admin"
             android:hint="@string/user_name"
             android:singleLine="true"
             android:textColor="@color/text_color_light" />

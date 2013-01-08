@@ -47,7 +47,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity android:name="InterviewGuest"></activity>
-        <activity android:name="People"></activity>
+        <activity android:name="com.kmware.hrm.PeopleInfo"></activity>
     </application>
 
 </manifest>

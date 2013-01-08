@@ -46,8 +46,8 @@ public class CustomContainerAdapter extends ArrayAdapter<BaseModel> implements
 		BaseModel p = getItem(position);
 
 		// заполняем View в пункте списка данными
-		((TextView) view.findViewById(R.id.tvTitle)).setText("" + p.getId());
-		((TextView) view.findViewById(R.id.tvDescription)).setText(p.getName());
+		((TextView) view.findViewById(R.id.tv_lv_Title)).setText("" + p.getId());
+		((TextView) view.findViewById(R.id.tv_lv_Description)).setText(p.getName());
 
 		return view;
 	}

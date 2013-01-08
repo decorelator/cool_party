@@ -1,6 +1,9 @@
 package com.kmware.hrm;
 
 import com.kmware.hrm.R;
+import com.kmware.hrm.ZActivity.MessageToast;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -50,7 +53,7 @@ public class Login extends ZActivity implements OnClickListener {
 			} else if (checkLogin().equals(LOGIN_GUEST)) {
 				Intent intent = new Intent(this, InterviewGuest.class);
 				startActivity(intent);
-				//finish();
+				// finish();
 				et_Login.setText("");
 				et_Password.setText("");
 			}
@@ -80,11 +83,24 @@ public class Login extends ZActivity implements OnClickListener {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	    if (keyCode == KeyEvent.KEYCODE_BACK) {
-	    	System.exit(0); 
-	        return true;
-	    }
-	    return super.onKeyDown(keyCode, event);
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+					case DialogInterface.BUTTON_POSITIVE:
+						System.exit(0);
+						break;
+					}
+				}
+			};
+
+			MessageToast.showDialog(this, getString(R.string.app_exit),
+					getString(R.string.app_exit_mess), listener);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
-	
+
 }

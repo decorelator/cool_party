@@ -2,6 +2,7 @@ package com.kmware.hrm;
 
 import com.kmware.hrm.preferences.PrefActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -52,19 +53,6 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 		btn_position.setOnClickListener(this);
 		btn_interview.setOnClickListener(this);
 
-		// ListView dash = (ListView) findViewById(R.id.dashList);
-		// ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
-		// for (int i = 1; i <= 20; i++) {
-		// dataList.add(new BaseModel(i, "" + i * 1000));
-		// }
-		// CustomContainerAdapter listAdapter = new CustomContainerAdapter(this,
-		// dataList,
-		// R.layout.list_container_row);
-		//
-		// // настраиваем список
-		//
-		// dash.setAdapter(listAdapter);
-
 	}
 
 	void fillData() {
@@ -97,7 +85,21 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
-	    	System.exit(0); 
+	    	DialogInterface.OnClickListener listener= new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which){
+						case DialogInterface.BUTTON_POSITIVE:
+							System.exit(0); 
+							break;
+					}
+				}
+			};
+			
+			 MessageToast.showDialog(this, getString(R.string.app_exit), getString(R.string.app_exit_mess), listener);
+	    	
+	    	
 	        return true;
 	    }
 	    return super.onKeyDown(keyCode, event);

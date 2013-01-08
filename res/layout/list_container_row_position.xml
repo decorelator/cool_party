@@ -8,15 +8,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
-
-        <ImageView
-            android:id="@+id/iv_lv_Next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:src="@android:drawable/ic_menu_edit" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,19 +16,30 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tv_lv_Title"
+                android:id="@+id/tv_people_title"
                 style="@style/text_size.title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Ivan Sverdlov"
                 />
 
             <TextView
-                android:id="@+id/tv_lv_Description"
+                android:id="@+id/tv_people_position"
                 style="@style/text_size.description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Developer"
                  />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_people_status"
+            style="@style/textview_category"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="C"
+            android:background="@drawable/people_orange" />
+
     </RelativeLayout>
 
 </LinearLayout>

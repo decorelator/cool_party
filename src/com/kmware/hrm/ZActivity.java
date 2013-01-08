@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 public class ZActivity extends Activity {
 	private final String LOGTAG = ZActivity.class.getSimpleName();
-	class MessageToast {
+	static class MessageToast {
 		private final String LOGTAG = MessageToast.class.getSimpleName();
 
 		private final int ID_ERROR = 1;
@@ -93,7 +93,7 @@ public class ZActivity extends Activity {
 			dialog.show();
 		}
 
-		public void showDialog(Context context, String title, String mes, OnClickListener l) {
+		public static void showDialog(Context context, String title, String mes, OnClickListener l) {
 
 			AlertDialog dialog = (new AlertDialog.Builder(context)).setTitle(title).setMessage(mes).setPositiveButton(R.string.ok, l)
 					.setNegativeButton(R.string.cancel, l).create();

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_interview_title"
+            style="@style/text_size.title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Alexander Plakhtiy" />
+
+        <LinearLayout
+            style="@style/textview_interview_date"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/people_orange"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_interview_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="12:00" />
+
+            <TextView
+                android:id="@+id/tv_interview_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="12/12/12" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_interview_project_title"
+            style="@style/text_size.description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_interview_title"
+            android:text="@string/project_name" />
+
+        <TextView
+            android:id="@+id/tv_interview_project"
+            style="@style/text_size.description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_interview_project_title"
+            android:layout_alignBottom="@+id/tv_interview_project_title"
+            android:layout_toRightOf="@+id/tv_interview_project_title"
+            android:text=": eFarmer" />
+
+        <TextView
+            android:id="@+id/tv_interview_position_title"
+            style="@style/text_size.description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_interview_project_title"
+            android:text="@string/position_name" />
+
+        <TextView
+            android:id="@+id/tv_interview_position"
+            style="@style/text_size.description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_interview_project"
+            android:layout_toRightOf="@+id/tv_interview_position_title"
+            android:text=": Developer" />
+         <TextView
+            android:id="@+id/tv_interview_phone_title"
+            style="@style/text_size.description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_interview_position_title"
+            android:text="@string/people_tel" />
+
+        <TextView
+            android:id="@+id/tv_interview_phone"
+            style="@style/text_size.description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_interview_position"
+            android:layout_toRightOf="@+id/tv_interview_phone_title"
+            android:text=": (050)2543210" />
+    </RelativeLayout>
+
+</LinearLayout>
