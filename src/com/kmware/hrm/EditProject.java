@@ -112,12 +112,12 @@ public class EditProject extends ZActivity {
 		for (int i = 1; i <= 20; i++) {
 			dataList.add(new BaseModel(i, "" + i * 1000));
 		}
-		CustomContainerAdapter listAdapter = new CustomContainerAdapter(this,
-				dataList, R.layout.list_container_row);
-
-		// настраиваем список
-
-		lv_Employee.setAdapter(listAdapter);
+//		CustomContainerAdapter listAdapter = new CustomContainerAdapter(this,
+//				dataList, R.layout.list_container_row);
+//
+//		// настраиваем список
+//
+//		lv_Employee.setAdapter(listAdapter);
 
 	}
 

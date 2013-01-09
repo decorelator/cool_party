@@ -1,8 +1,11 @@
 package com.kmware.hrm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.kmware.hrm.model.BaseModel;
+import com.kmware.hrm.model.People;
+
 
 
 import android.content.Intent;
@@ -42,9 +45,10 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	EditText edt_Search;
 	LinearLayout ll_NavigationButtons;
 	LinearLayout parent;
+	ListView lv_Conteiner;
 	private String extra;
 	private int currentPos;
-	ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
+	ArrayList<BaseModel> dataList;// = new ArrayList<BaseModel>();
 	CustomContainerAdapter listAdapter;
 
 	/** Called when the activity is first created. */
@@ -75,6 +79,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 					startActivityForResult(intentCheck(extra), RES_EDIT);
 			}
 		});
+	
 		init();
 
 	}
@@ -107,9 +112,11 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		iv_Interviews.setTag(2);
 
 		current = iv_People;
+		lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		parent = (LinearLayout) current.getParent();
 		parent.removeView(current);
 		getExtra();
+		fillData();
 
 		if (extra.equals(getResources().getString(R.string.cat_people)))
 			iv_People.performClick();
@@ -121,12 +128,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			iv_Interviews.performClick();
 
 		createNavigationButtons(R.id.iv_People);
-		fillData();
-		listAdapter = new CustomContainerAdapter(this, dataList,
-				R.layout.list_container_row);
 
-		// настраиваем список
-		ListView lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		lv_Conteiner.setAdapter(listAdapter);
 
 		edt_Search = (EditText) findViewById(R.id.edt_Search);
@@ -176,6 +178,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 	// генерируем данные для адаптера
 	void fillData() {
+		dataList = new ArrayList<BaseModel>();
 		for (int i = 1; i <= 20; i++) {
 			dataList.add(new BaseModel(i, "" + i * 1000));
 		}
@@ -194,6 +197,15 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			bar.setTitleIco(R.drawable.cat_people);
 			extra = getResources().getString(R.string.cat_people);
 			setVisability(R.id.iv_People);
+			ArrayList<BaseModel> t = new ArrayList<BaseModel>();
+
+			for(BaseModel model:dataList){
+				BaseModel p = new People(model.getId(), model.getName(),"p"+System.currentTimeMillis());
+				t.add(p);
+			}
+			
+			listAdapter = new CustomPeopleAdapter(this, t, R.layout.list_container_row_people); 
+			//lv_Conteiner.setAdapter(listAdapter);
 			break;
 		case R.id.iv_Projects:
 			// iv_subTitle.setImageResource(R.drawable.cat_project);

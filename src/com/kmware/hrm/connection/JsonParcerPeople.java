@@ -7,10 +7,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AndroidJSONParsing {
+import com.kmware.hrm.model.BaseModel;
+import com.kmware.hrm.model.People;
+
+public class JsonParcerPeople {
 
 	// url to make request
-	private static String url = "http://api.androidhive.info/contacts/";
+	private static String url = "http://api.androidhive.info/people/";
 
 	// JSON Node names
 	private static final String TAG_CONTACTS = "contacts";
@@ -34,12 +37,13 @@ public class AndroidJSONParsing {
 	JSONParser jParser = new JSONParser();
 
 	// getting JSON string from URL
-	JSONObject json = jParser.getJSONFromUrl(url);
-	{
+	JSONObject json;
+
+	public JsonParcerPeople() {
 		try {
 			// Getting Array of Contacts
+			json = jParser.getJSONFromUrl(url);
 			contacts = json.getJSONArray(TAG_CONTACTS);
-
 			// looping through All Contacts
 			for (int i = 0; i < contacts.length(); i++) {
 				JSONObject c = contacts.getJSONObject(i);
@@ -74,4 +78,21 @@ public class AndroidJSONParsing {
 		}
 	}
 
+	public ArrayList<BaseModel> getPeople() {
+		try {
+			contacts = json.getJSONArray(TAG_CONTACTS);
+			// looping through All Contacts
+			ArrayList<BaseModel> js_people = null;
+			for (int i = 0; i < contacts.length(); i++) {
+				JSONObject c = contacts.getJSONObject(i);
+				People p = new People(c.getInt(TAG_ID), c.getString(TAG_NAME), c.getString(TAG_NAME));
+				js_people.add(p);
+			}
+			return js_people;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return new ArrayList<BaseModel>();
+		}
+		
+	}
 }

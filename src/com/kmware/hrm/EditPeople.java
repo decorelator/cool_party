@@ -103,10 +103,10 @@ public class EditPeople extends ZActivity {
 		for (int i = 1; i <= 10; i++) {
 			dataList.add(new BaseModel(i, "Project " + i * 1000));
 		}
-		ArrayAdapter<BaseModel> listAdapter = new CustomContainerAdapter(this,
-				dataList, android.R.layout.simple_list_item_1);
-
-		lv_Projects.setAdapter(listAdapter);
+//		ArrayAdapter<BaseModel> listAdapter = new CustomContainerAdapter(this,
+//				dataList, android.R.layout.simple_list_item_1);
+//
+//		lv_Projects.setAdapter(listAdapter);
 		sp_Status.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
