@@ -15,17 +15,17 @@
         <item>3</item>
         <item>4</item>
     </integer-array>
-    
+
     <!-- PREFERENCES -->
     <string-array name="pref_theme">
-        <item >Blue</item>
-        <item >Orange</item>
+        <item>Blue</item>
+        <item>Orange</item>
     </string-array>
     <string-array name="pref_theme_values">
-        <item >1</item>
-        <item >2</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
-    
+
     <!-- EDIT PEOPLE -->
     <string-array name="people_status">
         <item>@string/people_candidate</item>
@@ -35,7 +35,7 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-    
+
     <!-- STATUS -->
     <string-array name="status">
         <item>@string/status_expected</item>
@@ -50,6 +50,20 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+    </string-array>
+    
+    <!-- ROLES -->
+    <string-array name="people_roles">
+        <item>@string/people_role_administartor</item>
+        <item>@string/people_role_hrmanager</item>
+        <item>@string/people_role_employee</item>
+        <item>@string/people_role_interviewer</item>
+    </string-array>
+    <string-array name="people_roles_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 
 </resources>

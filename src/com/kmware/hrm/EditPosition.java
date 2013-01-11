@@ -17,6 +17,7 @@ public class EditPosition extends ZActivity{
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.edit_position);
 		super.onCreate(savedInstanceState);
+		backHomeBar(R.drawable.actionbar_back_indicator,DashboardDesignActivity.createIntent(this));
 		getExtra();
 		if (extra.toString().length() != 0) {
 			setTitle(getResources().getString(R.string.position_edit),

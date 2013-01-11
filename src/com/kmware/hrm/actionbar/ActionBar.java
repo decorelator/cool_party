@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -81,6 +82,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 		mHomeBtn.setOnClickListener(this);
 		mHomeBtn.setTag(action);
 		mHomeBtn.setImageResource(action.getDrawable());
+		mLogoView.setVisibility(View.GONE);
 		mHomeLayout.setVisibility(View.VISIBLE);
 	}
 
@@ -103,7 +105,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 		mLogoView.setVisibility(View.VISIBLE);
 		mHomeLayout.setVisibility(View.GONE);
 	}
-
+	
 	/*
 	 * Emulating Honeycomb, setdisplayHomeAsUpEnabled takes a boolean and
 	 * toggles whether the "home" view should have a little triangle indicating
@@ -297,6 +299,7 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 	public static class IntentAction extends AbstractAction {
 		private Context mContext;
 		private OnClickListener mAtion;
+		private Intent mIntent;
 
 		public IntentAction(Context context, OnClickListener action, int drawable) {
 			super(drawable);
@@ -304,10 +307,21 @@ public class ActionBar extends RelativeLayout implements OnClickListener {
 			mAtion = action;
 		}
 
+		public IntentAction(Context context, Intent intent, int drawable) {
+			super(drawable);
+			mContext = context;
+			mIntent = intent;
+		}
+
 		@Override
 		public void performAction(View view) {
 			try {
-				mAtion.onClick(view);
+				if (mAtion != null) {
+					mAtion.onClick(view);
+				}
+				if (mIntent != null) {
+					mContext.startActivity(mIntent);
+				}
 			} catch (ActivityNotFoundException e) {
 				Toast.makeText(mContext, mContext.getText(R.string.actionbar_activity_not_found), Toast.LENGTH_SHORT).show();
 			}

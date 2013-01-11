@@ -2,14 +2,17 @@ package com.kmware.hrm;
 
 import java.util.ArrayList;
 
+import com.kmware.hrm.ZActivity.MessageToast;
 import com.kmware.hrm.model.BaseModel;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -22,6 +25,8 @@ public class EditPeople extends ZActivity {
 
 	Spinner sp_Status;
 	Spinner sp_Position;
+	Spinner sp_Role;
+	Button btn_AddRole;
 	EditText edt_Name;
 	EditText edt_Email;
 	EditText edt_Telephone;
@@ -31,11 +36,13 @@ public class EditPeople extends ZActivity {
 	LinearLayout ll_listview;
 
 	private String extra;
+	private String addRole;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.edit_people);
 		super.onCreate(savedInstanceState);
+		backHomeBar(R.drawable.actionbar_back_indicator,DashboardDesignActivity.createIntent(this));
 		getExtra();
 		if (extra.toString().length() != 0) {
 			setTitle(getResources().getString(R.string.people_edit),
@@ -98,7 +105,13 @@ public class EditPeople extends ZActivity {
 		edt_EmployeeDate = (EditText) findViewById(R.id.edt_people_date_in);
 		lv_Projects = (ListView) findViewById(R.id.lv_people_projects);
 		lv_Projects.getEmptyView();
-
+		btn_AddRole= (Button) findViewById(R.id.btn_people_add_role);
+		btn_AddRole.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				addRoleDialog();
+			}
+		});
 		ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
 		for (int i = 1; i <= 10; i++) {
 			dataList.add(new BaseModel(i, "Project " + i * 1000));
@@ -156,6 +169,26 @@ public class EditPeople extends ZActivity {
 		}
 	}
 
+	private void addRoleDialog(){
+//		DialogInterface.OnClickListener listener= new DialogInterface.OnClickListener() {
+//
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				
+//				switch (which){
+//					case DialogInterface.BUTTON_POSITIVE:
+//						
+//						break;
+//				}
+//			}
+//		};
+		
+		 MessageToast.showEnterTextDialog(this, getString(R.string.people_role_add), null);
+		
+	}
+	
+	
+	
 	private void paramOfLayout() {
 		ll_listview = (LinearLayout) findViewById(R.id.ll_people_listview);
 		if (findViewById(R.id.rl_people).isShown()) {

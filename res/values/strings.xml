@@ -61,9 +61,15 @@
     <string name="people_status">Status</string>
     <string name="people_info">Information:</string>
     <string name="people_candidate">Candidate</string>
-    <string name="people_employee">Employee</string>
-    <string name="people_add">Add people</string>
+    <string name="people_employee">Person</string>
+    <string name="people_add">Add Person</string>
     <string name="people_edit">Edit people</string>
+    <string name="people_role">Role</string>
+    <string name="people_role_administartor">Administrator</string>
+    <string name="people_role_employee">Employee</string>
+    <string name="people_role_hrmanager">HR Manager</string>
+    <string name="people_role_interviewer">Interviewer</string>
+    <string name="people_role_add">Enter the role</string>
 
     <!-- PROJECT -->
     <string name="project_name">Project name</string>
@@ -107,8 +113,8 @@
     <string name="interview_date">Date</string>
     <string name="interview_time">Time</string>
     <string name="interview_description">Description</string>
-    <string name="interview_add">Add interview</string>
-    <string name="interview_edit">Edit interview</string>
+    <string name="interview_add">Arrange interview</string>
+    <string name="interview_edit">Edit Interview</string>
 
     <!-- INTERVIEW GUEST -->
     <string name="guest_name">Name</string>

@@ -72,11 +72,10 @@
                         android:layout_height="wrap_content"
                         android:text="@string/interview_date" />
 
-                    <EditText
-                        android:id="@+id/edt_interview_date"
+                    <Button
+                        android:id="@+id/btn_interview_date"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="date" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -92,11 +91,10 @@
                         android:layout_height="wrap_content"
                         android:text="@string/interview_time" />
 
-                    <EditText
-                        android:id="@+id/edt_interview_time"
+                    <Button
+                        android:id="@+id/btn_interview_time"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="date|time" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
 

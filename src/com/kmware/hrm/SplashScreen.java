@@ -2,12 +2,11 @@ package com.kmware.hrm;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.app.Activity;
 import android.content.Intent;
 
-public class SplashScreen extends Activity {
+public class SplashScreen extends ZActivity {
 
 	public static String LOGTAG = SplashScreen.class.getSimpleName();
 	private Thread timer;
