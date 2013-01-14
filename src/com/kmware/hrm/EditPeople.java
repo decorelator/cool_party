@@ -52,6 +52,7 @@ public class EditPeople extends ZActivity {
 	private String extra;
 
 	private List<String> roleArray = new ArrayList<String>();
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.edit_people);
@@ -101,7 +102,6 @@ public class EditPeople extends ZActivity {
 		});
 
 		init();
-
 	}
 
 	private void init() {
@@ -127,11 +127,6 @@ public class EditPeople extends ZActivity {
 		for (int i = 1; i <= 10; i++) {
 			dataList.add(new BaseModel(i, "Project " + i * 1000));
 		}
-		// ArrayAdapter<BaseModel> listAdapter = new
-		// CustomContainerAdapter(this,
-		// dataList, android.R.layout.simple_list_item_1);
-		//
-		// lv_Projects.setAdapter(listAdapter);
 		sp_Status.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -166,12 +161,10 @@ public class EditPeople extends ZActivity {
 		});
 
 		readFile();
-		// адаптер
 		sp_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, roleArray);
 		sp_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		sp_Role.setAdapter(sp_Adapter);
-		// устанавливаем обработчик нажатия
 		sp_Role.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -215,7 +208,6 @@ public class EditPeople extends ZActivity {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						String enter = ((EditText) textEntryView.findViewById(R.id.edt_alertdialog)).getText().toString();
 						writeToFile(enter);
-							Log.d(LOGTAG, "Файл записан2");
 					}
 				}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
@@ -227,19 +219,15 @@ public class EditPeople extends ZActivity {
 
 	void writeToFile(String text) {
 		try {
-			// отрываем поток для записи
+			// Open tread for write
 			BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFileStreamPath(ROLEFILENAME), true));
-			// пишем данные
-//			for (String str : roleArray) {
-//				bw.write(str+"\n");
-//			}
-//			bw.write(text);
+			// Writing data
 			bw.append(text);
 			roleArray.add(text);
 			sp_Adapter.notifyDataSetChanged();
-			// закрываем поток
+			// Close tread
 			bw.close();
-			Log.d(LOGTAG, "Файл записан");
+			Log.d(LOGTAG, "File Writed");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -251,15 +239,12 @@ public class EditPeople extends ZActivity {
 		File file = this.getFileStreamPath(ROLEFILENAME);
 		if (!file.exists()) {
 			try {
-	//			file.createNewFile();
-				Log.e(LOGTAG, "NEW");
 				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(openFileOutput(ROLEFILENAME, MODE_PRIVATE)));
 				roleArray.addAll(Arrays.asList((getResources().getStringArray(R.array.people_roles))));
 				for (String str : roleArray) {
-					bw.write(str+"\n");
+					bw.write(str + "\n");
 				}
-
-				// закрываем поток
+				// Close tread
 				bw.close();
 
 			} catch (FileNotFoundException e) {
@@ -269,12 +254,11 @@ public class EditPeople extends ZActivity {
 			}
 		}
 		try {
-			Log.e(LOGTAG, "READ");
-			// открываем поток для чтения
+			// Open tread for read
 			BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(ROLEFILENAME)));
 			String str = "";
 			roleArray.clear();
-			// читаем содержимое
+			// Reading entry
 			while ((str = br.readLine()) != null) {
 				roleArray.add(str);
 				Log.d(LOGTAG, str);
