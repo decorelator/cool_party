@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_people_role"
                     android:layout_toLeftOf="@+id/btn_people_add_role"
-                    android:entries="@array/people_roles"
+                    android:entries="@null"
                     android:prompt="@string/people_role"
                     tools:listitem="@android:layout/simple_spinner_item" />
 

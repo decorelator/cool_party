@@ -107,15 +107,15 @@ public class ZActivity extends Activity {
 			dialog.show();
 		}
 
-		public static void showEnterTextDialog(Context context, String title, OnClickListener l) {
-
-			LayoutInflater factory = LayoutInflater.from(context);
-            final View textEntryView = factory.inflate(R.layout.alert_dialog_text_entry, null);
-           
-            AlertDialog dialog = new AlertDialog.Builder(context).setTitle(title).setView(textEntryView).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                	// ((EditText) textEntryView.findViewById(R.id.edt_alertdialog)).getText().toString();
-                	 
+//		public static void showEnterTextDialog(Context context, String title, OnClickListener l) {
+//
+//			LayoutInflater factory = LayoutInflater.from(context);
+//            final View textEntryView = factory.inflate(R.layout.alert_dialog_text_entry, null);
+//           
+//            AlertDialog dialog = new AlertDialog.Builder(context).setTitle(title).setView(textEntryView).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int whichButton) {
+//                	// ((EditText) textEntryView.findViewById(R.id.edt_alertdialog)).getText().toString();
+//                	 
 //                	 try{
 //                		  // Create file 
 //                		 / FileWriter fstream = new FileWriter("/res/raw/role.txt");
@@ -127,20 +127,20 @@ public class ZActivity extends Activity {
 //                		  System.err.println("Error: " + e.getMessage());
 //                		  }
 //                		  
-                
-
-                	
-                	
-                }
-            })
-            .setNegativeButton(R.string.cancel, l/*new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                }
-            }*/)
-            .create();
-			dialog.setCancelable(true);
-			dialog.show();
-		}
+//                
+//
+//                	
+//                	
+//                }
+//            })
+//            .setNegativeButton(R.string.cancel, l/*new DialogInterface.OnClickListener() {
+//                public void onClick(DialogInterface dialog, int whichButton) {
+//                }
+//            }*/)
+//            .create();
+//			dialog.setCancelable(true);
+//			dialog.show();
+//		}
 	
 	}
 
