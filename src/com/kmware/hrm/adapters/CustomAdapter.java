@@ -1,9 +1,9 @@
-package com.kmware.hrm;
+package com.kmware.hrm.adapters;
 
 import java.util.ArrayList;
 
+import com.kmware.hrm.R;
 import com.kmware.hrm.model.BaseModel;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +13,10 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-public abstract class CustomContainerAdapter<BaseModel> extends ArrayAdapter<BaseModel> implements
+public class CustomAdapter extends ArrayAdapter<BaseModel> implements
 		Filterable {
 
-	public static String LOGTAG = CustomContainerAdapter.class.getSimpleName();
+	public static String LOGTAG = CustomAdapter.class.getSimpleName();
 
 	Context ctx;
 	LayoutInflater lInflater;
@@ -24,23 +24,35 @@ public abstract class CustomContainerAdapter<BaseModel> extends ArrayAdapter<Bas
 	private ArrayList<BaseModel> filterList;
 	private ListFilter filter;
 
-	CustomContainerAdapter(Context context, ArrayList<BaseModel> list,
+	CustomAdapter(Context context, ArrayList<BaseModel> list,
 			int layout) {
 		super(context, layout, list);
 		ctx = context;
-		objects = (ArrayList<BaseModel>) list;
+		objects = list;
 		filterList = new ArrayList<BaseModel>(list);
 		lInflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	
 	}
 
-	// пункт списка
-	
-	public abstract View getView(int position, View convertView, ViewGroup parent);
+	// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ view
+		View view = convertView;
+		if (view == null) {
+			view = lInflater
+					.inflate(R.layout.list_container_row, parent, false);
+		}
 
-	public abstract boolean comparator(BaseModel constraint1,CharSequence constraint2);
-	
+		BaseModel p = getItem(position);
+
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ View пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		((TextView) view.findViewById(R.id.tv_lv_Title)).setText("" + p.getId());
+		((TextView) view.findViewById(R.id.tv_lv_Description)).setText(p.getName());
+
+		return view;
+	}
+
 	@Override
 	public Filter getFilter() {
 		if (filter == null){
@@ -60,7 +72,8 @@ public abstract class CustomContainerAdapter<BaseModel> extends ArrayAdapter<Bas
 			if (constraint != null && constraint.toString().length() > 0) {
 				ArrayList<BaseModel> founded = new ArrayList<BaseModel>();
 				for (BaseModel t : filterList) {
-					if (comparator(t,constraint))
+					if (String.valueOf((t.getId())).contains(constraint)
+							|| t.getName().toLowerCase().contains(constraint))
 						founded.add(t);
 				}
 

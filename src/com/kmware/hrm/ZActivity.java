@@ -1,17 +1,11 @@
 package com.kmware.hrm;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import com.kmware.hrm.actionbar.ActionBar;
 import com.kmware.hrm.actionbar.ActionBar.IntentAction;
 import com.kmware.hrm.preferences.PrefActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
@@ -22,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,16 +49,19 @@ public class ZActivity extends Activity {
 				case ID_ERROR:
 					title.setText(context.getResources().getString(R.string.dlg_error));
 					iv.setImageResource(R.drawable.dlg_error);
+					Log.i(LOGTAG, "Error dialog");
 					break;
 
 				case ID_WARNING:
 					title.setText(context.getString(R.string.dlg_warning));
 					iv.setImageResource(R.drawable.dlg_warning);
+					Log.i(LOGTAG, "Warning dialog");
 					break;
 
 				case ID_INFO:
 					title.setText(context.getString(R.string.dlg_info));
 					iv.setImageResource(R.drawable.dlg_info);
+					Log.i(LOGTAG, "Info dialog");
 					break;
 				}
 
@@ -75,6 +71,7 @@ public class ZActivity extends Activity {
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				Log.d(LOGTAG, "Error with creating dialog");
 			}
 
 		}
@@ -107,41 +104,6 @@ public class ZActivity extends Activity {
 			dialog.show();
 		}
 
-//		public static void showEnterTextDialog(Context context, String title, OnClickListener l) {
-//
-//			LayoutInflater factory = LayoutInflater.from(context);
-//            final View textEntryView = factory.inflate(R.layout.alert_dialog_text_entry, null);
-//           
-//            AlertDialog dialog = new AlertDialog.Builder(context).setTitle(title).setView(textEntryView).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int whichButton) {
-//                	// ((EditText) textEntryView.findViewById(R.id.edt_alertdialog)).getText().toString();
-//                	 
-//                	 try{
-//                		  // Create file 
-//                		 / FileWriter fstream = new FileWriter("/res/raw/role.txt");
-//                		  BufferedWriter out = new BufferedWriter(fstream);
-//                		  out.write(((EditText) textEntryView.findViewById(R.id.edt_alertdialog)).getText().toString());
-//                		  //Close the output stream
-//                		  out.close();
-//                		  }catch (Exception e){//Catch exception if any
-//                		  System.err.println("Error: " + e.getMessage());
-//                		  }
-//                		  
-//                
-//
-//                	
-//                	
-//                }
-//            })
-//            .setNegativeButton(R.string.cancel, l/*new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int whichButton) {
-//                }
-//            }*/)
-//            .create();
-//			dialog.setCancelable(true);
-//			dialog.show();
-//		}
-	
 	}
 
 	private MessageToast message;
@@ -210,7 +172,6 @@ public class ZActivity extends Activity {
 
 		switch (item.getItemId()) {
 		case R.id.menu_search:
-
 			Toast.makeText(ZActivity.this, "Search is Selected", Toast.LENGTH_SHORT).show();
 			return true;
 

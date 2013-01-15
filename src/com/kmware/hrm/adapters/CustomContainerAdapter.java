@@ -1,4 +1,4 @@
-package com.kmware.hrm;
+package com.kmware.hrm.adapters;
 
 import java.util.ArrayList;
 
@@ -11,48 +11,33 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.TextView;
 
-public class CustomAdapter extends ArrayAdapter<BaseModel> implements
+public abstract class CustomContainerAdapter<T extends BaseModel> extends ArrayAdapter<T> implements
 		Filterable {
 
-	public static String LOGTAG = CustomAdapter.class.getSimpleName();
+	public static String LOGTAG = CustomContainerAdapter.class.getSimpleName();
 
 	Context ctx;
 	LayoutInflater lInflater;
-	public ArrayList<BaseModel> objects;
-	private ArrayList<BaseModel> filterList;
+	public ArrayList<T> objects;
+	private ArrayList<T> filterList;
 	private ListFilter filter;
 
-	CustomAdapter(Context context, ArrayList<BaseModel> list,
+	CustomContainerAdapter(Context context, ArrayList<T> list,
 			int layout) {
 		super(context, layout, list);
 		ctx = context;
 		objects = list;
-		filterList = new ArrayList<BaseModel>(list);
+		filterList = new ArrayList<T>(list);
 		lInflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	
 	}
 
-	// пункт списка
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// используем созданные, но не используемые view
-		View view = convertView;
-		if (view == null) {
-			view = lInflater
-					.inflate(R.layout.list_container_row, parent, false);
-		}
+	public abstract View getView(int position, View convertView, ViewGroup parent);
 
-		BaseModel p = getItem(position);
-
-		// заполняем View в пункте списка данными
-		((TextView) view.findViewById(R.id.tv_lv_Title)).setText("" + p.getId());
-		((TextView) view.findViewById(R.id.tv_lv_Description)).setText(p.getName());
-
-		return view;
-	}
-
+	public abstract boolean comparator(T in,CharSequence constraint);
+	
 	@Override
 	public Filter getFilter() {
 		if (filter == null){
@@ -70,10 +55,9 @@ public class CustomAdapter extends ArrayAdapter<BaseModel> implements
 			constraint = constraint.toString().toLowerCase();
 			FilterResults result = new FilterResults();
 			if (constraint != null && constraint.toString().length() > 0) {
-				ArrayList<BaseModel> founded = new ArrayList<BaseModel>();
-				for (BaseModel t : filterList) {
-					if (String.valueOf((t.getId())).contains(constraint)
-							|| t.getName().toLowerCase().contains(constraint))
+				ArrayList<T> founded = new ArrayList<T>();
+				for (T t : filterList) {
+					if (comparator(t,constraint))
 						founded.add(t);
 				}
 
@@ -91,7 +75,7 @@ public class CustomAdapter extends ArrayAdapter<BaseModel> implements
 		protected void publishResults(CharSequence charSequence,
 				FilterResults filterResults) {
 			clear();
-			for (BaseModel o : (ArrayList<BaseModel>) filterResults.values) {
+			for (T o : (ArrayList<T>) filterResults.values) {
 				add(o);
 			}
 			notifyDataSetChanged();

@@ -2,9 +2,17 @@ package com.kmware.hrm;
 
 import java.util.ArrayList;
 
-import com.kmware.hrm.actionbar.ActionBar;
+import com.kmware.hrm.adapters.CustomContainerAdapter;
+import com.kmware.hrm.adapters.CustomInterviewerAdapter;
+import com.kmware.hrm.adapters.CustomPeopleAdapter;
+import com.kmware.hrm.adapters.CustomPositionAdapter;
+import com.kmware.hrm.adapters.CustomProjectAdapter;
 import com.kmware.hrm.model.BaseModel;
+import com.kmware.hrm.model.Interviewer;
 import com.kmware.hrm.model.People;
+import com.kmware.hrm.model.Position;
+import com.kmware.hrm.model.Project;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -45,7 +53,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	private String extra;
 	private int currentPos;
 	private boolean addButton;
-	ArrayList<BaseModel> dataList;// = new ArrayList<BaseModel>();
+	ArrayList<BaseModel> dataList;
 	CustomContainerAdapter listAdapter;
 
 	/** Called when the activity is first created. */
@@ -53,7 +61,6 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		setContentView(R.layout.list_container);
 		super.onCreate(savedInstanceState);
 
-		// setTitle("list", R.drawable.cat_people);
 		backHomeBar(R.drawable.actionbar_back_indicator, DashboardDesignActivity.createIntent(this));
 		addprefBarBtn(android.R.drawable.ic_menu_search, new OnClickListener() {
 
@@ -67,23 +74,11 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			}
 		});
 
-		// addprefBarBtn(android.R.drawable.ic_input_add, new OnClickListener()
-		// {
-		//
-		// @Override
-		// public void onClick(View v) {
-		//
-		// if (extra.length() > 0)
-		// startActivityForResult(intentCheck(extra), RES_EDIT);
-		// }
-		// });
-
 		init();
 
 	}
 
 	private void createNavigationButtons(int id) {
-		// Создание LayoutParams c шириной и высотой по содержимому
 		LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
 	}
@@ -125,8 +120,6 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			iv_Interviews.performClick();
 
 		createNavigationButtons(R.id.iv_People);
-
-		// lv_Conteiner.setAdapter(listAdapter);
 
 		edt_Search = (EditText) findViewById(R.id.edt_Search);
 		edt_Search.addTextChangedListener(new TextWatcher() {
@@ -170,7 +163,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		}
 	}
 
-	// генерируем данные для адаптера
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	void fillData() {
 		dataList = new ArrayList<BaseModel>();
 		for (int i = 1; i <= 20; i++) {
@@ -192,22 +185,35 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			bar.setTitleIco(R.drawable.cat_people);
 			extra = getResources().getString(R.string.cat_people);
 			setVisability(R.id.iv_People);
-			ArrayList<BaseModel> t = new ArrayList<BaseModel>();
-
-			for (BaseModel model : dataList) {
-				BaseModel p = new People(model.getId(), model.getName(), "p" + System.currentTimeMillis());
+			// Filling of the list of peoples by random values
+			ArrayList<People> t = new ArrayList<People>();
+			for (int i = 0; i < 20; i++) {
+				People p = new People(i, "Man" + i, "p" + System.currentTimeMillis());
 				t.add(p);
 			}
-			addButton();
-			addButton = true;
 			listAdapter = new CustomPeopleAdapter(this, t, R.layout.list_container_row_people);
 			lv_Conteiner.setAdapter(listAdapter);
+
+			addButton();
+			addButton = true;
 			break;
 		case R.id.iv_Projects:
 			// iv_subTitle.setImageResource(R.drawable.cat_project);
 			bar.setTitleIco(R.drawable.cat_project);
 			extra = getResources().getString(R.string.cat_projects);
 			setVisability(R.id.iv_Projects);
+			// Filling of the list of projects by random values
+			ArrayList<Project> t_project = new ArrayList<Project>();
+			for (int i = 0; i < 20; i++) {
+				Project p = new Project(i, "Project" + i);
+				p.seteData(":" + (System.currentTimeMillis() / 1000));
+				p.setsData(":" + (System.currentTimeMillis() / 1000));
+				t_project.add(p);
+			}
+
+			listAdapter = new CustomProjectAdapter(this, t_project, R.layout.list_container_row_project);
+			lv_Conteiner.setAdapter(listAdapter);
+
 			if (addButton) {
 				deleteBarBtn(1);
 				addButton = false;
@@ -219,6 +225,14 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			bar.setTitleIco(R.drawable.cat_position);
 			extra = getResources().getString(R.string.cat_positions);
 			setVisability(R.id.iv_Positions);
+			// Filling of the list of positions by random values
+			ArrayList<Position> t_position = new ArrayList<Position>();
+			for (int i = 0; i < 20; i++) {
+				Position p = new Position(i, "Position" + i);
+				t_position.add(p);
+			}
+			listAdapter = new CustomPositionAdapter(this, t_position, R.layout.list_container_row_position);
+			lv_Conteiner.setAdapter(listAdapter);
 			addButton();
 			addButton = true;
 			break;
@@ -227,6 +241,19 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			extra = getResources().getString(R.string.cat_interviews);
 			// iv_subTitle.setImageResource(R.drawable.cat_intervies);
 			setVisability(R.id.iv_Interviews);
+			
+			// Filling of the list of positions by random values
+						ArrayList<Interviewer> t_interview = new ArrayList<Interviewer>();
+						for (int i = 0; i < 20; i++) {
+							Interviewer p = new Interviewer(i, "Position" + i);
+							p.setPhone(""+i*1234);
+							p.setPosition("position"+i*2);
+							p.setProject("Project"+i*5);
+							t_interview.add(p);
+						}
+						listAdapter = new CustomInterviewerAdapter(this, t_interview, R.layout.list_container_row_interview);
+						lv_Conteiner.setAdapter(listAdapter);
+			
 			addButton();
 			addButton = true;
 			break;

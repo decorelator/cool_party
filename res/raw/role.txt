@@ -1,4 +1,0 @@
-Administrator
-HR Manager
-Employee
-Interviewer

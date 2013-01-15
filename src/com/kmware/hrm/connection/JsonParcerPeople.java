@@ -52,14 +52,10 @@ public class JsonParcerPeople {
 				String id = c.getString(TAG_ID);
 				String name = c.getString(TAG_NAME);
 				String email = c.getString(TAG_EMAIL);
-				String address = c.getString(TAG_ADDRESS);
-				String gender = c.getString(TAG_GENDER);
 
 				// Phone number is agin JSON Object
 				JSONObject phone = c.getJSONObject(TAG_PHONE);
 				String mobile = phone.getString(TAG_PHONE_MOBILE);
-				String home = phone.getString(TAG_PHONE_HOME);
-				String office = phone.getString(TAG_PHONE_OFFICE);
 
 				// creating new HashMap
 				HashMap<String, String> map = new HashMap<String, String>();

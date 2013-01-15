@@ -7,7 +7,7 @@ public class People extends BaseModel {
 	private String position;
 	private String status;
 
-	private List<BaseModel> projects;
+	private List<Project> projects;
 
 	public People(int id, String name, String position) {
 		super(id, name);
@@ -23,11 +23,11 @@ public class People extends BaseModel {
 		this.role = role;
 	}
 
-	public List<BaseModel> getProjects() {
+	public List<Project> getProjects() {
 		return projects;
 	}
 
-	public void setProjects(List<BaseModel> projects) {
+	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
 

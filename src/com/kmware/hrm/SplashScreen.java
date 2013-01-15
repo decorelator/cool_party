@@ -3,7 +3,6 @@ package com.kmware.hrm;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.app.Activity;
 import android.content.Intent;
 
 public class SplashScreen extends ZActivity {

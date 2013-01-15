@@ -1,11 +1,10 @@
 package com.kmware.hrm;
 
 import com.kmware.hrm.R;
-import com.kmware.hrm.ZActivity.MessageToast;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,9 +49,11 @@ public class Login extends ZActivity implements OnClickListener {
 				Intent intent = new Intent(this, DashboardDesignActivity.class);
 				startActivity(intent);
 				finish();
+				Log.i(LOGTAG, "Login like admin");
 			} else if (checkLogin().equals(LOGIN_GUEST)) {
 				Intent intent = new Intent(this, InterviewGuest.class);
 				startActivity(intent);
+				Log.i(LOGTAG, "Login like guest");
 				// finish();
 				et_Login.setText("");
 				et_Password.setText("");

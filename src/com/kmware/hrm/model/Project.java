@@ -6,7 +6,6 @@ public class Project extends BaseModel {
 
 	private String sData;
 	private String eData;
-	private String project;
 	private List<People> people;
 
 	public Project(int id, String project) {
@@ -34,12 +33,12 @@ public class Project extends BaseModel {
 
 	}
 
-	public String getProject() {
-		return project;
+	public List<People> getPeople() {
+		return people;
 	}
 
-	public void setProject(String project) {
-		this.project = project;
+	public void setPeople(List<People> people) {
+		this.people = people;
 	}
 
 }

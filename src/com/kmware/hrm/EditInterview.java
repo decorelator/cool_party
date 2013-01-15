@@ -3,7 +3,6 @@ package com.kmware.hrm;
 import com.kmware.hrm.view.CustomDatePickerDialog;
 import com.kmware.hrm.view.CustomTimePickerDialog;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,10 +10,8 @@ import java.util.GregorianCalendar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.net.ParseException;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.TimeFormatException;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -181,9 +178,7 @@ public class EditInterview extends ZActivity implements OnClickListener {
 	
 	private void setBtnTimeText()  {
 		CustomTimePickerDialog.setTime(hour,minute);
-		GregorianCalendar calendar = new GregorianCalendar(0,0,0,hour,minute);
 		SimpleDateFormat in= new SimpleDateFormat("HH:mm");
-		
 			btn_Time.setText(in.format(new Time(hour, minute, 0)));
 		
 		
