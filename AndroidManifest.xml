@@ -7,6 +7,8 @@
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="10" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
 
     <application
         android:allowBackup="true"
@@ -14,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity android:name="com.kmware.hrm.SplashScreen"
-            android:configChanges="orientation|keyboardHidden">
+            android:configChanges="orientation|keyboardHidden" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,7 +50,9 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity android:name="InterviewGuest"></activity>
-        <activity android:name="com.kmware.hrm.PeopleInfo"></activity>
+        <activity android:name="PeopleInfo"></activity>
+        <activity android:name="ProjectInfo"></activity>
+        <activity android:name="PositionInfo"></activity>
     </application>
 
 </manifest>

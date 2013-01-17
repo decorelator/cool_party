@@ -23,7 +23,7 @@ public class PeopleInfo extends ZActivity {
 		super.onCreate(savedInstanceState);
 		getExtra();
 
-		setTitle(getResources().getString(R.string.position_edit));
+		setTitle(getResources().getString(R.string.people_info));
 
 		init();
 

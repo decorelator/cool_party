@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -29,7 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,6 +38,12 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	public static String LOGTAG = ListContainer.class.getSimpleName();
 	private static final int RES_ADD = 0;
 	private static final int RES_EDIT = 1;
+	private final int CHECK_R_PERFORM_CLICK = 0;
+	private final int CHECK_R_ID = 1;
+	private final int CHECK_CLASS = 2;
+	private final int CHECK_INTENT_EDIT = 3;
+	private final int CHECK_INTENT_ADD = 4;
+
 	private Button current;
 
 	Button iv_People;
@@ -53,8 +59,12 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	private String extra;
 	private int currentPos;
 	private boolean addButton;
-	ArrayList<BaseModel> dataList;
-	CustomContainerAdapter listAdapter;
+	private ArrayList<BaseModel> dataList;
+	private CustomContainerAdapter<? extends BaseModel> listAdapter;
+	private ArrayList<People> t_people;
+	private ArrayList<Project> t_project;
+	private ArrayList<Position> t_position;
+	private ArrayList<Interviewer> t_interview;
 
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,11 +85,6 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		});
 
 		init();
-
-	}
-
-	private void createNavigationButtons(int id) {
-		LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
 	}
 
@@ -107,19 +112,10 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		parent = (LinearLayout) current.getParent();
 		parent.removeView(current);
-		getExtra();
-		fillData();
-		addButton = false;
-		if (extra.equals(getResources().getString(R.string.cat_people)))
-			iv_People.performClick();
-		if (extra.equals(getResources().getString(R.string.cat_projects)))
-			iv_Project.performClick();
-		if (extra.equals(getResources().getString(R.string.cat_positions)))
-			iv_Positions.performClick();
-		if (extra.equals(getResources().getString(R.string.cat_interviews)))
-			iv_Interviews.performClick();
 
-		createNavigationButtons(R.id.iv_People);
+		addButton = false;
+		getExtra();
+		checkingCategory(CHECK_R_PERFORM_CLICK);
 
 		edt_Search = (EditText) findViewById(R.id.edt_Search);
 		edt_Search.addTextChangedListener(new TextWatcher() {
@@ -140,58 +136,90 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 		lv_Conteiner.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(ListContainer.this, PeopleInfo.class);
-				startActivity(intent);
+				startActivity((Intent) checkingCategory(CHECK_CLASS));
 			}
 		});
-
 		registerForContextMenu(lv_Conteiner);
-
 	}
 
 	private void getExtra() {
 		Bundle extras = getIntent().getExtras();
-
 		if (extras != null) {
 			try {
 				extra = extras.getString(Extras.DASHBOARD_INTENT);
 			} catch (Exception e) {
-
 				e.printStackTrace();
 			}
-
 		}
 	}
 
-	// ���������� ������ ��� ��������
-	void fillData() {
-		dataList = new ArrayList<BaseModel>();
-		for (int i = 1; i <= 20; i++) {
-			dataList.add(new BaseModel(i, "" + i * 1000));
+	private Object checkingCategory(int checkFilter) {
+		Object o = null;
+
+		switch (checkFilter) {
+		case 0:
+			if (extra.equals(getResources().getString(R.string.cat_people)))
+				o = iv_People.performClick();
+			if (extra.equals(getResources().getString(R.string.cat_projects)))
+				o = iv_Project.performClick();
+			if (extra.equals(getResources().getString(R.string.cat_positions)))
+				o = iv_Positions.performClick();
+			if (extra.equals(getResources().getString(R.string.cat_interviews)))
+				o = iv_Interviews.performClick();
+			break;
+		case 1:
+			if (extra.equals(getResources().getString(R.string.cat_people)))
+				o = 1;
+			if (extra.equals(getResources().getString(R.string.cat_projects)))
+				o = 2;
+			if (extra.equals(getResources().getString(R.string.cat_positions)))
+				o = 3;
+			if (extra.equals(getResources().getString(R.string.cat_interviews)))
+				o = 4;
+			break;
+		case 2:
+			if (extra.equals(getResources().getString(R.string.cat_people)))
+				o = new Intent(ListContainer.this, PeopleInfo.class);
+			if (extra.equals(getResources().getString(R.string.cat_projects)))
+				o = new Intent(ListContainer.this, ProjectInfo.class);
+			if (extra.equals(getResources().getString(R.string.cat_positions)))
+				o = new Intent(ListContainer.this, PositionInfo.class);
+			if (extra.equals(getResources().getString(R.string.cat_interviews)))
+				o = new Intent(ListContainer.this, PositionInfo.class);
+			break;
+		case 3:
+			if (extra.equals(getResources().getString(R.string.cat_people)))
+				o = new Intent(ListContainer.this, EditPeople.class);
+			if (extra.equals(getResources().getString(R.string.cat_projects)))
+				o = new Intent(ListContainer.this, EditProject.class);
+			if (extra.equals(getResources().getString(R.string.cat_positions)))
+				o = new Intent(ListContainer.this, EditPosition.class);
+			if (extra.equals(getResources().getString(R.string.cat_interviews)))
+				o = new Intent(ListContainer.this, EditInterview.class);
+			break;
 		}
+		return o;
 	}
 
 	@Override
 	public void onClick(View v) {
-
 		// l.removeView(current);
 		parent.addView(current, (Integer) v.getTag());
 		bar.setTitle(((Button) v).getText());
 		current.setTag(v.getTag());
 		switch (v.getId()) {
 		case R.id.iv_People:
-
 			// iv_subTitle.setImageResource(R.drawable.cat_people);
 			bar.setTitleIco(R.drawable.cat_people);
 			extra = getResources().getString(R.string.cat_people);
-			setVisability(R.id.iv_People);
 			// Filling of the list of peoples by random values
-			ArrayList<People> t = new ArrayList<People>();
+			t_people = new ArrayList<People>();
 			for (int i = 0; i < 20; i++) {
 				People p = new People(i, "Man" + i, "p" + System.currentTimeMillis());
-				t.add(p);
+				t_people.add(p);
 			}
-			listAdapter = new CustomPeopleAdapter(this, t, R.layout.list_container_row_people);
+
+			listAdapter = new CustomPeopleAdapter(this, t_people, R.layout.list_container_row_people);
 			lv_Conteiner.setAdapter(listAdapter);
 
 			addButton();
@@ -201,9 +229,8 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			// iv_subTitle.setImageResource(R.drawable.cat_project);
 			bar.setTitleIco(R.drawable.cat_project);
 			extra = getResources().getString(R.string.cat_projects);
-			setVisability(R.id.iv_Projects);
 			// Filling of the list of projects by random values
-			ArrayList<Project> t_project = new ArrayList<Project>();
+			t_project = new ArrayList<Project>();
 			for (int i = 0; i < 20; i++) {
 				Project p = new Project(i, "Project" + i);
 				p.seteData(":" + (System.currentTimeMillis() / 1000));
@@ -220,40 +247,39 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			}
 			break;
 		case R.id.iv_Positions:
-
 			// iv_subTitle.setImageResource(R.drawable.cat_position);
 			bar.setTitleIco(R.drawable.cat_position);
 			extra = getResources().getString(R.string.cat_positions);
-			setVisability(R.id.iv_Positions);
 			// Filling of the list of positions by random values
-			ArrayList<Position> t_position = new ArrayList<Position>();
+			t_position = new ArrayList<Position>();
 			for (int i = 0; i < 20; i++) {
 				Position p = new Position(i, "Position" + i);
 				t_position.add(p);
 			}
+
 			listAdapter = new CustomPositionAdapter(this, t_position, R.layout.list_container_row_position);
 			lv_Conteiner.setAdapter(listAdapter);
+
 			addButton();
 			addButton = true;
 			break;
 		case R.id.iv_Interviews:
+			// iv_subTitle.setImageResource(R.drawable.cat_intervies);
 			bar.setTitleIco(R.drawable.cat_intervies);
 			extra = getResources().getString(R.string.cat_interviews);
-			// iv_subTitle.setImageResource(R.drawable.cat_intervies);
-			setVisability(R.id.iv_Interviews);
-			
 			// Filling of the list of positions by random values
-						ArrayList<Interviewer> t_interview = new ArrayList<Interviewer>();
-						for (int i = 0; i < 20; i++) {
-							Interviewer p = new Interviewer(i, "Position" + i);
-							p.setPhone(""+i*1234);
-							p.setPosition("position"+i*2);
-							p.setProject("Project"+i*5);
-							t_interview.add(p);
-						}
-						listAdapter = new CustomInterviewerAdapter(this, t_interview, R.layout.list_container_row_interview);
-						lv_Conteiner.setAdapter(listAdapter);
-			
+			t_interview = new ArrayList<Interviewer>();
+			for (int i = 0; i < 20; i++) {
+				Interviewer p = new Interviewer(i, "Position" + i);
+				p.setPhone("" + i * 1234);
+				p.setPosition("position" + i * 2);
+				p.setProject("Project" + i * 5);
+				t_interview.add(p);
+			}
+
+			listAdapter = new CustomInterviewerAdapter(this, t_interview, R.layout.list_container_row_interview);
+			lv_Conteiner.setAdapter(listAdapter);
+
 			addButton();
 			addButton = true;
 			break;
@@ -265,12 +291,10 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	private void addButton() {
 		if (!addButton) {
 			addprefBarBtn(android.R.drawable.ic_input_add, new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
-
 					if (extra.length() > 0)
-						startActivityForResult(intentCheck(extra), RES_EDIT);
+						startActivityForResult((Intent) checkingCategory(CHECK_INTENT_EDIT)/* CHECK_INTENT_ADD */, RES_EDIT);
 				}
 			});
 		}
@@ -287,34 +311,13 @@ public class ListContainer extends ZActivity implements OnClickListener {
 				listAdapter.notifyDataSetChanged();
 			}
 			break;
-		}
-	}
 
-	protected void setVisability(int id) {
-		iv_People.setVisibility(View.VISIBLE);
-		iv_Project.setVisibility(View.VISIBLE);
-		iv_Positions.setVisibility(View.VISIBLE);
-		iv_Interviews.setVisibility(View.VISIBLE);
-		// findViewById(id).setVisibility(View.GONE);
-
-	}
-
-	private Intent intentCheck(String extra) {
-		Intent intent = new Intent();
-
-		if (extra.equals(getResources().getString(R.string.cat_people))) {
-			intent = new Intent(ListContainer.this, EditPeople.class);
+		case RES_ADD:
+			if (resultCode == RESULT_OK) {
+				listAdapter.notifyDataSetChanged();
+			}
+			break;
 		}
-		if (extra.equals(getResources().getString(R.string.cat_projects))) {
-			intent = new Intent(ListContainer.this, EditProject.class);
-		}
-		if (extra.equals(getResources().getString(R.string.cat_positions))) {
-			intent = new Intent(ListContainer.this, EditPosition.class);
-		}
-		if (extra.equals(getResources().getString(R.string.cat_interviews))) {
-			intent = new Intent(ListContainer.this, EditInterview.class);
-		}
-		return intent;
 	}
 
 	@Override
@@ -332,11 +335,25 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		switch (item.getItemId()) {
 		case R.id.lv_row_edit:
 			Intent intent = new Intent();
-			intent = intentCheck(extra);
+			intent = (Intent) checkingCategory(CHECK_INTENT_EDIT);
 			startActivityForResult(intent, RES_EDIT);
 			return true;
 		case R.id.lv_row_delete:
-
+			switch((Integer) checkingCategory(CHECK_R_ID)){
+			case 1:
+				Log.e(LOGTAG,""+lv_Conteiner.getSelectedItemPosition());
+				break;
+			case 2:
+				//t_project.remove(item.getItemId());
+				break;
+			case 3:
+				//t_position.remove(item.getItemId());
+				break;
+			case 4:
+				//t_interview.remove(item.getItemId());
+				break;
+			}
+			
 			return true;
 		}
 		return false;
