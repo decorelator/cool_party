@@ -23,6 +23,7 @@ public class ProjectInfo extends ZActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.project);
 		super.onCreate(savedInstanceState);
+		backHomeBar(R.drawable.actionbar_back_indicator, DashboardDesignActivity.createIntent(this));
 		getExtra();
 
 		setTitle(getResources().getString(R.string.people_info));

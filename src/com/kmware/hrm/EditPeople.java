@@ -10,13 +10,21 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.kmware.hrm.model.BaseModel;
+import com.kmware.hrm.view.CustomDatePickerDialog;
+import com.kmware.hrm.view.CustomTimePickerDialog;
+
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,30 +33,35 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-public class EditPeople extends ZActivity {
+public class EditPeople extends ZActivity  {
 
 	public static String LOGTAG = EditPeople.class.getSimpleName();
 	public final String ROLEFILENAME = "role.txt";
-
+	private final int DATE_DIALOG_ID = 0;
+	
 	Spinner sp_Status;
 	Spinner sp_Position;
 	Spinner sp_Role;
 	Button btn_AddRole;
+	Button btn_EmployeeDate;
 	EditText edt_Name;
 	EditText edt_Email;
 	EditText edt_Telephone;
 	EditText edt_Skype;
-	EditText edt_EmployeeDate;
 	ListView lv_Projects;
 	LinearLayout ll_listview;
 	ArrayAdapter<String> sp_Adapter;
 
+	private int year;
+	private int month;
+	private int day;
 	private String extra;
 
 	private List<String> roleArray = new ArrayList<String>();
@@ -106,6 +119,11 @@ public class EditPeople extends ZActivity {
 
 	private void init() {
 
+		Calendar c = Calendar.getInstance();
+		year = c.get(Calendar.YEAR);
+		month = c.get(Calendar.MONTH);
+		day = c.get(Calendar.DAY_OF_MONTH);
+		
 		sp_Status = (Spinner) findViewById(R.id.sp_people_status);
 		edt_Name = (EditText) findViewById(R.id.edt_people_name);
 		sp_Position = (Spinner) findViewById(R.id.sp_people_position);
@@ -113,9 +131,16 @@ public class EditPeople extends ZActivity {
 		edt_Email = (EditText) findViewById(R.id.edt_people_email);
 		edt_Telephone = (EditText) findViewById(R.id.edt_people_tel);
 		edt_Skype = (EditText) findViewById(R.id.edt_people_skype);
-		edt_EmployeeDate = (EditText) findViewById(R.id.edt_people_date_in);
 		lv_Projects = (ListView) findViewById(R.id.lv_people_projects);
 		lv_Projects.getEmptyView();
+		btn_EmployeeDate = (Button) findViewById(R.id.btn_people_date_in);
+		btn_EmployeeDate.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				btnChangeDate_Click(v);
+			}
+		});
+		setBtnDateText();
 		btn_AddRole = (Button) findViewById(R.id.btn_people_add_role);
 		btn_AddRole.setOnClickListener(new OnClickListener() {
 			@Override
@@ -270,6 +295,36 @@ public class EditPeople extends ZActivity {
 		}
 	}
 
+	public void btnChangeDate_Click(View v) {
+		showDialog(DATE_DIALOG_ID);
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case DATE_DIALOG_ID:
+			return new CustomDatePickerDialog(this, dateSetListener, year, month, day);
+		
+		default:
+			return null;
+		}
+	}
+	
+	private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int currentYear, int monthOfYear, int dayOfMonth) {
+			year = currentYear;
+			month = monthOfYear;
+			day = dayOfMonth;
+			setBtnDateText();
+		}
+	};
+	
+	private void setBtnDateText() {
+		CustomDatePickerDialog.setDate(year, month, day);
+		GregorianCalendar calendar = new GregorianCalendar(year, month, day);
+		btn_EmployeeDate.setText(DateFormat.format("dd MMMM yyyy", calendar.getTime()));
+	}
+	
 	private void paramOfLayout() {
 		ll_listview = (LinearLayout) findViewById(R.id.ll_people_listview);
 		if (findViewById(R.id.rl_people).isShown()) {

@@ -17,7 +17,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -25,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -185,7 +185,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			if (extra.equals(getResources().getString(R.string.cat_positions)))
 				o = new Intent(ListContainer.this, PositionInfo.class);
 			if (extra.equals(getResources().getString(R.string.cat_interviews)))
-				o = new Intent(ListContainer.this, PositionInfo.class);
+				o = new Intent(ListContainer.this, InterviewInfo.class);
 			break;
 		case 3:
 			if (extra.equals(getResources().getString(R.string.cat_people)))
@@ -329,9 +329,9 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		// AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-		// .getMenuInfo();
 
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	    int index = info.position;
 		switch (item.getItemId()) {
 		case R.id.lv_row_edit:
 			Intent intent = new Intent();
@@ -341,22 +341,24 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		case R.id.lv_row_delete:
 			switch((Integer) checkingCategory(CHECK_R_ID)){
 			case 1:
-				Log.e(LOGTAG,""+lv_Conteiner.getSelectedItemPosition());
+				t_people.remove(index);
 				break;
 			case 2:
-				//t_project.remove(item.getItemId());
+				t_project.remove(index);
 				break;
 			case 3:
-				//t_position.remove(item.getItemId());
+				t_position.remove(index);
 				break;
 			case 4:
-				//t_interview.remove(item.getItemId());
+				t_interview.remove(index);
 				break;
 			}
-			
+			listAdapter.notifyDataSetChanged();
 			return true;
 		}
 		return false;
 	}
 
+
+	
 }

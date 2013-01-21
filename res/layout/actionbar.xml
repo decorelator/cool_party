@@ -81,18 +81,13 @@
             android:id="@+id/actionbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/ActionBarText"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/actionbar_home"
             android:ellipsize="marquee"
-            android:lines="1"
             android:marqueeRepeatLimit="marquee_forever"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
-            android:scrollHorizontally="true"
-            android:textColor="@color/actionbar_title"
-            android:textSize="16dip"
-            android:textStyle="bold" />
+            android:scrollHorizontally="true" />
 
         <ImageView
             android:id="@+id/icon"

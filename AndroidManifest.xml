@@ -53,6 +53,7 @@
         <activity android:name="PeopleInfo"></activity>
         <activity android:name="ProjectInfo"></activity>
         <activity android:name="PositionInfo"></activity>
+        <activity android:name="com.kmware.hrm.InterviewInfo"></activity>
     </application>
 
 </manifest>

@@ -3,10 +3,9 @@
     style="@style/FooterBar" >
 
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        style="@style/text.small"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:gravity="center"
         android:text="@string/app_name_full"
         android:textColor="@color/text_color_light" />

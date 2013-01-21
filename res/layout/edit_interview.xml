@@ -17,22 +17,19 @@
 
             <TextView
                 android:id="@+id/tv_interviewer_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text.small"
                 android:text="@string/interview_interviewer" />
 
             <EditText
                 android:id="@+id/edt_interview_name"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/edit_text.singleline"
                 android:ems="10"
                 android:inputType="textPersonName" >
             </EditText>
 
             <TextView
                 android:id="@+id/tv_interview_project"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text.small"
                 android:text="@string/interview_project" />
 
             <Spinner
@@ -43,8 +40,7 @@
 
             <TextView
                 android:id="@+id/tv_interview_position"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text.small"
                 android:text="@string/interview_position" />
 
             <Spinner
@@ -68,8 +64,7 @@
 
                     <TextView
                         android:id="@+id/tv_interview_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/text.small"
                         android:text="@string/interview_date" />
 
                     <Button
@@ -87,27 +82,24 @@
 
                     <TextView
                         android:id="@+id/tv_interview_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/text.small"
                         android:text="@string/interview_time" />
 
                     <Button
                         android:id="@+id/btn_interview_time"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_interview_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text.small"
                 android:text="@string/interview_description" />
 
             <EditText
                 android:id="@+id/edt_interview_description"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                style="@style/edit_text.singleline"
                 android:ems="10"
                 android:inputType="textMultiLine" 
                 android:maxLength="100">

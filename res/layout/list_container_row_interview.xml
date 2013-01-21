@@ -25,15 +25,13 @@
 
             <TextView
                 android:id="@+id/tv_interview_time"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/text.small"
                 android:gravity="center_horizontal"
                 android:text="12:00" />
 
             <TextView
                 android:id="@+id/tv_interview_date"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/text.small"
                 android:gravity="center_horizontal"
                 android:text="12/12/12" />
         </LinearLayout>

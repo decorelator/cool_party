@@ -10,24 +10,9 @@
 
     <include
         android:layout_width="fill_parent"
-        android:layout_height="1dip"
+        android:layout_height="0dip"
         android:layout_weight="1"
-        layout="@layout/fragment_layout" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
-        android:visibility="gone" >
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/caption_back3" />
-    </LinearLayout>
+        layout="@layout/dashboard_items" />
 
     <include layout="@layout/footer_layout" />
 

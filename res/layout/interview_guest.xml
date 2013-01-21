@@ -12,16 +12,17 @@
         android:weightSum="2" >
 
         <TextView
-            android:id="@+id/guest_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            style="@style/text_size.small"
             android:text="@string/guest_name" />
 
         <TextView
-            android:id="@+id/tv_guest_name"
+            android:id="@+id/tv_interviewer_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/text_size.small"
             android:layout_weight="1"
             android:text="Ivanov Ivan Ivanovich" />
     </LinearLayout>
@@ -44,16 +45,17 @@
             android:weightSum="2" >
 
             <TextView
-                android:id="@+id/guest_project"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_project" />
 
             <TextView
-                android:id="@+id/tv_guest_project"
+                android:id="@+id/tv_interviewer_project"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="HRM mobile" />
         </LinearLayout>
@@ -77,16 +79,17 @@
             android:weightSum="2" >
 
             <TextView
-                android:id="@+id/guest_position"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_position" />
 
             <TextView
-                android:id="@+id/tv_guest_position"
+                android:id="@+id/tv_interviewer_position"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="Developer" />
         </LinearLayout>
@@ -110,16 +113,17 @@
             android:weightSum="2" >
 
             <TextView
-                android:id="@+id/guest_date"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_date" />
 
             <TextView
-                android:id="@+id/tv_guest_date"
+                android:id="@+id/tv_interviewer_date"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="21/12/2012" />
         </LinearLayout>
@@ -143,16 +147,17 @@
             android:weightSum="2" >
 
             <TextView
-                android:id="@+id/guest_time"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_time" />
 
             <TextView
-                android:id="@+id/tv_guest_time"
+                android:id="@+id/tv_interviewer_time"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="12:00" />
         </LinearLayout>
@@ -176,16 +181,17 @@
             android:weightSum="2" >
 
             <TextView
-                android:id="@+id/guest_address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_address" />
 
             <TextView
-                android:id="@+id/tv_guest_address"
+                android:id="@+id/tv_interviewer_address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_testAddr" />
         </LinearLayout>
@@ -209,16 +215,17 @@
             android:weightSum="2" >
 
             <TextView
-                android:id="@+id/guest_description"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_description" />
 
             <TextView
-                android:id="@+id/tv_guest_description"
+                android:id="@+id/tv_interviewer_description"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="Some usefull" />
         </LinearLayout>

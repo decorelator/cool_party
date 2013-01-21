@@ -7,8 +7,7 @@
 
     <EditText
         android:id="@+id/edt_Search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/edit_text.singleline"
         android:drawableRight="@android:drawable/ic_menu_search"
         android:ems="10"
         android:singleLine="true" >

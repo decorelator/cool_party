@@ -21,6 +21,7 @@ public class PeopleInfo extends ZActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.people);
 		super.onCreate(savedInstanceState);
+		backHomeBar(R.drawable.actionbar_back_indicator, DashboardDesignActivity.createIntent(this));
 		getExtra();
 
 		setTitle(getResources().getString(R.string.people_info));

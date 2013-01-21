@@ -2,22 +2,43 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.    -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+            backward-compatibility can go here.        -->
     </style>
 
-    <!-- Application theme. -->
+<!-- Application theme. -->
+
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <!-- TEXT VIEW -->
+<!-- TEXT -->
+    
+    <style name="text_size"></style>
+    <style name="text_size.title">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_color_light</item>
+    </style>
+    <style name="text_size.description">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#848484</item>
+    </style>
+    <style name="text_size.small">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="text_size.medium">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="text_size.medium.light">
+        <item name="android:textColor">@color/text_color_light</item>
+    </style>
+    
+<!-- TEXT VIEW -->
+    
     <style name="text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -33,45 +54,45 @@
         <item name="android:paddingRight">5dip</item>
          <item name="android:gravity">center_horizontal</item>
     </style>
-    
-
-    <!-- TEXT -->
-    <style name="text_size"></style>
-
-    <style name="text_size.title">
+    <style name="text.small">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/text_color_light</item>
     </style>
 
-    <style name="text_size.description">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">#848484</item>
-    </style>
+<!-- EDIT TEXT --> 
 
-    <style name="text_size.medium">
-        <item name="android:textSize">16sp</item>
-    </style>
+	<style name="edit_text"></style>
+	<style name="edit_text.singleline">
+	    <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:singleLine">true</item>
+	</style>
+  
+<!-- BUTTON -->	
+	
+	<style name="button"></style>
+	
+<!-- SPINNER --> 
 
-    <style name="text_size.medium.light">
-        <item name="android:textColor">@color/text_color_light</item>
-    </style>
-    <!-- COLOR -->
+	<style name="spinner"></style>
+    
+<!-- COLOR -->
+
     <style name="main_blue">
         <item name="android:background">@color/mane_blue</item>
     </style>
-
     <style name="main_orange">
         <item name="android:background">@color/mane_orange</item>
     </style>
 
-    <!-- DASH BOARD -->
+<!-- DASH BOARD -->
+
     <style name="ActionBarCompat">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@color/actionbar_orange</item>
     </style>
-
     <style name="DashboardButton">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_width">wrap_content</item>
@@ -83,13 +104,14 @@
         <item name="android:textColor">#ff29549f</item>
         <item name="android:background">@null</item>
     </style>
-
     <style name="FooterBar">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:background">@color/mane_blue</item>
     </style>
-    <!-- ACTIONBAR -->
+    
+<!-- ACTIONBAR -->
+
       <style name="ActionBar">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">@dimen/actionbar_height</item>
@@ -99,18 +121,21 @@
     <style name="ActionBarItem">
         <item name="android:layout_width">@dimen/actionbar_item_width</item>
         <item name="android:layout_height">@dimen/actionbar_height</item>
-        
         <item name="android:layout_marginLeft">1px</item>
     </style>
     <style name="ActionBarHomeItem" parent="ActionBarItem">
         <item name="android:layout_marginRight">0px</item>
-        
     </style>
     <style name="ActionBarHomeLogo" parent="ActionBarItem">
         <item name="android:layout_marginRight">0px</item>
-        
     </style>
     <style name="ActionBarProgressBar" parent="@android:style/Widget.ProgressBar.Small">
     </style>
-
+	<style name="ActionBarText" parent="text_size.medium">
+	    <item name="android:textStyle">bold</item>
+	    <item name="android:lines">1</item>
+	    <item name="android:paddingLeft">10dip</item>
+	    <item name="android:paddingRight">10dip</item>
+	    <item name="android:textColor">@color/actionbar_title</item>
+	</style>
 </resources>

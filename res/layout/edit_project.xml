@@ -18,14 +18,12 @@
 
             <TextView
                 android:id="@+id/tv_project_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text.small"
                 android:text="@string/project_name" />
 
             <EditText
                 android:id="@+id/edt_project_name"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/edit_text.singleline"
                 android:ems="10"
                 android:inputType="text"
                 android:singleLine="true" >
@@ -33,8 +31,7 @@
 
             <TextView
                 android:id="@+id/tv_project_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text.small"
                 android:text="@string/project_status" />
 
             <Spinner
@@ -47,29 +44,23 @@
 
             <EditText
                 android:id="@+id/edt_project_email"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/edit_text.singleline"
                 android:ems="10"
                 android:hint="@string/project_email"
-                android:inputType="textEmailAddress"
-                android:singleLine="true" />
+                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/edt_project_tel"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/edit_text.singleline"
                 android:ems="10"
                 android:hint="@string/project_tel"
-                android:inputType="phone"
-                android:singleLine="true" />
+                android:inputType="phone"/>
 
             <EditText
                 android:id="@+id/edt_project_skype"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/edit_text.singleline"
                 android:ems="10"
-                android:hint="@string/project_skype"
-                android:singleLine="true" />
+                android:hint="@string/project_skype" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -91,13 +82,12 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:text="@string/project_start_date" />
-
-                    <EditText
-                        android:id="@+id/edt_project_start_date"
+					
+                    <Button
+                        android:id="@+id/btn_project_sdate"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="date" />
+                        android:layout_height="wrap_content" />
+                    
                 </LinearLayout>
 
                 <LinearLayout
@@ -114,12 +104,10 @@
                         android:gravity="center_horizontal"
                         android:text="@string/project_end_date" />
 
-                    <EditText
-                        android:id="@+id/edt_project_end_date"
+                    <Button
+                        android:id="@+id/btn_project_edate"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="date" />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -145,8 +133,7 @@
 
             <TextView
                 android:id="@+id/tv_project_employee"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                style="@style/text.small"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/project_employments" />

@@ -41,6 +41,11 @@
     <string name="pref_interface">Interface</string>
     <string name="pref_theme_summury">Theme description</string>
     <string name="pref_interface_summury">Interface description</string>
+    <string name="pref_text_size">Text Size</string>
+    <string name="pref_text_size_description">Enter the font size </string>
+    <string name="pref_text_size_entered">Text Size in Enter field</string>
+    <string name="pref_text_size_entered_description">Enter the font size of entered text</string>
+    <string name="pref_connection">Connection</string>
 
     <!-- PEOPLE -->
     <string name="people_name">Name</string>
@@ -115,6 +120,7 @@
     <string name="interview_description">Description</string>
     <string name="interview_add">Arrange interview</string>
     <string name="interview_edit">Edit Interview</string>
+    <string name="interview_info">Information:</string>
 
     <!-- INTERVIEW GUEST -->
     <string name="guest_name">Name</string>
