@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:key="pref_interface" android:title="@string/pref_interface" android:summary="@string/pref_interface_summury"></PreferenceCategory><ListPreference android:title="@string/pref_theme" android:entryValues="@array/pref_theme_values" android:key="pref_theme" android:entries="@array/pref_theme" android:summary="@string/pref_theme_summury" />
+    <PreferenceCategory android:key="Authorizathion_category" android:title="@string/pref_authorization"><CheckBoxPreference android:key="Authorizathion" android:title="@string/pref_authorization" android:summary="@string/pref_authorization_chbx" /></PreferenceCategory><PreferenceCategory android:key="pref_interface" android:title="@string/pref_interface" android:summary="@string/pref_interface_summury"><ListPreference android:title="@string/pref_theme" android:entryValues="@array/pref_theme_values" android:key="pref_theme" android:entries="@array/pref_theme" android:summary="@string/pref_theme_summury" /><EditTextPreference android:key="Pref_text_size" android:title="@string/pref_text_size" android:summary="@string/pref_text_size_description" /><EditTextPreference android:key="Pref_text_size_entered" android:title="@string/pref_text_size_entered" android:summary="@string/pref_text_size_entered_description" /></PreferenceCategory>
     
-    <EditTextPreference android:key="pref_text_size" android:title="@string/pref_text_size" android:summary="@string/pref_text_size_description"/>
-    <EditTextPreference android:key="pref_text_size_entered" android:title="@string/pref_text_size_entered" android:summary="@string/pref_text_size_entered_description"/>
+    
+    
     <PreferenceCategory android:key="pref_connection" android:title="@string/pref_connection"></PreferenceCategory>
+    
+    
 
 </PreferenceScreen>
