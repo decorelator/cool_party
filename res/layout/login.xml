@@ -39,7 +39,10 @@
             android:hint="@string/user_name"
             android:singleLine="true"
             android:text="admin"
-            android:textColor="@color/text_color_light" />
+            android:textColor="@color/text_color_light">
+            <requestFocus />
+            </EditText>
+             
 
         <Button
             android:id="@+id/btnLogin"

@@ -4,7 +4,10 @@ import com.kmware.hrm.preferences.PrefActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,12 +16,20 @@ import android.widget.Button;
 public class DashboardDesignActivity extends ZActivity implements OnClickListener {
 
 	public static String LOGTAG = DashboardDesignActivity.class.getSimpleName();
-
+	SharedPreferences prefs;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.dashboard_layout);
 		super.onCreate(savedInstanceState);
 		final Intent i = new Intent(this, PrefActivity.class);
+		if (getIntent().getBooleanExtra("LOGOUT", false)) 
+	    {
+	        Intent intent = new Intent(DashboardDesignActivity.this,Login.class);
+	        startActivity(intent);
+	        finish();
+	    }
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		addprefBarBtn(R.drawable.act_pref, new OnClickListener() {
 
@@ -34,6 +45,7 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 	}
 
 	private void init() {
+		prefs = PreferenceManager.getDefaultSharedPreferences(this); 
 		/**
 		 * Creating all buttons instances
 		 * */
@@ -97,6 +109,14 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 				public void onClick(DialogInterface dialog, int which) {
 					switch (which){
 						case DialogInterface.BUTTON_POSITIVE:
+							if (!prefs.getBoolean("Authorizathion", false))
+							{
+								Editor e = prefs.edit();
+									  e.remove("userName");
+									  e.remove("password");
+								e.commit();
+								  
+							}
 							System.exit(0); 
 							break;
 					}

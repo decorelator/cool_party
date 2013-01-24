@@ -35,6 +35,8 @@
 
     <!-- APPLICATION MENU -->
     <string name="menu_preferences">Preferences</string>
+    <string name="menu_logout">Log Out</string>
+    <string name="menu_logout_title">Do you really want to log out?</string>
     <string name="menu_search">Search</string>
 
     <!-- PEFERENCES -->

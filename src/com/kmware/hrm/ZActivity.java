@@ -6,9 +6,12 @@ import com.kmware.hrm.preferences.PrefActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -180,7 +183,31 @@ public class ZActivity extends Activity {
 			Toast.makeText(ZActivity.this, "Preferences is Selected", Toast.LENGTH_SHORT).show();
 			startActivity(intent);
 			return true;
+		
+		case R.id.menu_logout:
+			
+			DialogInterface.OnClickListener listener= new DialogInterface.OnClickListener() {
 
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which){
+						case DialogInterface.BUTTON_POSITIVE:
+							Intent intent = new Intent(ZActivity.this, DashboardDesignActivity.class);
+							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+							intent.putExtra("LOGOUT", true); 
+							SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ZActivity.this); 
+							prefs.edit().putBoolean("Authorizathion", false).commit();
+							startActivity(intent);
+							finish();
+							break;
+					}
+				}
+			};
+			
+			 MessageToast.showDialog(this, getString(R.string.menu_logout), getString(R.string.menu_logout_title), listener);
+	    	
+			return true;	
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}
