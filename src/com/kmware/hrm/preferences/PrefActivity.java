@@ -28,9 +28,12 @@ public class PrefActivity extends PreferenceActivity {
   
   public void init(){
 	  prefs = PreferenceManager.getDefaultSharedPreferences(this); 
+	  chbx_pref_auth = (CheckBoxPreference) findPreference("Authorizathion");
+	  lv_pref_theme = (ListPreference) findPreference("pref_theme");
+	  
 	  
 	  final Boolean APP_PREF_AUTH_CHK = prefs.getBoolean("Authorizathion", false);
-	  final String APP_PREF_THEME  = prefs.getString("Blue", "Orange");
+	  final String APP_PREF_THEME  = prefs.getString("pref_theme", "Orange");
 	  final String APP_PREF_TEXT_SIZE  = prefs.getString("Pref_text_size", "14");
 	  final String APP_PREF_TEXT_SIZE_ENTERED  = prefs.getString("Pref_text_size_entered", "14");
 	  

@@ -38,8 +38,8 @@
             android:ems="10"
             android:hint="@string/user_name"
             android:singleLine="true"
-            android:textColor="@color/text_color_light"
-            android:text="admin" />
+            android:text="admin"
+            android:textColor="@color/text_color_light" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -47,10 +47,18 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/etPassword"
             android:layout_alignRight="@+id/etPassword"
-            android:layout_below="@+id/etPassword"
+            android:layout_below="@+id/chbx_save_auth"
             android:background="@drawable/selector_button_logon"
             android:minHeight="40sp"
             android:text="@string/logon" />
+
+        <CheckBox
+            android:id="@+id/chbx_save_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/etPassword"
+            android:layout_below="@+id/etPassword"
+            android:text="@string/login_check" />
     </RelativeLayout>
 
     <include layout="@layout/footer_layout" />

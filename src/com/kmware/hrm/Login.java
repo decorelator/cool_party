@@ -3,12 +3,15 @@ package com.kmware.hrm;
 import com.kmware.hrm.R;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class Login extends ZActivity implements OnClickListener {
@@ -21,6 +24,8 @@ public class Login extends ZActivity implements OnClickListener {
 	private Button btn_Login;
 	private EditText et_Login;
 	private EditText et_Password;
+	private CheckBox chbx_save;
+	SharedPreferences prefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,12 +36,14 @@ public class Login extends ZActivity implements OnClickListener {
 	}
 
 	private void init() {
-
+		prefs = PreferenceManager.getDefaultSharedPreferences(this); 
 		et_Login = (EditText) findViewById(R.id.etLogin);
 		et_Password = (EditText) findViewById(R.id.etPassword);
 		btn_Login = (Button) findViewById(R.id.btnLogin);
 		btn_Login.setOnClickListener(this);
-
+		chbx_save = (CheckBox) findViewById(R.id.chbx_save_auth);
+		chbx_save.setChecked(prefs.getBoolean("Authorizathion", false));
+		
 	}
 
 	@Override
@@ -47,7 +54,17 @@ public class Login extends ZActivity implements OnClickListener {
 		case R.id.btnLogin:
 			if (checkLogin().equals(LOGIN_ADMIN)) {
 				Intent intent = new Intent(this, DashboardDesignActivity.class);
+				chbx_save.setOnClickListener(new OnClickListener() {
+					  @Override
+					  public void onClick(View v) {
+						if (((CheckBox) v).isChecked()) {
+							
+						}
+				 
+					  }
+					});
 				startActivity(intent);
+				
 				finish();
 				Log.i(LOGTAG, "Login like admin");
 			} else if (checkLogin().equals(LOGIN_GUEST)) {

@@ -47,20 +47,11 @@
                 android:layout_height="wrap_content" >
 
                 <com.kmware.hrm.view.SimpleTextView
+                    android:id="@+id/tv_people_role"
                     style="@style/text"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:text="@string/people_role" />
-
-                <Spinner
-                    android:id="@+id/sp_people_role"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_people_role"
-                    android:layout_toLeftOf="@+id/btn_people_add_role"
-                    android:entries="@null"
-                    android:prompt="@string/people_role"
-                    tools:listitem="@android:layout/simple_spinner_item" />
 
                 <Button
                     android:id="@+id/btn_people_add_role"
@@ -69,6 +60,18 @@
                     android:layout_alignBaseline="@+id/sp_people_role"
                     android:layout_alignParentRight="true"
                     android:background="@android:drawable/ic_input_add" />
+
+                <Spinner
+                    android:id="@+id/sp_people_role"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tv_people_role"
+                    android:layout_toLeftOf="@+id/btn_people_add_role"
+                    android:entries="@null"
+                    android:prompt="@string/people_role"
+                    tools:listitem="@android:layout/simple_spinner_item" />
+
             </RelativeLayout>
 
             <com.kmware.hrm.view.SimpleTextView
@@ -92,6 +95,7 @@
                     android:layout_height="wrap_content" >
 
                     <com.kmware.hrm.view.SimpleTextView
+                        android:id="@+id/tv_people_contacts"
                         style="@style/text.small"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
@@ -141,14 +145,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/tv_people_date_start" />
+                        android:layout_alignParentTop="true" />
 
                     <com.kmware.hrm.view.SimpleTextView
                         style="@style/text"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/btn_people_date_in"
                         android:text="@string/people_date_in" />
+
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>

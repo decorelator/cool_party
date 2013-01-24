@@ -14,11 +14,13 @@
     <string name="actionbar_activity_not_found">Failed to open intent </string>
     <string name="app_exit">Exit</string>
     <string name="app_exit_mess">Do you really want to exit?</string>
+    
 
     <!-- LOGIN -->
     <string name="user_name">User name</string>
     <string name="password">Password</string>
     <string name="logon">Log On</string>
+    <string name="login_check">Remain in the system</string>
     <string name="err_login">Login is incorrect</string>
     <string name="err_password">Password is incorrect</string>
 
