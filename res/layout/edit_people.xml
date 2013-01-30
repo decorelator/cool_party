@@ -43,6 +43,7 @@
             </EditText>
 
             <RelativeLayout
+                android:id="@+id/rl_people_role"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
 
@@ -71,8 +72,91 @@
                     android:entries="@null"
                     android:prompt="@string/people_role"
                     tools:listitem="@android:layout/simple_spinner_item" />
-
             </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_people_roles_admin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edt_login"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <com.kmware.hrm.view.SimpleTextView
+                    style="@style/text"
+                    android:layout_weight="1"
+                    android:text="@string/people_role_administartor" />
+
+                <ImageView
+                    android:id="@+id/iv_people_admin_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_input_delete" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_people_roles_hr"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edt_login"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <com.kmware.hrm.view.SimpleTextView
+                    style="@style/text"
+                    android:layout_weight="1"
+                    android:text="@string/people_role_hrmanager" />
+
+                <ImageView
+                    android:id="@+id/iv_people_hr_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_input_delete" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_people_roles_emp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edt_login"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <com.kmware.hrm.view.SimpleTextView
+                    style="@style/text"
+                    android:layout_weight="1"
+                    android:text="@string/people_role_employee" />
+
+                <ImageView
+                    android:id="@+id/iv_people_emp_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_input_delete" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_people_roles_interveew"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edt_login"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <com.kmware.hrm.view.SimpleTextView
+                    style="@style/text"
+                    android:layout_weight="1"
+                    android:text="@string/people_role_interviewer" />
+
+                <ImageView
+                    android:id="@+id/iv_people_int_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_input_delete" />
+            </LinearLayout>
 
             <com.kmware.hrm.view.SimpleTextView
                 style="@style/text"
@@ -153,7 +237,6 @@
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/btn_people_date_in"
                         android:text="@string/people_date_in" />
-
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>

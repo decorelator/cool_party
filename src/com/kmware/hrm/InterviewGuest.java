@@ -1,6 +1,10 @@
 package com.kmware.hrm;
 
+import com.kmware.hrm.ZActivity.MessageToast;
+
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 public class InterviewGuest extends ZActivity {
@@ -52,4 +56,26 @@ public class InterviewGuest extends ZActivity {
 		}
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+					case DialogInterface.BUTTON_POSITIVE:
+						finish();
+						System.exit(0);
+						break;
+					}
+				}
+			};
+
+			MessageToast.showDialog(this, getString(R.string.app_exit), getString(R.string.app_exit_mess), listener);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
 }

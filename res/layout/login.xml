@@ -38,7 +38,6 @@
             android:ems="10"
             android:hint="@string/user_name"
             android:singleLine="true"
-            android:text="admin"
             android:textColor="@color/text_color_light">
             <requestFocus />
             </EditText>

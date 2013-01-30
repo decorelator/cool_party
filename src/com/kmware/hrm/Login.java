@@ -12,14 +12,12 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class Login extends ZActivity implements OnClickListener {
 
@@ -49,11 +47,11 @@ public class Login extends ZActivity implements OnClickListener {
 		btn_Login = (Button) findViewById(R.id.btnLogin);
 		btn_Login.setOnClickListener(this);
 		chbx_save = (CheckBox) findViewById(R.id.chbx_save_auth);
-		chbx_save.setChecked(prefs.getBoolean("Authorizathion", false));
+		chbx_save.setChecked(prefs.getBoolean(PrefActivity.APP_PREF_AUTH_CHK, false));
 
-		if (prefs.getBoolean("Authorizathion", false)) {
-			et_Login.setText(prefs.getString("userName", ""));
-			et_Password.setText(prefs.getString("password", ""));
+		if (prefs.getBoolean(PrefActivity.APP_PREF_AUTH_CHK, false)) {
+			et_Login.setText(prefs.getString(PrefActivity.APP_PREF_USERNAME, ""));
+			et_Password.setText(prefs.getString(PrefActivity.APP_PREF_PASSWORD, ""));
 			if (et_Login.getText().toString().trim().equals(LOGIN_ADMIN) || et_Login.getText().toString().trim().equals(LOGIN_GUEST)) {
 				btn_Login.performClick();
 			}
@@ -71,13 +69,13 @@ public class Login extends ZActivity implements OnClickListener {
 				Editor e = prefs.edit();
 				String userName = et_Login.getText().toString();
 				String password = et_Password.getText().toString();
-				e.putString("userName", userName);
-				e.putString("password", password);
+				e.putString(PrefActivity.APP_PREF_USERNAME, userName);
+				e.putString(PrefActivity.APP_PREF_PASSWORD, password);
 				if (chbx_save.isChecked()) 
 				{
-					e.putBoolean("Authorizathion", true);
+					e.putBoolean(PrefActivity.APP_PREF_AUTH_CHK, true);
 				} else {
-					e.putBoolean("Authorizathion", false);
+					e.putBoolean(PrefActivity.APP_PREF_AUTH_CHK, false);
 				}
 				e.commit();
 				startActivity(intent);
@@ -87,7 +85,7 @@ public class Login extends ZActivity implements OnClickListener {
 				Intent intent = new Intent(this, InterviewGuest.class);
 				startActivity(intent);
 				Log.i(LOGTAG, "Login like guest");
-				// finish();
+				finish();
 				et_Login.setText("");
 				et_Password.setText("");
 			}
@@ -122,6 +120,7 @@ public class Login extends ZActivity implements OnClickListener {
 				public void onClick(DialogInterface dialog, int which) {
 					switch (which) {
 					case DialogInterface.BUTTON_POSITIVE:
+						finish();
 						System.exit(0);
 						break;
 					}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="rl_role_admin" type="id"/>
+    <item name="rl_role_hr_manager" type="id"/>
+    <item name="rl_role_employee" type="id"/>
+    <item name="rl_role_interviewer" type="id"/>
+    
+    <item name="iv_role_admin_" type="id"/>
+    <item name="iv_role_hr_manager_" type="id"/>
+    <item name="iv_role_employee" type="id"/>
+    <item name="iv_role_interviewer" type="id"/>
+
+</resources>

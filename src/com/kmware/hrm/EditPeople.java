@@ -1,30 +1,19 @@
 package com.kmware.hrm;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.kmware.hrm.model.BaseModel;
 import com.kmware.hrm.view.CustomDatePickerDialog;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -33,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
@@ -56,13 +46,23 @@ public class EditPeople extends ZActivity  {
 	ListView lv_Projects;
 	LinearLayout ll_listview;
 	ArrayAdapter<String> sp_Adapter;
+	
+	LinearLayout ll_admin;
+	LinearLayout ll_hr;
+	LinearLayout ll_empl;
+	LinearLayout ll_interview;
+	ImageView iv_del_admin;
+	ImageView iv_del_hr;
+	ImageView iv_del_empl;
+	ImageView iv_del_interview;
 
 	private int year;
 	private int month;
 	private int day;
 	private String extra;
+	private Set<String> roles;
 
-	private List<String> roleArray = new ArrayList<String>();
+//	private List<String> roleArray = new ArrayList<String>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +121,7 @@ public class EditPeople extends ZActivity  {
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
+		roles = new TreeSet<String>();
 		
 		sp_Status = (Spinner) findViewById(R.id.sp_people_status);
 		edt_Name = (EditText) findViewById(R.id.edt_people_name);
@@ -143,7 +144,7 @@ public class EditPeople extends ZActivity  {
 		btn_AddRole.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				addRoleDialog();
+				addRole();
 			}
 		});
 		ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
@@ -183,8 +184,7 @@ public class EditPeople extends ZActivity  {
 			}
 		});
 
-		readFile();
-		sp_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, roleArray);
+		sp_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Arrays.asList(getResources().getStringArray(R.array.people_roles)));
 		sp_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		sp_Role.setAdapter(sp_Adapter);
@@ -198,6 +198,47 @@ public class EditPeople extends ZActivity  {
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 
+			}
+		});
+	//TEMPORARY	
+		ll_admin = (LinearLayout) findViewById(R.id.ll_people_roles_admin);
+		ll_hr = (LinearLayout) findViewById(R.id.ll_people_roles_hr);
+		ll_empl = (LinearLayout) findViewById(R.id.ll_people_roles_emp);
+		ll_interview = (LinearLayout) findViewById(R.id.ll_people_roles_interveew);
+		iv_del_admin = (ImageView) findViewById(R.id.iv_people_admin_del);
+		iv_del_admin.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ll_admin.setVisibility(View.GONE);
+				roles.remove(getResources().getString(R.string.people_role_administartor));
+			}
+		});
+		iv_del_hr = (ImageView) findViewById(R.id.iv_people_hr_del);
+		iv_del_hr.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ll_hr.setVisibility(View.GONE);
+				roles.remove(getResources().getString(R.string.people_role_hrmanager));
+			}
+		});
+		iv_del_empl = (ImageView) findViewById(R.id.iv_people_emp_del);
+		iv_del_empl.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ll_empl.setVisibility(View.GONE);
+				roles.remove(getResources().getString(R.string.people_role_employee));
+			}
+		});
+		iv_del_interview = (ImageView) findViewById(R.id.iv_people_int_del);
+		iv_del_interview.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ll_interview.setVisibility(View.GONE);
+				roles.remove(getResources().getString(R.string.people_role_interviewer));
 			}
 		});
 	}
@@ -215,83 +256,98 @@ public class EditPeople extends ZActivity  {
 		}
 	}
 
-	private void addRoleDialog() {
-
-		showEnterTextDialog(this, getString(R.string.people_role_add));
-
-	}
-
-	public void showEnterTextDialog(Context context, String title) {
-
-		LayoutInflater factory = LayoutInflater.from(context);
-		final View textEntryView = factory.inflate(R.layout.alert_dialog_text_entry, null);
-
-		AlertDialog dialog = new AlertDialog.Builder(context).setTitle(title).setView(textEntryView)
-				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						String enter = ((EditText) textEntryView.findViewById(R.id.edt_alertdialog)).getText().toString();
-						writeToFile(enter);
-					}
-				}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-					}
-				}).create();
-		dialog.setCancelable(true);
-		dialog.show();
-	}
-
-	void writeToFile(String text) {
-		try {
-			// Open tread for write
-			BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFileStreamPath(ROLEFILENAME), true));
-			// Writing data
-			bw.append(text);
-			roleArray.add(text);
-			sp_Adapter.notifyDataSetChanged();
-			// Close tread
-			bw.close();
-			Log.d(LOGTAG, "File Writed");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void addRole(){
+		switch(sp_Role.getSelectedItemPosition()){
+		case 0:
+			ll_admin.setVisibility(View.VISIBLE);
+			roles.add(getResources().getString(R.string.people_role_administartor));
+			break;
+		case 1:
+			ll_hr.setVisibility(View.VISIBLE);
+			roles.add(getResources().getString(R.string.people_role_hrmanager));
+			break;
+		case 2:
+			ll_empl.setVisibility(View.VISIBLE);
+			roles.add(getResources().getString(R.string.people_role_employee));
+			break;
+		case 3:
+			ll_interview.setVisibility(View.VISIBLE);
+			roles.add(getResources().getString(R.string.people_role_interviewer));
+			break;
 		}
 	}
+	
+//	public void showEnterTextDialog(Context context, String title) {
+//
+//		LayoutInflater factory = LayoutInflater.from(context);
+//		final View textEntryView = factory.inflate(R.layout.alert_dialog_text_entry, null);
+//
+//		AlertDialog dialog = new AlertDialog.Builder(context).setTitle(title).setView(textEntryView)
+//				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int whichButton) {
+//						String enter = ((EditText) textEntryView.findViewById(R.id.edt_alertdialog)).getText().toString();
+//						writeToFile(enter);
+//					}
+//				}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//					public void onClick(DialogInterface dialog, int whichButton) {
+//					}
+//				}).create();
+//		dialog.setCancelable(true);
+//		dialog.show();
+//	}
 
-	void readFile() {
-		File file = this.getFileStreamPath(ROLEFILENAME);
-		if (!file.exists()) {
-			try {
-				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(openFileOutput(ROLEFILENAME, MODE_PRIVATE)));
-				roleArray.addAll(Arrays.asList((getResources().getStringArray(R.array.people_roles))));
-				for (String str : roleArray) {
-					bw.write(str + "\n");
-				}
-				// Close tread
-				bw.close();
-
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		try {
-			// Open tread for read
-			BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(ROLEFILENAME)));
-			String str = "";
-			roleArray.clear();
-			// Reading entry
-			while ((str = br.readLine()) != null) {
-				roleArray.add(str);
-				Log.d(LOGTAG, str);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	void writeToFile(String text) {
+//		try {
+//			// Open tread for write
+//			BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFileStreamPath(ROLEFILENAME), true));
+//			// Writing data
+//			bw.append(text);
+//			roleArray.add(text);
+//			sp_Adapter.notifyDataSetChanged();
+//			// Close tread
+//			bw.close();
+//			Log.d(LOGTAG, "File Writed");
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	void readFile() {
+//		File file = this.getFileStreamPath(ROLEFILENAME);
+//		if (!file.exists()) {
+//			try {
+//				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(openFileOutput(ROLEFILENAME, MODE_PRIVATE)));
+//				roleArray.addAll(Arrays.asList((getResources().getStringArray(R.array.people_roles))));
+//				for (String str : roleArray) {
+//					bw.write(str + "\n");
+//				}
+//				// Close tread
+//				bw.close();
+//
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		try {
+//			// Open tread for read
+//			BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(ROLEFILENAME)));
+//			String str = "";
+//			roleArray.clear();
+//			// Reading entry
+//			while ((str = br.readLine()) != null) {
+//				roleArray.add(str);
+//				Log.d(LOGTAG, str);
+//			}
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	public void btnChangeDate_Click(View v) {
 		showDialog(DATE_DIALOG_ID);
@@ -336,5 +392,17 @@ public class EditPeople extends ZActivity  {
 		setResult(RESULT_OK);
 		finish();
 	}
-
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		Log.d(LOGTAG, "onRestoreInstanceState");
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		Log.d(LOGTAG, "onSaveInstanceState");
+	}
+	
 }

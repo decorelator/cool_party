@@ -27,14 +27,6 @@
             android:text="@string/project_start_date" />
 
         <TextView
-            android:id="@+id/tv_people_status"
-            style="@style/textview_category"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/people_orange"
-            android:text="10" />
-
-        <TextView
             android:id="@+id/tv_project_startdate"
             style="@style/text_size.description"
             android:layout_width="wrap_content"

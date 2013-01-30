@@ -196,7 +196,7 @@ public class ZActivity extends Activity {
 							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 							intent.putExtra("LOGOUT", true); 
 							SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ZActivity.this); 
-							prefs.edit().putBoolean("Authorizathion", false).commit();
+							prefs.edit().putBoolean(PrefActivity.APP_PREF_AUTH_CHK, false).commit();
 							startActivity(intent);
 							finish();
 							break;

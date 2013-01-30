@@ -109,14 +109,15 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 				public void onClick(DialogInterface dialog, int which) {
 					switch (which){
 						case DialogInterface.BUTTON_POSITIVE:
-							if (!prefs.getBoolean("Authorizathion", false))
+							if (!prefs.getBoolean(PrefActivity.APP_PREF_AUTH_CHK, false))
 							{
 								Editor e = prefs.edit();
-									  e.remove("userName");
-									  e.remove("password");
+									  e.remove(PrefActivity.APP_PREF_USERNAME);
+									  e.remove(PrefActivity.APP_PREF_PASSWORD);
 								e.commit();
 								  
 							}
+							finish();
 							System.exit(0); 
 							break;
 					}
