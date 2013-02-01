@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Set;
-import java.util.TreeSet;
-
+import java.util.List;
 import com.kmware.hrm.model.BaseModel;
 import com.kmware.hrm.view.CustomDatePickerDialog;
 import android.app.DatePickerDialog;
@@ -14,8 +12,10 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class EditPeople extends ZActivity  {
 
@@ -45,24 +46,15 @@ public class EditPeople extends ZActivity  {
 	EditText edt_Skype;
 	ListView lv_Projects;
 	LinearLayout ll_listview;
-	ArrayAdapter<String> sp_Adapter;
+	LinearLayout ll_roles;
 	
-	LinearLayout ll_admin;
-	LinearLayout ll_hr;
-	LinearLayout ll_empl;
-	LinearLayout ll_interview;
-	ImageView iv_del_admin;
-	ImageView iv_del_hr;
-	ImageView iv_del_empl;
-	ImageView iv_del_interview;
-
+	private List<String> set_roles;
+	private ArrayAdapter<String> sp_Adapter;
 	private int year;
 	private int month;
 	private int day;
 	private String extra;
-	private Set<String> roles;
-
-//	private List<String> roleArray = new ArrayList<String>();
+	private List<String> roles;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -121,7 +113,7 @@ public class EditPeople extends ZActivity  {
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
-		roles = new TreeSet<String>();
+		roles = new ArrayList<String>();
 		
 		sp_Status = (Spinner) findViewById(R.id.sp_people_status);
 		edt_Name = (EditText) findViewById(R.id.edt_people_name);
@@ -144,6 +136,7 @@ public class EditPeople extends ZActivity  {
 		btn_AddRole.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (!sp_Role.getSelectedItem().toString().equals("Empty"))
 				addRole();
 			}
 		});
@@ -183,11 +176,10 @@ public class EditPeople extends ZActivity  {
 
 			}
 		});
-
-		sp_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Arrays.asList(getResources().getStringArray(R.array.people_roles)));
-		sp_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		sp_Role.setAdapter(sp_Adapter);
+		set_roles = new ArrayList<String>();
+		set_roles.addAll( Arrays.asList(getResources().getStringArray(R.array.people_roles)));
+		
+		setSpinnerAdapter(set_roles);
 		sp_Role.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -200,47 +192,8 @@ public class EditPeople extends ZActivity  {
 
 			}
 		});
-	//TEMPORARY	
-		ll_admin = (LinearLayout) findViewById(R.id.ll_people_roles_admin);
-		ll_hr = (LinearLayout) findViewById(R.id.ll_people_roles_hr);
-		ll_empl = (LinearLayout) findViewById(R.id.ll_people_roles_emp);
-		ll_interview = (LinearLayout) findViewById(R.id.ll_people_roles_interveew);
-		iv_del_admin = (ImageView) findViewById(R.id.iv_people_admin_del);
-		iv_del_admin.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				ll_admin.setVisibility(View.GONE);
-				roles.remove(getResources().getString(R.string.people_role_administartor));
-			}
-		});
-		iv_del_hr = (ImageView) findViewById(R.id.iv_people_hr_del);
-		iv_del_hr.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				ll_hr.setVisibility(View.GONE);
-				roles.remove(getResources().getString(R.string.people_role_hrmanager));
-			}
-		});
-		iv_del_empl = (ImageView) findViewById(R.id.iv_people_emp_del);
-		iv_del_empl.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				ll_empl.setVisibility(View.GONE);
-				roles.remove(getResources().getString(R.string.people_role_employee));
-			}
-		});
-		iv_del_interview = (ImageView) findViewById(R.id.iv_people_int_del);
-		iv_del_interview.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				ll_interview.setVisibility(View.GONE);
-				roles.remove(getResources().getString(R.string.people_role_interviewer));
-			}
-		});
+		
+		ll_roles = (LinearLayout) findViewById(R.id.ll_people_roles);
 	}
 
 	private void getExtra() {
@@ -257,24 +210,60 @@ public class EditPeople extends ZActivity  {
 	}
 
 	private void addRole(){
-		switch(sp_Role.getSelectedItemPosition()){
-		case 0:
-			ll_admin.setVisibility(View.VISIBLE);
-			roles.add(getResources().getString(R.string.people_role_administartor));
-			break;
-		case 1:
-			ll_hr.setVisibility(View.VISIBLE);
-			roles.add(getResources().getString(R.string.people_role_hrmanager));
-			break;
-		case 2:
-			ll_empl.setVisibility(View.VISIBLE);
-			roles.add(getResources().getString(R.string.people_role_employee));
-			break;
-		case 3:
-			ll_interview.setVisibility(View.VISIBLE);
-			roles.add(getResources().getString(R.string.people_role_interviewer));
-			break;
-		}
+		LinearLayout ll_role = (LinearLayout) findViewById(R.id.ll_people_roles);
+		LayoutInflater ltInflater = getLayoutInflater();
+		 String role = sp_Role.getSelectedItem().toString();
+		 set_roles.remove(role);
+		 if (set_roles.size() != 0){
+			 setSpinnerAdapter(set_roles);
+			 
+		 }	else {
+			 set_roles.add("Empty");
+			 setSpinnerAdapter(set_roles);
+		 }
+		 
+		 roles.add(role);
+		 java.util.Collections.sort(roles);
+		 if (ll_role.getChildCount() > 0)
+			 ll_role.removeAllViews();
+		 for (int i=0; i<roles.size(); i++){
+			 final View view = ltInflater.inflate(R.layout.people_role, null, false);
+			 TextView tv_role = (TextView) view.findViewById(R.id.tv_people_role);
+			 tv_role.setText(roles.get(i)); 
+			 ImageView iv_role_del = (ImageView) view.findViewById(R.id.iv_people_role_del);
+			 iv_role_del.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					TextView tv_role = (TextView) view.findViewById(R.id.tv_people_role);
+					ViewGroup parent = (ViewGroup) view.getParent();
+					
+					parent.removeView(view);
+					roles.remove(tv_role.getText());
+					
+//					List<String> lst = new ArrayList<String>();
+//					lst.addAll( Arrays.asList(getResources().getStringArray(R.array.people_roles)));
+//					lst.removeAll(roles);
+//					set_roles.addAll(lst);
+					set_roles.clear();
+					set_roles.addAll( Arrays.asList(getResources().getStringArray(R.array.people_roles)));
+					set_roles.removeAll(roles);
+					setSpinnerAdapter(set_roles);
+					sp_Role.setSelection(0);
+				}
+			});
+			 
+			 ll_role.addView(view);
+		 }
+	        
+	}
+	
+	private void setSpinnerAdapter(List<String> lst){
+		sp_Adapter = new ArrayAdapter<String>(EditPeople.this, android.R.layout.simple_spinner_item, lst);
+		sp_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp_Role.setAdapter(sp_Adapter);
+		
 	}
 	
 //	public void showEnterTextDialog(Context context, String title) {

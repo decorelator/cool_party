@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_people_role"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edt_login"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+   
+                <com.kmware.hrm.view.SimpleTextView
+                    android:id="@+id/tv_people_role"
+                    style="@style/text"
+                    android:layout_weight="1"
+                    android:text="@string/people_role_administartor" />
+
+                <ImageView
+                    android:id="@+id/iv_people_role_del"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_input_delete" />
+
+</LinearLayout>
