@@ -2,6 +2,7 @@ package com.kmware.hrm;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.content.Intent;
 
@@ -15,6 +16,11 @@ public class SplashScreen extends ZActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
+		try{
+			timer = (Thread) getLastNonConfigurationInstance();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		timer = new Thread() {
 			public void run() {
 				try {
@@ -34,8 +40,22 @@ public class SplashScreen extends ZActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    if (keyCode == KeyEvent.KEYCODE_BACK) {
-	        return true;
+	       return true;
 	    }
 	    return super.onKeyDown(keyCode, event);
 	}
+	
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		Log.d(LOGTAG, "onRestoreInstanceState");
+	}
+
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		Log.d(LOGTAG, "onSaveInstanceState");
+	}
+	
+	public Object onRetainNonConfigurationInstance() {
+	    return timer;
+	  }
 }

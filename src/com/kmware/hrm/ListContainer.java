@@ -57,9 +57,8 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	LinearLayout parent;
 	ListView lv_Conteiner;
 	private String extra;
-	private int currentPos;
 	private boolean addButton;
-	private ArrayList<BaseModel> dataList;
+//	private ArrayList<BaseModel> dataList;
 	private CustomContainerAdapter<? extends BaseModel> listAdapter;
 	private ArrayList<People> t_people;
 	private ArrayList<Project> t_project;
@@ -109,6 +108,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		iv_Interviews.setTag(2);
 
 		current = iv_People;
+		
 		lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		parent = (LinearLayout) current.getParent();
 		parent.removeView(current);
@@ -218,7 +218,6 @@ public class ListContainer extends ZActivity implements OnClickListener {
 				People p = new People(i, "Man" + i, "p" + System.currentTimeMillis());
 				t_people.add(p);
 			}
-
 			listAdapter = new CustomPeopleAdapter(this, t_people, R.layout.list_container_row_people);
 			lv_Conteiner.setAdapter(listAdapter);
 
@@ -359,6 +358,4 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		return false;
 	}
 
-
-	
 }

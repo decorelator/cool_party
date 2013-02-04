@@ -1,7 +1,5 @@
 package com.kmware.hrm;
 
-import com.kmware.hrm.ZActivity.MessageToast;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -17,21 +15,21 @@ public class InterviewGuest extends ZActivity {
 	TextView tv_Time;
 	TextView tv_Address;
 	TextView tv_Description;
-	
+
 	private String extra;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.interview_guest);
 		super.onCreate(savedInstanceState);
-		bar.setTitle(((TextView)findViewById(R.id.tv_interviewer_name)).getText().toString());
+		bar.setTitle(((TextView) findViewById(R.id.tv_interviewer_name)).getText().toString());
 		getExtra();
 		init();
 
 	}
 
 	private void init() {
-		
+
 		tv_Name = (TextView) findViewById(R.id.tv_interviewer_name);
 		tv_Project = (TextView) findViewById(R.id.tv_interviewer_project);
 		tv_Position = (TextView) findViewById(R.id.tv_interviewer_position);
@@ -39,8 +37,7 @@ public class InterviewGuest extends ZActivity {
 		tv_Time = (TextView) findViewById(R.id.tv_interviewer_time);
 		tv_Address = (TextView) findViewById(R.id.tv_interviewer_address);
 		tv_Description = (TextView) findViewById(R.id.tv_interviewer_description);
-		
-		
+
 	}
 
 	private void getExtra() {
@@ -52,7 +49,6 @@ public class InterviewGuest extends ZActivity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
 
@@ -77,5 +73,5 @@ public class InterviewGuest extends ZActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 }

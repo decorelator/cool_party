@@ -14,7 +14,7 @@
     <string name="actionbar_activity_not_found">Failed to open intent </string>
     <string name="app_exit">Exit</string>
     <string name="app_exit_mess">Do you really want to exit?</string>
-    
+    <string name="empty">Empty</string>
 
     <!-- LOGIN -->
     <string name="user_name">User name</string>

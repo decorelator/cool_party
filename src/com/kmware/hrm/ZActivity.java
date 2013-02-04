@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -24,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ZActivity extends Activity {
+public class ZActivity extends Activity implements OnSharedPreferenceChangeListener {
 	private final String LOGTAG = ZActivity.class.getSimpleName();
 	static class MessageToast {
 		private final String LOGTAG = MessageToast.class.getSimpleName();
@@ -115,6 +116,14 @@ public class ZActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			  public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+			    // Implementation
+			  }
+			};
+			prefs.registerOnSharedPreferenceChangeListener(listener);
+			
 		bar = new ActionBar(this, null);
 		bar.clearHomeAction();
 		LinearLayout l = (LinearLayout) findViewById(R.id.root);
@@ -226,6 +235,12 @@ public class ZActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		Log.d(LOGTAG, "onSaveInstanceState");
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

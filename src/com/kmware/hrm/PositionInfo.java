@@ -1,7 +1,6 @@
 package com.kmware.hrm;
 
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class PositionInfo extends ZActivity {

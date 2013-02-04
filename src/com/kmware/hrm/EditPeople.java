@@ -29,12 +29,13 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class EditPeople extends ZActivity  {
+public class EditPeople extends ZActivity {
 
 	public static String LOGTAG = EditPeople.class.getSimpleName();
-	public final String ROLEFILENAME = "role.txt";
+	// public final String ROLEFILENAME = "role.txt";
 	private final int DATE_DIALOG_ID = 0;
-	
+	private final String SAVE_ROLE = "role";
+
 	Spinner sp_Status;
 	Spinner sp_Position;
 	Spinner sp_Role;
@@ -47,7 +48,7 @@ public class EditPeople extends ZActivity  {
 	ListView lv_Projects;
 	LinearLayout ll_listview;
 	LinearLayout ll_roles;
-	
+
 	private List<String> set_roles;
 	private ArrayAdapter<String> sp_Adapter;
 	private int year;
@@ -108,13 +109,14 @@ public class EditPeople extends ZActivity  {
 	}
 
 	private void init() {
-
+		
 		Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
-		roles = new ArrayList<String>();
-		
+		if (roles == null)
+			roles = new ArrayList<String>();
+
 		sp_Status = (Spinner) findViewById(R.id.sp_people_status);
 		edt_Name = (EditText) findViewById(R.id.edt_people_name);
 		sp_Position = (Spinner) findViewById(R.id.sp_people_position);
@@ -136,8 +138,8 @@ public class EditPeople extends ZActivity  {
 		btn_AddRole.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (!sp_Role.getSelectedItem().toString().equals("Empty"))
-				addRole();
+				if (!sp_Role.getSelectedItem().toString().equals(getResources().getString(R.string.empty)))
+					addRole();
 			}
 		});
 		ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
@@ -177,8 +179,8 @@ public class EditPeople extends ZActivity  {
 			}
 		});
 		set_roles = new ArrayList<String>();
-		set_roles.addAll( Arrays.asList(getResources().getStringArray(R.array.people_roles)));
-		
+		set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
+
 		setSpinnerAdapter(set_roles);
 		sp_Role.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -192,7 +194,7 @@ public class EditPeople extends ZActivity  {
 
 			}
 		});
-		
+
 		ll_roles = (LinearLayout) findViewById(R.id.ll_people_roles);
 	}
 
@@ -209,134 +211,142 @@ public class EditPeople extends ZActivity  {
 		}
 	}
 
-	private void addRole(){
+	private void addRole() {
+		String role = sp_Role.getSelectedItem().toString();
+		set_roles.remove(role);
+		if (!set_roles.isEmpty()) {
+			setSpinnerAdapter(set_roles);
+
+		} else {
+			set_roles.add(getResources().getString(R.string.empty));
+			setSpinnerAdapter(set_roles);
+		}
+
+		roles.add(role);
+		java.util.Collections.sort(roles);
+
+		resetRoles();
+	}
+
+	private void resetRoles() {
 		LinearLayout ll_role = (LinearLayout) findViewById(R.id.ll_people_roles);
 		LayoutInflater ltInflater = getLayoutInflater();
-		 String role = sp_Role.getSelectedItem().toString();
-		 set_roles.remove(role);
-		 if (set_roles.size() != 0){
-			 setSpinnerAdapter(set_roles);
-			 
-		 }	else {
-			 set_roles.add("Empty");
-			 setSpinnerAdapter(set_roles);
-		 }
-		 
-		 roles.add(role);
-		 java.util.Collections.sort(roles);
-		 if (ll_role.getChildCount() > 0)
-			 ll_role.removeAllViews();
-		 for (int i=0; i<roles.size(); i++){
-			 final View view = ltInflater.inflate(R.layout.people_role, null, false);
-			 TextView tv_role = (TextView) view.findViewById(R.id.tv_people_role);
-			 tv_role.setText(roles.get(i)); 
-			 ImageView iv_role_del = (ImageView) view.findViewById(R.id.iv_people_role_del);
-			 iv_role_del.setOnClickListener(new OnClickListener() {
-				
+		if (ll_role.getChildCount() > 0)
+			ll_role.removeAllViews();
+		for (int i = 0; i < roles.size(); i++) {
+			final View view = ltInflater.inflate(R.layout.people_role, null, false);
+			TextView tv_role = (TextView) view.findViewById(R.id.tv_people_role);
+			tv_role.setText(roles.get(i));
+			ImageView iv_role_del = (ImageView) view.findViewById(R.id.iv_people_role_del);
+			iv_role_del.setOnClickListener(new OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
-					
+
 					TextView tv_role = (TextView) view.findViewById(R.id.tv_people_role);
 					ViewGroup parent = (ViewGroup) view.getParent();
-					
+
 					parent.removeView(view);
 					roles.remove(tv_role.getText());
-					
-//					List<String> lst = new ArrayList<String>();
-//					lst.addAll( Arrays.asList(getResources().getStringArray(R.array.people_roles)));
-//					lst.removeAll(roles);
-//					set_roles.addAll(lst);
+
 					set_roles.clear();
-					set_roles.addAll( Arrays.asList(getResources().getStringArray(R.array.people_roles)));
+					set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
 					set_roles.removeAll(roles);
 					setSpinnerAdapter(set_roles);
 					sp_Role.setSelection(0);
 				}
 			});
-			 
-			 ll_role.addView(view);
-		 }
-	        
+
+			ll_role.addView(view);
+		}
+
 	}
-	
-	private void setSpinnerAdapter(List<String> lst){
+
+	private void setSpinnerAdapter(List<String> lst) {
 		sp_Adapter = new ArrayAdapter<String>(EditPeople.this, android.R.layout.simple_spinner_item, lst);
 		sp_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp_Role.setAdapter(sp_Adapter);
-		
-	}
-	
-//	public void showEnterTextDialog(Context context, String title) {
-//
-//		LayoutInflater factory = LayoutInflater.from(context);
-//		final View textEntryView = factory.inflate(R.layout.alert_dialog_text_entry, null);
-//
-//		AlertDialog dialog = new AlertDialog.Builder(context).setTitle(title).setView(textEntryView)
-//				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface dialog, int whichButton) {
-//						String enter = ((EditText) textEntryView.findViewById(R.id.edt_alertdialog)).getText().toString();
-//						writeToFile(enter);
-//					}
-//				}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-//					public void onClick(DialogInterface dialog, int whichButton) {
-//					}
-//				}).create();
-//		dialog.setCancelable(true);
-//		dialog.show();
-//	}
 
-//	void writeToFile(String text) {
-//		try {
-//			// Open tread for write
-//			BufferedWriter bw = new BufferedWriter(new FileWriter(this.getFileStreamPath(ROLEFILENAME), true));
-//			// Writing data
-//			bw.append(text);
-//			roleArray.add(text);
-//			sp_Adapter.notifyDataSetChanged();
-//			// Close tread
-//			bw.close();
-//			Log.d(LOGTAG, "File Writed");
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	void readFile() {
-//		File file = this.getFileStreamPath(ROLEFILENAME);
-//		if (!file.exists()) {
-//			try {
-//				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(openFileOutput(ROLEFILENAME, MODE_PRIVATE)));
-//				roleArray.addAll(Arrays.asList((getResources().getStringArray(R.array.people_roles))));
-//				for (String str : roleArray) {
-//					bw.write(str + "\n");
-//				}
-//				// Close tread
-//				bw.close();
-//
-//			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		try {
-//			// Open tread for read
-//			BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(ROLEFILENAME)));
-//			String str = "";
-//			roleArray.clear();
-//			// Reading entry
-//			while ((str = br.readLine()) != null) {
-//				roleArray.add(str);
-//				Log.d(LOGTAG, str);
-//			}
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	}
+
+	// public void showEnterTextDialog(Context context, String title) {
+	//
+	// LayoutInflater factory = LayoutInflater.from(context);
+	// final View textEntryView =
+	// factory.inflate(R.layout.alert_dialog_text_entry, null);
+	//
+	// AlertDialog dialog = new
+	// AlertDialog.Builder(context).setTitle(title).setView(textEntryView)
+	// .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	// public void onClick(DialogInterface dialog, int whichButton) {
+	// String enter = ((EditText)
+	// textEntryView.findViewById(R.id.edt_alertdialog)).getText().toString();
+	// writeToFile(enter);
+	// }
+	// }).setNegativeButton(R.string.cancel, new
+	// DialogInterface.OnClickListener() {
+	// public void onClick(DialogInterface dialog, int whichButton) {
+	// }
+	// }).create();
+	// dialog.setCancelable(true);
+	// dialog.show();
+	// }
+
+	// void writeToFile(String text) {
+	// try {
+	// // Open tread for write
+	// BufferedWriter bw = new BufferedWriter(new
+	// FileWriter(this.getFileStreamPath(ROLEFILENAME), true));
+	// // Writing data
+	// bw.append(text);
+	// roleArray.add(text);
+	// sp_Adapter.notifyDataSetChanged();
+	// // Close tread
+	// bw.close();
+	// Log.d(LOGTAG, "File Writed");
+	// } catch (FileNotFoundException e) {
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
+	//
+	// void readFile() {
+	// File file = this.getFileStreamPath(ROLEFILENAME);
+	// if (!file.exists()) {
+	// try {
+	// BufferedWriter bw = new BufferedWriter(new
+	// OutputStreamWriter(openFileOutput(ROLEFILENAME, MODE_PRIVATE)));
+	// roleArray.addAll(Arrays.asList((getResources().getStringArray(R.array.people_roles))));
+	// for (String str : roleArray) {
+	// bw.write(str + "\n");
+	// }
+	// // Close tread
+	// bw.close();
+	//
+	// } catch (FileNotFoundException e) {
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// try {
+	// // Open tread for read
+	// BufferedReader br = new BufferedReader(new
+	// InputStreamReader(openFileInput(ROLEFILENAME)));
+	// String str = "";
+	// roleArray.clear();
+	// // Reading entry
+	// while ((str = br.readLine()) != null) {
+	// roleArray.add(str);
+	// Log.d(LOGTAG, str);
+	// }
+	// } catch (FileNotFoundException e) {
+	// e.printStackTrace();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
 
 	public void btnChangeDate_Click(View v) {
 		showDialog(DATE_DIALOG_ID);
@@ -347,12 +357,12 @@ public class EditPeople extends ZActivity  {
 		switch (id) {
 		case DATE_DIALOG_ID:
 			return new CustomDatePickerDialog(this, dateSetListener, year, month, day);
-		
+
 		default:
 			return null;
 		}
 	}
-	
+
 	private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int currentYear, int monthOfYear, int dayOfMonth) {
 			year = currentYear;
@@ -361,13 +371,13 @@ public class EditPeople extends ZActivity  {
 			setBtnDateText();
 		}
 	};
-	
+
 	private void setBtnDateText() {
 		CustomDatePickerDialog.setDate(year, month, day);
 		GregorianCalendar calendar = new GregorianCalendar(year, month, day);
 		btn_EmployeeDate.setText(DateFormat.format("dd MMMM yyyy", calendar.getTime()));
 	}
-	
+
 	private void paramOfLayout() {
 		ll_listview = (LinearLayout) findViewById(R.id.ll_people_listview);
 		if (findViewById(R.id.rl_people).isShown()) {
@@ -381,17 +391,28 @@ public class EditPeople extends ZActivity  {
 		setResult(RESULT_OK);
 		finish();
 	}
-	
+
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		Log.d(LOGTAG, "onRestoreInstanceState");
+		roles = savedInstanceState.getStringArrayList(SAVE_ROLE);
+		resetRoles();
+		set_roles.clear();
+		set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
+		set_roles.removeAll(roles);
+		if (!set_roles.isEmpty())
+			setSpinnerAdapter(set_roles);
+		else
+			set_roles.add(getResources().getString(R.string.empty));
+		sp_Role.setSelection(0);
+		Log.d(LOGTAG, "onRestoreInstanceState - " + roles.toString());
 	}
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		Log.d(LOGTAG, "onSaveInstanceState");
+		outState.putStringArrayList(SAVE_ROLE, (ArrayList<String>) roles);
+		Log.d(LOGTAG, "onSaveInstanceState - " + roles.toString());
 	}
-	
+
 }

@@ -117,7 +117,7 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 								e.commit();
 								  
 							}
-							finish();
+							//finish();
 							System.exit(0); 
 							break;
 					}

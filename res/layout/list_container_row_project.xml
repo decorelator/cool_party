@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical" > -->
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
@@ -14,8 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="eFarmer" />
+            android:layout_alignParentTop="true" />
 
         <TextView
             android:id="@+id/tv_project_sd"
@@ -32,7 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv_project_sd"
-            android:text=": 12/12/12" 
             android:layout_alignBaseline="@+id/tv_project_sd"/>
 
         <TextView
@@ -50,9 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv_project_ed"
-            android:text=": 20/02/13" 
             android:layout_alignBaseline="@+id/tv_project_sd"/>
 
     </RelativeLayout>
 
-</LinearLayout>
+<!-- </LinearLayout> -->

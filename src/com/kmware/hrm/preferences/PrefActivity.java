@@ -1,17 +1,11 @@
 package com.kmware.hrm.preferences;
 
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.util.Log;
-import android.view.KeyEvent;
 import com.kmware.hrm.R;
 
 public class PrefActivity extends PreferenceActivity {
@@ -19,6 +13,7 @@ public class PrefActivity extends PreferenceActivity {
 	SharedPreferences prefs;
 	//CheckBoxPreference chbx_pref_auth;
 	ListPreference lv_pref_theme;
+	ListPreference lv_pref_text_size;
 	EditTextPreference edt_pref_text_size;
 	EditTextPreference edt_pref_entered_text;
 

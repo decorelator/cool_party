@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" ><PreferenceCategory android:key="pref_interface" android:title="@string/pref_interface" android:summary="@string/pref_interface_summury"><ListPreference android:title="@string/pref_theme" android:entryValues="@array/pref_theme_values" android:key="pref_theme" android:entries="@array/pref_theme" android:summary="@string/pref_theme_summury" /><EditTextPreference android:key="Pref_text_size" android:title="@string/pref_text_size" android:summary="@string/pref_text_size_description" /></PreferenceCategory>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" ><PreferenceCategory android:key="pref_interface" android:title="@string/pref_interface" android:summary="@string/pref_interface_summury"><ListPreference android:title="@string/pref_theme" android:entryValues="@array/pref_theme_values" android:key="pref_theme" android:entries="@array/pref_theme" android:summary="@string/pref_theme_summury" android:negativeButtonText="@string/cancel" android:positiveButtonText="@string/ok"/>
+<ListPreference android:entryValues="@array/pref_textsize_values" android:title="@string/pref_text_size" android:summary="@string/pref_text_size_description" android:key="pref_text_size" android:entries="@array/pref_textsize"/>
+</PreferenceCategory>
     
     
     
