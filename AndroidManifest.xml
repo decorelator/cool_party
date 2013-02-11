@@ -15,6 +15,11 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
+        <provider android:name="com.kmware.hrm.db.HrmProvider"
+                  android:authorities="hrm"
+                  android:multiprocess="true">
+      	</provider>
+        
         <activity android:name="com.kmware.hrm.SplashScreen"
             android:configChanges="orientation|keyboardHidden" >
             <intent-filter>

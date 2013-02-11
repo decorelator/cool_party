@@ -45,16 +45,19 @@ public class SplashScreen extends ZActivity {
 	    return super.onKeyDown(keyCode, event);
 	}
 	
+	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		Log.d(LOGTAG, "onRestoreInstanceState");
 	}
 
+	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		Log.d(LOGTAG, "onSaveInstanceState");
 	}
 	
+	@Override
 	public Object onRetainNonConfigurationInstance() {
 	    return timer;
 	  }
