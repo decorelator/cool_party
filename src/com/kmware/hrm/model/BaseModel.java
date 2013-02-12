@@ -4,8 +4,15 @@ public class BaseModel {
 	private int id;
 	private String name;
 
+	public BaseModel() {
+	}
+
 	public BaseModel(int id, String name) {
 		this.id = id;
+		this.name = name;
+	}
+
+	public BaseModel(String name) {
 		this.name = name;
 	}
 

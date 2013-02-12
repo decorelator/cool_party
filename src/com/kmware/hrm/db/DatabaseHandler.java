@@ -1,0 +1,423 @@
+package com.kmware.hrm.db;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.kmware.hrm.ListContainer;
+import com.kmware.hrm.model.People;
+import com.kmware.hrm.model.Position;
+import com.kmware.hrm.model.Project;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+public class DatabaseHandler extends SQLiteOpenHelper {
+	private static final String LOGTAG = DatabaseHandler.class.getSimpleName();
+
+	// All Static variables
+	// Database Version
+	private static final int DATABASE_VERSION = 1;
+
+	// Database Name
+	private static final String DATABASE_NAME = "HRM.db";
+
+	// Tables name
+	private static final String TABLE_ROLES = "roles";
+	private static final String TABLE_PEOPLES = "peoples";
+	private static final String TABLE_PROJECTS = "projects";
+	private static final String TABLE_POSITIONS = "positions";
+	private static final String TABLE_INTERVIEWS = "interviews";
+
+	public DatabaseHandler(Context context) {
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	}
+
+	// Creating Tables
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		try {
+			// Creating Table Peoples
+			db.execSQL("CREATE TABLE " + TABLE_PEOPLES + " ( " + PEOPLES_COLUMNS.ID + " INTEGER PRIMARY KEY, " + PEOPLES_COLUMNS.NAME + " TEXT, "
+					+ PEOPLES_COLUMNS.LAST_NAME + " TEXT," + PEOPLES_COLUMNS.EMAIL + " TEXT," + PEOPLES_COLUMNS.PHONE + " LONG," + PEOPLES_COLUMNS.SKYPE
+					+ " TEXT," + PEOPLES_COLUMNS.EMPLOYMENT_DATE + " DATE," + PEOPLES_COLUMNS.STATUS_ID + " INTEGER" + ")");
+			// Creating Table Projects
+			db.execSQL("CREATE TABLE " + TABLE_PROJECTS + " ( " + PROJECT_COLUMNS.ID + " INTEGER PRIMARY KEY, " + PROJECT_COLUMNS.NAME + " TEXT,"
+					+ PROJECT_COLUMNS.EMAIL + " TEXT," + PROJECT_COLUMNS.PHONE + " LONG," + PROJECT_COLUMNS.SKYPE + " TEXT," + PROJECT_COLUMNS.START_DATE
+					+ " DATE," + PROJECT_COLUMNS.END_DATE + " DATE," + PROJECT_COLUMNS.STATUS_ID + " INTEGER" + ")");
+			// Creating Table Positions
+			db.execSQL("CREATE TABLE " + TABLE_POSITIONS + " ( " + POSITION_COLUMNS.ID + " INTEGER PRIMARY KEY, " + POSITION_COLUMNS.NAME + " TEXT,"
+					+ POSITION_COLUMNS.DESCRIPTION + " TEXT" + ")");
+			// Creating Table Interview
+			db.execSQL("CREATE TABLE " + TABLE_INTERVIEWS + " ( " + INTERVIEW_COLUMNS.ID + " INTEGER PRIMARY KEY, " + INTERVIEW_COLUMNS.NAME + " TEXT,"
+					+ INTERVIEW_COLUMNS.DATE + " DATE," + INTERVIEW_COLUMNS.TIME + " TIME," + INTERVIEW_COLUMNS.DESCRIPTION + " TEXT" + ")");
+			// Creating Table Roles
+			db.execSQL("CREATE TABLE " + TABLE_ROLES + " ( " + ROLES_COLUMNS.ID + " INTEGER PRIMARY KEY, " + ROLES_COLUMNS.NAME + " TEXT,"
+					+ ROLES_COLUMNS.LOWER_NAME + " TEXT," + ROLES_COLUMNS.DESCRIPTION + " TEXT" + ")");
+			Log.i(LOGTAG, "DataBase was Create");
+		} catch (SQLiteException ex) {
+			ex.printStackTrace();
+			Log.w(LOGTAG, "DataBase was not created");
+		}
+	}
+
+	// Upgrading database
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// Drop older table if existed
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PEOPLES);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECTS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_POSITIONS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INTERVIEWS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_ROLES);
+
+		// Create tables again
+		onCreate(db);
+	}
+
+	public static class PEOPLES_COLUMNS {
+		public static String ID = "_id";
+		public static String NAME = "name";
+		public static String LAST_NAME = "last_name";
+		public static String EMAIL = "email";
+		public static String PHONE = "phone";
+		public static String SKYPE = "skype";
+		public static String EMPLOYMENT_DATE = "empl_date";
+		public static String STATUS_ID = "statusID";
+	}
+
+	public static class PROJECT_COLUMNS {
+		public static String ID = "_id";
+		public static String NAME = "name";
+		public static String EMAIL = "email";
+		public static String PHONE = "phone";
+		public static String SKYPE = "skype";
+		public static String START_DATE = "start_date";
+		public static String END_DATE = "end_date";
+		public static String STATUS_ID = "statusID";
+	}
+
+	public static class POSITION_COLUMNS {
+		public static String ID = "_id";
+		public static String NAME = "name";
+		public static String DESCRIPTION = "description";
+	}
+
+	public static class INTERVIEW_COLUMNS {
+		public static String ID = "_id";
+		public static String NAME = "name";
+		public static String DATE = "date";
+		public static String TIME = "time";
+		public static String DESCRIPTION = "description";
+	}
+
+	public static class ROLES_COLUMNS {
+		public static String ID = "_id";
+		public static String NAME = "name";
+		public static String LOWER_NAME = "lowerName";
+		public static String DESCRIPTION = "description";
+	}
+
+	// ====PEOPLE===================================================================================================
+	
+	// Adding new person
+	public void addPerson(People person) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(PEOPLES_COLUMNS.NAME, person.getName()); // Person Name
+		values.put(PEOPLES_COLUMNS.LAST_NAME, person.getLastname());
+		values.put(PEOPLES_COLUMNS.EMAIL, person.getEmail());
+		values.put(PEOPLES_COLUMNS.PHONE, person.getPhone());
+		values.put(PEOPLES_COLUMNS.SKYPE, person.getSkype());
+		values.put(PEOPLES_COLUMNS.EMPLOYMENT_DATE, person.getEmployment_date());
+		values.put(PEOPLES_COLUMNS.STATUS_ID, person.getStatus_id());
+
+		// Inserting Row
+		db.insert(TABLE_PEOPLES, null, values);
+		db.close(); // Closing database connection
+	}
+
+	// Getting one Person
+	public People getPerson(int id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.query(TABLE_PEOPLES, new String[] { PEOPLES_COLUMNS.ID, PEOPLES_COLUMNS.NAME, PEOPLES_COLUMNS.LAST_NAME, PEOPLES_COLUMNS.EMAIL,
+				PEOPLES_COLUMNS.PHONE, PEOPLES_COLUMNS.SKYPE, PEOPLES_COLUMNS.EMPLOYMENT_DATE, PEOPLES_COLUMNS.STATUS_ID }, PEOPLES_COLUMNS.ID + "=?",
+				new String[] { String.valueOf(id) }, null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		People person = new People(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+		person.setLastname(cursor.getString(2));
+		person.setEmail(cursor.getString(3));
+		person.setPhone(Integer.parseInt(cursor.getString(4)));
+		person.setSkype(cursor.getString(5));
+		person.setEmployment_date(cursor.getString(6));
+		person.setStatus_id(Integer.parseInt(cursor.getString(7)));
+		// return person
+		return person;
+	}
+
+	// Getting All People
+	public List<People> getAllPeople() {
+		List<People> list = new ArrayList<People>();
+		// Select All Query
+		String selectQuery = "SELECT  * FROM " + TABLE_PEOPLES;
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				People person = new People();
+				person.setId(Integer.parseInt(cursor.getString(0)));
+				person.setName(cursor.getString(1));
+				person.setLastname(cursor.getString(2));
+				person.setEmail(cursor.getString(3));
+				person.setPhone(Integer.parseInt(cursor.getString(4)));
+				person.setSkype(cursor.getString(5));
+				person.setEmployment_date(cursor.getString(6));
+				person.setStatus_id(Integer.parseInt(cursor.getString(7)));
+				// Adding to list
+				list.add(person);
+			} while (cursor.moveToNext());
+		}
+
+		// return list
+		return list;
+	}
+
+	// Updating single person
+	public int updatePerson(People person) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(PEOPLES_COLUMNS.NAME, person.getName());
+		values.put(PEOPLES_COLUMNS.LAST_NAME, person.getLastname());
+		values.put(PEOPLES_COLUMNS.EMAIL, person.getEmail());
+		values.put(PEOPLES_COLUMNS.PHONE, person.getPhone());
+		values.put(PEOPLES_COLUMNS.SKYPE, person.getSkype());
+		values.put(PEOPLES_COLUMNS.EMPLOYMENT_DATE, person.getEmployment_date());
+		values.put(PEOPLES_COLUMNS.STATUS_ID, person.getStatus_id());
+
+		// updating row
+		int result = db.update(TABLE_PEOPLES, values, PEOPLES_COLUMNS.ID + " = ?", new String[] { String.valueOf(person.getId()) });
+		db.close();
+		return result;
+	}
+
+	// Deleting single person
+	public void deletePerson(People person) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_PEOPLES, PEOPLES_COLUMNS.ID + " = ?", new String[] { String.valueOf(person.getId()) });
+		db.close();
+	}
+
+	// Getting people Count
+	public int getPeopleCount() {
+		String countQuery = "SELECT  * FROM " + TABLE_PEOPLES;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(countQuery, null);
+		cursor.close();
+		// return count
+		return cursor.getCount();
+	}
+
+	// ====PROJECT==================================================================================================
+	
+	// Adding new project
+	public void addProject(Project project) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(PROJECT_COLUMNS.NAME, project.getName());
+		values.put(PROJECT_COLUMNS.EMAIL, project.getEmail());
+		values.put(PROJECT_COLUMNS.PHONE, project.getPhone());
+		values.put(PROJECT_COLUMNS.SKYPE, project.getSkype());
+		values.put(PROJECT_COLUMNS.START_DATE, project.getsData());
+		values.put(PROJECT_COLUMNS.END_DATE, project.geteData());
+		values.put(PROJECT_COLUMNS.STATUS_ID, project.getStatus_id());
+		// Inserting Row
+		db.insert(TABLE_PROJECTS, null, values);
+		db.close(); // Closing database connection
+	}
+
+	// Getting one Project
+	public Project getProject(int id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.query(TABLE_PROJECTS, new String[] { PROJECT_COLUMNS.ID, PROJECT_COLUMNS.NAME, PROJECT_COLUMNS.EMAIL, PROJECT_COLUMNS.PHONE,
+				PROJECT_COLUMNS.SKYPE, PROJECT_COLUMNS.START_DATE, PROJECT_COLUMNS.END_DATE, PROJECT_COLUMNS.STATUS_ID }, PROJECT_COLUMNS.ID + "=?",
+				new String[] { String.valueOf(id) }, null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		Project project = new Project(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+		project.setEmail(cursor.getString(2));
+		project.setPhone(Integer.parseInt(cursor.getString(3)));
+		project.setSkype(cursor.getString(4));
+		project.setsData(cursor.getString(5));
+		project.seteData(cursor.getString(6));
+		project.setStatus_id(Integer.parseInt(cursor.getString(7)));
+		// return project
+		return project;
+	}
+
+	// Getting All Projects
+	public List<Project> getAllProject() {
+		List<Project> list = new ArrayList<Project>();
+		// Select All Query
+		String selectQuery = "SELECT  * FROM " + TABLE_PROJECTS;
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				Project project = new Project();
+				project.setId(Integer.parseInt(cursor.getString(0)));
+				project.setName(cursor.getString(1));
+				project.setEmail(cursor.getString(2));
+				project.setPhone(Integer.parseInt(cursor.getString(3)));
+				project.setSkype(cursor.getString(4));
+				project.setsData(cursor.getString(5));
+				project.seteData(cursor.getString(6));
+				project.setStatus_id(Integer.parseInt(cursor.getString(7)));
+				// Adding to list
+				list.add(project);
+			} while (cursor.moveToNext());
+		}
+
+		// return list
+		return list;
+	}
+
+	// Updating single project
+	public int updateProject(Project project) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(PROJECT_COLUMNS.NAME, project.getName());
+		values.put(PROJECT_COLUMNS.EMAIL, project.getEmail());
+		values.put(PROJECT_COLUMNS.PHONE, project.getPhone());
+		values.put(PROJECT_COLUMNS.SKYPE, project.getSkype());
+		values.put(PROJECT_COLUMNS.START_DATE, project.getsData());
+		values.put(PROJECT_COLUMNS.END_DATE, project.geteData());
+		values.put(PROJECT_COLUMNS.STATUS_ID, project.getStatus_id());
+
+		// updating row
+		int result = db.update(TABLE_PROJECTS, values, PROJECT_COLUMNS.ID + " = ?", new String[] { String.valueOf(project.getId()) });
+		db.close();
+		return result;
+	}
+
+	// Deleting single project
+	public void deleteProject(Project project) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_PROJECTS, PROJECT_COLUMNS.ID + " = ?", new String[] { String.valueOf(project.getId()) });
+		db.close();
+	}
+
+	// Getting project Count
+	public int getProjectCount() {
+		String countQuery = "SELECT  * FROM " + TABLE_PROJECTS;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(countQuery, null);
+		cursor.close();
+		// return count
+		return cursor.getCount();
+	}
+
+	// ====POSITION=================================================================================================
+	
+	// Adding new position
+	public void addPosition(Position position) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(POSITION_COLUMNS.NAME, position.getName());
+		values.put(POSITION_COLUMNS.DESCRIPTION, position.getDescription());
+		// Inserting Row
+		db.insert(TABLE_POSITIONS, null, values);
+		db.close(); // Closing database connection
+	}
+
+	// Getting one Position
+	public Position getPosition(int id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.query(TABLE_POSITIONS, new String[] { POSITION_COLUMNS.ID, POSITION_COLUMNS.NAME, POSITION_COLUMNS.DESCRIPTION },
+				POSITION_COLUMNS.ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		Position position = new Position(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+		position.setDescription(cursor.getString(2));
+		// return position
+		return position;
+	}
+
+	// Getting All Positions
+	public List<Position> getAllPositions() {
+		List<Position> list = new ArrayList<Position>();
+		// Select All Query
+		String selectQuery = "SELECT  * FROM " + TABLE_POSITIONS;
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				Position position = new Position();
+				position.setId(Integer.parseInt(cursor.getString(0)));
+				position.setName(cursor.getString(1));
+				position.setDescription(cursor.getString(2));
+
+				// Adding to list
+				list.add(position);
+			} while (cursor.moveToNext());
+		}
+
+		// return list
+		return list;
+	}
+
+	// Updating single position
+	public int updatePosition(Position position) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(POSITION_COLUMNS.NAME, position.getName());
+		values.put(POSITION_COLUMNS.DESCRIPTION, position.getDescription());
+
+		// updating row
+		int result = db.update(TABLE_POSITIONS, values, POSITION_COLUMNS.ID + " = ?", new String[] { String.valueOf(position.getId()) });
+		db.close();
+		return result;
+	}
+
+	// Deleting single position
+	public void deletePosition(Position position) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_POSITIONS, POSITION_COLUMNS.ID + " = ?", new String[] { String.valueOf(position.getId()) });
+		db.close();
+	}
+
+	// Getting position Count
+	public int getPositionCount() {
+		String countQuery = "SELECT  * FROM " + TABLE_POSITIONS;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(countQuery, null);
+		cursor.close();
+		// return count
+		return cursor.getCount();
+	}
+}

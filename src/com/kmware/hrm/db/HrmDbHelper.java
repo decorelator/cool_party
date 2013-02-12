@@ -39,7 +39,7 @@ public class HrmDbHelper {
 		Cursor c = cr.query(HrmProvider.ROLES_URI, null, null, null, null);
 		Roles[] roles = new Roles[c.getCount()];
 		int i = 0;
-
+		
 		try {
 			c.moveToFirst();
 			while (!c.isAfterLast()) {
