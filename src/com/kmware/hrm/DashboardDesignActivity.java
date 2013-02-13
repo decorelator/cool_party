@@ -1,7 +1,12 @@
 package com.kmware.hrm;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.kmware.hrm.db.DatabaseHandler;
 import com.kmware.hrm.model.People;
+import com.kmware.hrm.model.Roles;
 import com.kmware.hrm.preferences.PrefActivity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,8 +56,10 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 		prefs = PreferenceManager.getDefaultSharedPreferences(this); 
 		
 		DatabaseHandler db = new DatabaseHandler(this);
-		
-		db.addPerson(new People("Ivan","Sverdlov"));
+		db.addPerson(new People("SV", "Iv"));
+		People p = new People();
+		p.setId(1);
+		db.deletePerson(p);
 		/**
 		 * Creating all buttons instances
 		 * */

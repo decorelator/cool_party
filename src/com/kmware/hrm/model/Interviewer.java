@@ -7,11 +7,15 @@ public class Interviewer extends BaseModel {
 	private String project;
 	private String position;
 	private String phone;
-	
+	private String description;
+
+	public Interviewer() {
+	}
+
 	public Interviewer(int id, String name) {
 		super(id, name);
 	}
-	
+
 	public String getTime() {
 		return time;
 	}
@@ -52,6 +56,12 @@ public class Interviewer extends BaseModel {
 		this.phone = phone;
 	}
 
+	public String getDescription() {
+		return description;
+	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }

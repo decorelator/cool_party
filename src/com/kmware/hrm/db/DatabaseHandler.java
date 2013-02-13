@@ -3,10 +3,11 @@ package com.kmware.hrm.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kmware.hrm.ListContainer;
+import com.kmware.hrm.model.Interviewer;
 import com.kmware.hrm.model.People;
 import com.kmware.hrm.model.Position;
 import com.kmware.hrm.model.Project;
+import com.kmware.hrm.model.Roles;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,7 +19,7 @@ import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String LOGTAG = DatabaseHandler.class.getSimpleName();
-
+	private Context context;
 	// All Static variables
 	// Database Version
 	private static final int DATABASE_VERSION = 1;
@@ -35,6 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	public DatabaseHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		this.context = context;
 	}
 
 	// Creating Tables
@@ -57,7 +59,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 					+ INTERVIEW_COLUMNS.DATE + " DATE," + INTERVIEW_COLUMNS.TIME + " TIME," + INTERVIEW_COLUMNS.DESCRIPTION + " TEXT" + ")");
 			// Creating Table Roles
 			db.execSQL("CREATE TABLE " + TABLE_ROLES + " ( " + ROLES_COLUMNS.ID + " INTEGER PRIMARY KEY, " + ROLES_COLUMNS.NAME + " TEXT,"
-					+ ROLES_COLUMNS.LOWER_NAME + " TEXT," + ROLES_COLUMNS.DESCRIPTION + " TEXT" + ")");
+					+ ROLES_COLUMNS.LOWER_NAME + " TEXT," + ROLES_COLUMNS.DESCRIPTION + " TEXT," + " UNIQUE( " + ROLES_COLUMNS.NAME + " ) ON CONFLICT REPLACE "
+					+ ")");
+			
+			 String[] roles = context.getResources().getStringArray(com.kmware.hrm.R.array.people_roles);
+	           
+	           for (int i = 0; i < roles.length; i++){
+//	        	   db.execSQL(String.format("INSERT INTO " + TABLE_ROLES + " (" + ROLES_COLUMNS.NAME + " , " + ROLES_COLUMNS.LOWER_NAME + " , " + ROLES_COLUMNS.DESCRIPTION + " ) " +
+//	        			   					"VALUES ('%s' , 0, 0)", roles[i].replace("'", "''")));
+	        	   db.execSQL(String.format("INSERT INTO roles (name) " +
+		   					"VALUES ('%s')", roles[i]));   
+	           }      
 			Log.i(LOGTAG, "DataBase was Create");
 		} catch (SQLiteException ex) {
 			ex.printStackTrace();
@@ -123,7 +135,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// ====PEOPLE===================================================================================================
-	
+
 	// Adding new person
 	public void addPerson(People person) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -230,7 +242,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// ====PROJECT==================================================================================================
-	
+
 	// Adding new project
 	public void addProject(Project project) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -336,7 +348,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// ====POSITION=================================================================================================
-	
+
 	// Adding new position
 	public void addPosition(Position position) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -357,7 +369,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				POSITION_COLUMNS.ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
-
+		db.close();
 		Position position = new Position(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
 		position.setDescription(cursor.getString(2));
 		// return position
@@ -385,7 +397,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				list.add(position);
 			} while (cursor.moveToNext());
 		}
-
+		db.close();
 		// return list
 		return list;
 	}
@@ -414,6 +426,189 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	// Getting position Count
 	public int getPositionCount() {
 		String countQuery = "SELECT  * FROM " + TABLE_POSITIONS;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(countQuery, null);
+		cursor.close();
+		// return count
+		return cursor.getCount();
+	}
+
+	// ====INTERVIEW================================================================================================
+
+	// Adding new Interview
+	public void addInterview(Interviewer interview) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(INTERVIEW_COLUMNS.NAME, interview.getName());
+		values.put(INTERVIEW_COLUMNS.DATE, interview.getDate());
+		values.put(INTERVIEW_COLUMNS.TIME, interview.getTime());
+		values.put(INTERVIEW_COLUMNS.DESCRIPTION, interview.getDescription());
+
+		// Inserting Row
+		db.insert(TABLE_INTERVIEWS, null, values);
+		db.close(); // Closing database connection
+	}
+
+	// Getting one Interview
+	public Interviewer getInterview(int id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.query(TABLE_INTERVIEWS, new String[] { INTERVIEW_COLUMNS.ID, INTERVIEW_COLUMNS.NAME, INTERVIEW_COLUMNS.DATE, INTERVIEW_COLUMNS.TIME,
+				INTERVIEW_COLUMNS.DESCRIPTION }, INTERVIEW_COLUMNS.ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		Interviewer interview = new Interviewer(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+		interview.setDate(cursor.getString(2));
+		interview.setTime(cursor.getString(3));
+		interview.setDescription(cursor.getString(4));
+		// return project
+		return interview;
+	}
+
+	// Getting All Interview
+	public List<Interviewer> getAllInterviewer() {
+		List<Interviewer> list = new ArrayList<Interviewer>();
+		// Select All Query
+		String selectQuery = "SELECT  * FROM " + TABLE_INTERVIEWS;
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				Interviewer interview = new Interviewer();
+				interview.setId(Integer.parseInt(cursor.getString(0)));
+				interview.setName(cursor.getString(1));
+				interview.setDate(cursor.getString(2));
+				interview.setTime(cursor.getString(3));
+				interview.setDescription(cursor.getString(4));
+				// Adding to list
+				list.add(interview);
+			} while (cursor.moveToNext());
+		}
+
+		// return list
+		return list;
+	}
+
+	// Updating single interview
+	public int updateInterview(Interviewer interview) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(INTERVIEW_COLUMNS.NAME, interview.getName());
+		values.put(INTERVIEW_COLUMNS.DATE, interview.getDate());
+		values.put(INTERVIEW_COLUMNS.TIME, interview.getTime());
+		values.put(INTERVIEW_COLUMNS.DESCRIPTION, interview.getDescription());
+
+		// updating row
+		int result = db.update(TABLE_INTERVIEWS, values, INTERVIEW_COLUMNS.ID + " = ?", new String[] { String.valueOf(interview.getId()) });
+		db.close();
+		return result;
+	}
+
+	// Deleting single interview
+	public void deleteInterview(Interviewer interview) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_INTERVIEWS, INTERVIEW_COLUMNS.ID + " = ?", new String[] { String.valueOf(interview.getId()) });
+		db.close();
+	}
+
+	// Getting interview Count
+	public int getInterviewCount() {
+		String countQuery = "SELECT  * FROM " + TABLE_INTERVIEWS;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(countQuery, null);
+		cursor.close();
+		// return count
+		return cursor.getCount();
+	}
+
+	// ====ROLES====================================================================================================
+
+	// Adding new Role
+	public void addRole(Roles role) {
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(ROLES_COLUMNS.NAME, role.getRoleName());
+		values.put(ROLES_COLUMNS.LOWER_NAME, role.getLoweredRoleName());
+		values.put(ROLES_COLUMNS.DESCRIPTION, role.getDescription());
+		// Inserting Row
+		db.insert(TABLE_ROLES, null, values);
+		db.close(); // Closing database connection
+	}
+
+	// Getting one Role
+	public Roles getRole(int id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.query(TABLE_ROLES, new String[] { ROLES_COLUMNS.ID, ROLES_COLUMNS.NAME, ROLES_COLUMNS.LOWER_NAME, ROLES_COLUMNS.DESCRIPTION },
+				ROLES_COLUMNS.ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		Roles role = new Roles(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+		role.setLoweredRoleName(cursor.getString(2));
+		role.setDescription(cursor.getString(3));
+		// return role
+		return role;
+	}
+
+	// Getting All Roles
+	public List<Roles> getAllRoles() {
+		List<Roles> list = new ArrayList<Roles>();
+		// Select All Query
+		String selectQuery = "SELECT  * FROM " + TABLE_ROLES;
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				Roles role = new Roles();
+				role.setRoleId(Integer.parseInt(cursor.getString(0)));
+				role.setRoleName(cursor.getString(1));
+				role.setLoweredRoleName(cursor.getString(2));
+				role.setDescription(cursor.getString(3));
+				// Adding to list
+				list.add(role);
+			} while (cursor.moveToNext());
+		}
+
+		// return list
+		return list;
+	}
+
+	// Updating single role
+	public int updateRole(Roles role) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(ROLES_COLUMNS.NAME, role.getRoleName());
+		values.put(ROLES_COLUMNS.LOWER_NAME, role.getLoweredRoleName());
+		values.put(ROLES_COLUMNS.DESCRIPTION, role.getDescription());
+
+		// updating row
+		int result = db.update(TABLE_ROLES, values, ROLES_COLUMNS.ID + " = ?", new String[] { String.valueOf(role.getRoleId()) });
+		db.close();
+		return result;
+	}
+
+	// Deleting single Role
+	public void deleteRole(Roles role) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_ROLES, ROLES_COLUMNS.ID + " = ?", new String[] { String.valueOf(role.getRoleId()) });
+		db.close();
+	}
+
+	// Getting Roles Count
+	public int getRolesCount() {
+		String countQuery = "SELECT  * FROM " + TABLE_ROLES;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
 		cursor.close();

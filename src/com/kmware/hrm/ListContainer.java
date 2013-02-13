@@ -7,6 +7,7 @@ import com.kmware.hrm.adapters.CustomInterviewerAdapter;
 import com.kmware.hrm.adapters.CustomPeopleAdapter;
 import com.kmware.hrm.adapters.CustomPositionAdapter;
 import com.kmware.hrm.adapters.CustomProjectAdapter;
+import com.kmware.hrm.db.DatabaseHandler;
 import com.kmware.hrm.model.BaseModel;
 import com.kmware.hrm.model.Interviewer;
 import com.kmware.hrm.model.People;
@@ -17,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -58,12 +60,14 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	ListView lv_Conteiner;
 	private String extra;
 	private boolean addButton;
-//	private ArrayList<BaseModel> dataList;
+	// private ArrayList<BaseModel> dataList;
 	private CustomContainerAdapter<? extends BaseModel> listAdapter;
 	private ArrayList<People> t_people;
 	private ArrayList<Project> t_project;
 	private ArrayList<Position> t_position;
 	private ArrayList<Interviewer> t_interview;
+
+	private DatabaseHandler db;
 
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,8 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 	private void init() {
 
+		db = new DatabaseHandler(this);
+
 		ll_NavigationButtons = (LinearLayout) findViewById(R.id.ll_NavigationButtons);
 
 		iv_People = (Button) findViewById(R.id.iv_People);
@@ -108,7 +114,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		iv_Interviews.setTag(2);
 
 		current = iv_People;
-		
+
 		lv_Conteiner = (ListView) findViewById(R.id.lv_Conteiner);
 		parent = (LinearLayout) current.getParent();
 		parent.removeView(current);
@@ -251,9 +257,10 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			extra = getResources().getString(R.string.cat_positions);
 			// Filling of the list of positions by random values
 			t_position = new ArrayList<Position>();
-			for (int i = 0; i < 20; i++) {
-				Position p = new Position(i, "Position" + i);
-				t_position.add(p);
+			try {
+				t_position.addAll(db.getAllPositions());
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 
 			listAdapter = new CustomPositionAdapter(this, t_position, R.layout.list_container_row_position);
@@ -292,8 +299,11 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			addprefBarBtn(android.R.drawable.ic_input_add, new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (extra.length() > 0)
-						startActivityForResult((Intent) checkingCategory(CHECK_INTENT_EDIT)/* CHECK_INTENT_ADD */, RES_EDIT);
+					if (extra.length() > 0) {
+						Intent intent = new Intent();
+						intent = (Intent) checkingCategory(CHECK_INTENT_EDIT);
+						startActivityForResult(intent, RES_ADD);
+					}
 				}
 			});
 		}
@@ -307,12 +317,48 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		case RES_EDIT:
 
 			if (resultCode == RESULT_OK) {
+				try {
+					switch ((Integer) checkingCategory(CHECK_R_ID)) {
+					case 1:
+						break;
+					case 2:
+
+						break;
+					case 3:
+						t_position.clear();
+						t_position.addAll(db.getAllPositions());
+						break;
+					case 4:
+						break;
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				listAdapter.notifyDataSetChanged();
 			}
 			break;
 
 		case RES_ADD:
 			if (resultCode == RESULT_OK) {
+
+				try {
+					switch ((Integer) checkingCategory(CHECK_R_ID)) {
+					case 1:
+						break;
+					case 2:
+
+						break;
+					case 3:
+						t_position.clear();
+						t_position.addAll(db.getAllPositions());
+						break;
+					case 4:
+						break;
+					}
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				listAdapter.notifyDataSetChanged();
 			}
 			break;
@@ -330,23 +376,40 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	public boolean onContextItemSelected(MenuItem item) {
 
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-	    int index = info.position;
+		int index = info.position;
 		switch (item.getItemId()) {
 		case R.id.lv_row_edit:
 			Intent intent = new Intent();
 			intent = (Intent) checkingCategory(CHECK_INTENT_EDIT);
+			switch ((Integer) checkingCategory(CHECK_R_ID)) {
+			case 1:
+				break;
+			case 2:
+
+				break;
+			case 3:
+				intent.putExtra("ID", t_position.get(index).getId());
+				Log.i(LOGTAG, "Edit position - " + t_position.get(index).getId() + " " + t_position.get(index).getName());
+				break;
+			case 4:
+				break;
+			}
+
 			startActivityForResult(intent, RES_EDIT);
 			return true;
 		case R.id.lv_row_delete:
-			switch((Integer) checkingCategory(CHECK_R_ID)){
+			switch ((Integer) checkingCategory(CHECK_R_ID)) {
 			case 1:
 				t_people.remove(index);
 				break;
 			case 2:
 				t_project.remove(index);
+
 				break;
 			case 3:
 				t_position.remove(index);
+				db.deletePosition(db.getPosition(t_position.get(index).getId()));
+				Log.i(LOGTAG, "Delete position - " + (index + 1) + " " + t_position.get(index).getName());
 				break;
 			case 4:
 				t_interview.remove(index);

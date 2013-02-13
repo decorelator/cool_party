@@ -10,6 +10,18 @@ public class Roles {
 	private String loweredRoleName;
 	private String description;
 
+	public Roles(){
+	}
+	
+	public Roles(String name){
+		this.roleName = name;
+	}
+	
+	public Roles(int id, String name){
+		this.roleId = id;
+		this.roleName = name;
+	}
+	
 	public int getAppId() {
 		return appId;
 	}
