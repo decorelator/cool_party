@@ -1,8 +1,10 @@
 package com.kmware.hrm.adapters;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.kmware.hrm.model.BaseModel;
+import com.kmware.hrm.model.Position;
 
 import android.content.Context;
 import android.view.LayoutInflater;

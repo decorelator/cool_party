@@ -1,11 +1,14 @@
 package com.kmware.hrm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import com.kmware.hrm.model.BaseModel;
+
+import com.kmware.hrm.db.DatabaseHandler;
+import com.kmware.hrm.model.People;
+import com.kmware.hrm.model.Position;
+import com.kmware.hrm.model.Roles;
 import com.kmware.hrm.view.CustomDatePickerDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -42,6 +45,7 @@ public class EditPeople extends ZActivity {
 	Button btn_AddRole;
 	Button btn_EmployeeDate;
 	EditText edt_Name;
+	EditText edt_Lastname;
 	EditText edt_Email;
 	EditText edt_Telephone;
 	EditText edt_Skype;
@@ -49,13 +53,19 @@ public class EditPeople extends ZActivity {
 	LinearLayout ll_listview;
 	LinearLayout ll_roles;
 
-	private List<String> set_roles;
 	private ArrayAdapter<String> sp_Adapter;
 	private int year;
 	private int month;
 	private int day;
 	private String extra;
 	private List<String> roles;
+	private List<String> set_roles;
+	private List<Roles> role;
+	private List<Position> position;
+	// private List<People> people;
+	private People person;
+
+	private DatabaseHandler db;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +73,7 @@ public class EditPeople extends ZActivity {
 		super.onCreate(savedInstanceState);
 		backHomeBar(R.drawable.actionbar_back_indicator, DashboardDesignActivity.createIntent(this));
 		getExtra();
-		if (extra.toString().length() != 0) {
+		if (extra != null) {
 			setTitle(getResources().getString(R.string.people_edit), android.R.drawable.ic_input_add);
 			addprefBarBtn(android.R.drawable.arrow_down_float, new OnClickListener() {
 				@Override
@@ -109,16 +119,22 @@ public class EditPeople extends ZActivity {
 	}
 
 	private void init() {
-		
+		db = new DatabaseHandler(this);
+		role = new ArrayList<Roles>(db.getAllRoles());
+		position = new ArrayList<Position>(db.getAllPositions());
+
 		Calendar c = Calendar.getInstance();
-		year = c.get(Calendar.YEAR);
-		month = c.get(Calendar.MONTH);
-		day = c.get(Calendar.DAY_OF_MONTH);
+		if (!parseDate()) {
+			year = c.get(Calendar.YEAR);
+			month = c.get(Calendar.MONTH);
+			day = c.get(Calendar.DAY_OF_MONTH);
+		}
 		if (roles == null)
 			roles = new ArrayList<String>();
 
 		sp_Status = (Spinner) findViewById(R.id.sp_people_status);
 		edt_Name = (EditText) findViewById(R.id.edt_people_name);
+		edt_Lastname = (EditText) findViewById(R.id.edt_people_lastname);
 		sp_Position = (Spinner) findViewById(R.id.sp_people_position);
 		sp_Role = (Spinner) findViewById(R.id.sp_people_role);
 		edt_Email = (EditText) findViewById(R.id.edt_people_email);
@@ -142,10 +158,6 @@ public class EditPeople extends ZActivity {
 					addRole();
 			}
 		});
-		ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
-		for (int i = 1; i <= 10; i++) {
-			dataList.add(new BaseModel(i, "Project " + i * 1000));
-		}
 		sp_Status.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -166,6 +178,12 @@ public class EditPeople extends ZActivity {
 
 			}
 		});
+
+		List<String> pos = new ArrayList<String>();
+		for (int i = 0; i < position.size(); i++) {
+			pos.add(position.get(i).getName());
+		}
+		setSpinnerAdapter(R.id.sp_people_position, pos);
 		sp_Position.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -179,9 +197,13 @@ public class EditPeople extends ZActivity {
 			}
 		});
 		set_roles = new ArrayList<String>();
-		set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
 
-		setSpinnerAdapter(set_roles);
+		// set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
+
+		for (int i = 0; i < role.size(); i++) {
+			set_roles.add(role.get(i).getRoleName());
+		}
+		setSpinnerAdapter(R.id.sp_people_role, set_roles);
 		sp_Role.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -196,6 +218,50 @@ public class EditPeople extends ZActivity {
 		});
 
 		ll_roles = (LinearLayout) findViewById(R.id.ll_people_roles);
+		if (getIntent().getIntExtra("ID", 0) != 0) {
+			enterField(getIntent().getIntExtra("ID", 0));
+		}
+	}
+
+	public void enterField(int id) {
+
+		// people = new ArrayList<People>();
+		person = new People();
+		try {
+			person.setPerson(db.getPerson(id));
+			sp_Status.setSelection(person.getStatus_id());
+			edt_Name.setText(person.getName());
+			edt_Lastname.setText(person.getLastname());
+			int i = 0;
+			while (((position.get(i)).getId() != person.getPosition()) && (i < position.size())) {
+				i++;
+			}
+			sp_Position.setSelection(i);
+			// sp_Role
+			edt_Email.setText(person.getEmail());
+
+			if (person.getPhone() != 0) {
+				edt_Telephone.setText(String.valueOf(person.getPhone()));
+			} else
+				edt_Telephone.setText("");
+			edt_Skype.setText(person.getSkype());
+			String db_role = "" + db.getPerson(getIntent().getIntExtra("ID", 0)).getRole();
+			if (db_role.length() > 1 && !db_role.equals("null")) {
+				String[] db_roles = db_role.split(":");
+				for (i = 0; i < db_roles.length; i++) {
+					int j = 0;
+					while (!set_roles.get(j).equals(db.getRole(Integer.parseInt(db_roles[i])).getRoleName())) {
+						j++;
+					}
+					sp_Role.setSelection(j);
+					addRole();
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Log.w(LOGTAG, "DB have not ID = " + id);
+		}
+
 	}
 
 	private void getExtra() {
@@ -215,11 +281,11 @@ public class EditPeople extends ZActivity {
 		String role = sp_Role.getSelectedItem().toString();
 		set_roles.remove(role);
 		if (!set_roles.isEmpty()) {
-			setSpinnerAdapter(set_roles);
+			setSpinnerAdapter(R.id.sp_people_role, set_roles);
 
 		} else {
 			set_roles.add(getResources().getString(R.string.empty));
-			setSpinnerAdapter(set_roles);
+			setSpinnerAdapter(R.id.sp_people_role, set_roles);
 		}
 
 		roles.add(role);
@@ -250,9 +316,14 @@ public class EditPeople extends ZActivity {
 					roles.remove(tv_role.getText());
 
 					set_roles.clear();
-					set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
+
+					for (int i = 0; i < role.size(); i++) {
+						set_roles.add(role.get(i).getRoleName());
+					}
+
+					// set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
 					set_roles.removeAll(roles);
-					setSpinnerAdapter(set_roles);
+					setSpinnerAdapter(R.id.sp_people_role, set_roles);
 					sp_Role.setSelection(0);
 				}
 			});
@@ -262,10 +333,17 @@ public class EditPeople extends ZActivity {
 
 	}
 
-	private void setSpinnerAdapter(List<String> lst) {
+	private void setSpinnerAdapter(int id, List<String> lst) {
 		sp_Adapter = new ArrayAdapter<String>(EditPeople.this, android.R.layout.simple_spinner_item, lst);
 		sp_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		sp_Role.setAdapter(sp_Adapter);
+		switch (id) {
+		case R.id.sp_people_role:
+			sp_Role.setAdapter(sp_Adapter);
+			break;
+		case R.id.sp_people_position:
+			sp_Position.setAdapter(sp_Adapter);
+			break;
+		}
 
 	}
 
@@ -388,8 +466,39 @@ public class EditPeople extends ZActivity {
 	}
 
 	private void save() {
-		setResult(RESULT_OK);
-		finish();
+		if (edt_Name.getText().toString().trim().length() > 0) {
+			People person = new People();
+			person.setName(edt_Name.getText().toString().trim());
+			person.setLastname(edt_Lastname.getText().toString().trim());
+
+			if (sp_Status.getSelectedItemId() == 1) {
+				person.setSkype(edt_Skype.getText().toString().trim());
+				person.setEmail(edt_Email.getText().toString().trim());
+				if (edt_Telephone.getText().toString().trim().length() > 0) {
+					person.setPhone(Integer.parseInt(edt_Telephone.getText().toString().trim()));
+				}
+				person.setEmployment_date("" + day + ":" + month + ":" + year);
+			}
+			person.setStatus_id(sp_Status.getSelectedItemPosition());
+			person.setPosition((db.getPositionByName(String.valueOf(sp_Position.getSelectedItem()))).getId());
+			String str = "";
+			for (int i = 0; i < roles.size(); i++) {
+				str = str + String.valueOf(db.getRoleByName(roles.get(i)).getRoleId()) + ":";
+			}
+			if (str.length() > 0 && str.charAt(str.length() - 1) == ':') {
+				str = str.substring(0, str.length() - 1);
+			}
+			person.setRole(str);
+			if (getIntent().getIntExtra("ID", 0) == 0) {
+				db.addPerson(person);
+			} else {
+				person.setId(getIntent().getIntExtra("ID", 0));
+				db.updatePerson(person);
+			}
+
+			setResult(RESULT_OK);
+			finish();
+		}
 	}
 
 	@Override
@@ -398,10 +507,13 @@ public class EditPeople extends ZActivity {
 		roles = savedInstanceState.getStringArrayList(SAVE_ROLE);
 		resetRoles();
 		set_roles.clear();
-		set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
+		for (int i = 0; i < role.size(); i++) {
+			set_roles.add(role.get(i).getRoleName());
+		}
+		// set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
 		set_roles.removeAll(roles);
 		if (!set_roles.isEmpty())
-			setSpinnerAdapter(set_roles);
+			setSpinnerAdapter(R.id.sp_people_role, set_roles);
 		else
 			set_roles.add(getResources().getString(R.string.empty));
 		sp_Role.setSelection(0);
@@ -413,6 +525,28 @@ public class EditPeople extends ZActivity {
 		super.onSaveInstanceState(outState);
 		outState.putStringArrayList(SAVE_ROLE, (ArrayList<String>) roles);
 		Log.d(LOGTAG, "onSaveInstanceState - " + roles.toString());
+	}
+
+	private boolean parseDate() {
+		try {
+			String parser;
+			if (db.getPerson(getIntent().getIntExtra("ID", 0)) != null) {
+				parser = "" + db.getPerson(getIntent().getIntExtra("ID", 0)).getEmployment_date();
+				String[] date = parser.split(":");
+				if (date.length > 1 && !parser.equals("null")) {
+					year = Integer.parseInt(date[2]);
+					month = Integer.parseInt(date[1]);
+					day = Integer.parseInt(date[0]);
+					return true;
+				}
+				return false;
+			} else {
+				return false;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 }

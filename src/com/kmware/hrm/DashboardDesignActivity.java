@@ -55,11 +55,6 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 	private void init() {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this); 
 		
-		DatabaseHandler db = new DatabaseHandler(this);
-		db.addPerson(new People("SV", "Iv"));
-		People p = new People();
-		p.setId(1);
-		db.deletePerson(p);
 		/**
 		 * Creating all buttons instances
 		 * */

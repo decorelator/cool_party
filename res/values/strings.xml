@@ -56,6 +56,8 @@
     <!-- PEOPLE -->
     <string name="people_name">Name</string>
     <string name="people_name_title">Name:</string>
+    <string name="people_lastname">Lastname</string>
+    <string name="people_lastname_title">Lastname:</string>
     <string name="people_position">Position</string>
     <string name="people_position_title">Position:</string>
     <string name="people_projects">Projects</string>
@@ -70,6 +72,7 @@
     <string name="people_tel">Phone</string>
     <string name="people_tel_title">Phone:</string>
     <string name="people_status">Status</string>
+    <string name="people_status_title">Status:</string>
     <string name="people_info">Information:</string>
     <string name="people_candidate">Candidate</string>
     <string name="people_employee">Person</string>

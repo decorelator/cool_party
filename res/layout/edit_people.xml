@@ -41,6 +41,20 @@
 
                 <requestFocus />
             </EditText>
+            
+            <com.kmware.hrm.view.SimpleTextView
+                style="@style/text"
+                android:text="@string/people_lastname" />
+
+            <EditText
+                android:id="@+id/edt_people_lastname"
+                style="@style/edit_text.singleline"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:singleLine="true" >
+
+                <requestFocus />
+            </EditText>
 
             <RelativeLayout
                 android:id="@+id/rl_people_role"

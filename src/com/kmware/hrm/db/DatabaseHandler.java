@@ -46,7 +46,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			// Creating Table Peoples
 			db.execSQL("CREATE TABLE " + TABLE_PEOPLES + " ( " + PEOPLES_COLUMNS.ID + " INTEGER PRIMARY KEY, " + PEOPLES_COLUMNS.NAME + " TEXT, "
 					+ PEOPLES_COLUMNS.LAST_NAME + " TEXT," + PEOPLES_COLUMNS.EMAIL + " TEXT," + PEOPLES_COLUMNS.PHONE + " LONG," + PEOPLES_COLUMNS.SKYPE
-					+ " TEXT," + PEOPLES_COLUMNS.EMPLOYMENT_DATE + " DATE," + PEOPLES_COLUMNS.STATUS_ID + " INTEGER" + ")");
+					+ " TEXT," + PEOPLES_COLUMNS.EMPLOYMENT_DATE + " DATE," + PEOPLES_COLUMNS.ROLES + " TEXT," + PEOPLES_COLUMNS.POSITION + " INTEGER,"
+					+ PEOPLES_COLUMNS.STATUS_ID + " INTEGER" + ")");
 			// Creating Table Projects
 			db.execSQL("CREATE TABLE " + TABLE_PROJECTS + " ( " + PROJECT_COLUMNS.ID + " INTEGER PRIMARY KEY, " + PROJECT_COLUMNS.NAME + " TEXT,"
 					+ PROJECT_COLUMNS.EMAIL + " TEXT," + PROJECT_COLUMNS.PHONE + " LONG," + PROJECT_COLUMNS.SKYPE + " TEXT," + PROJECT_COLUMNS.START_DATE
@@ -61,15 +62,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			db.execSQL("CREATE TABLE " + TABLE_ROLES + " ( " + ROLES_COLUMNS.ID + " INTEGER PRIMARY KEY, " + ROLES_COLUMNS.NAME + " TEXT,"
 					+ ROLES_COLUMNS.LOWER_NAME + " TEXT," + ROLES_COLUMNS.DESCRIPTION + " TEXT," + " UNIQUE( " + ROLES_COLUMNS.NAME + " ) ON CONFLICT REPLACE "
 					+ ")");
-			
-			 String[] roles = context.getResources().getStringArray(com.kmware.hrm.R.array.people_roles);
-	           
-	           for (int i = 0; i < roles.length; i++){
-//	        	   db.execSQL(String.format("INSERT INTO " + TABLE_ROLES + " (" + ROLES_COLUMNS.NAME + " , " + ROLES_COLUMNS.LOWER_NAME + " , " + ROLES_COLUMNS.DESCRIPTION + " ) " +
-//	        			   					"VALUES ('%s' , 0, 0)", roles[i].replace("'", "''")));
-	        	   db.execSQL(String.format("INSERT INTO roles (name) " +
-		   					"VALUES ('%s')", roles[i]));   
-	           }      
+
+			String[] roles = context.getResources().getStringArray(com.kmware.hrm.R.array.people_roles);
+
+			for (int i = 0; i < roles.length; i++) {
+				db.execSQL(String.format("INSERT INTO roles (name) " + "VALUES ('%s')", roles[i]));
+			}
 			Log.i(LOGTAG, "DataBase was Create");
 		} catch (SQLiteException ex) {
 			ex.printStackTrace();
@@ -99,6 +97,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		public static String PHONE = "phone";
 		public static String SKYPE = "skype";
 		public static String EMPLOYMENT_DATE = "empl_date";
+		public static String ROLES = "roles";
+		public static String POSITION = "position";
 		public static String STATUS_ID = "statusID";
 	}
 
@@ -147,6 +147,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(PEOPLES_COLUMNS.PHONE, person.getPhone());
 		values.put(PEOPLES_COLUMNS.SKYPE, person.getSkype());
 		values.put(PEOPLES_COLUMNS.EMPLOYMENT_DATE, person.getEmployment_date());
+		values.put(PEOPLES_COLUMNS.ROLES, person.getRole());
+		values.put(PEOPLES_COLUMNS.POSITION, person.getPosition());
 		values.put(PEOPLES_COLUMNS.STATUS_ID, person.getStatus_id());
 
 		// Inserting Row
@@ -156,30 +158,36 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	// Getting one Person
 	public People getPerson(int id) {
-		SQLiteDatabase db = this.getReadableDatabase();
+		if (id != 0) {
+			SQLiteDatabase db = this.getReadableDatabase();
+			Cursor cursor = db.query(TABLE_PEOPLES, new String[] { PEOPLES_COLUMNS.ID, PEOPLES_COLUMNS.NAME, PEOPLES_COLUMNS.LAST_NAME, PEOPLES_COLUMNS.EMAIL,
+					PEOPLES_COLUMNS.PHONE, PEOPLES_COLUMNS.SKYPE, PEOPLES_COLUMNS.EMPLOYMENT_DATE, PEOPLES_COLUMNS.ROLES, PEOPLES_COLUMNS.POSITION,
+					PEOPLES_COLUMNS.STATUS_ID }, PEOPLES_COLUMNS.ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+			if (cursor != null)
+				cursor.moveToFirst();
 
-		Cursor cursor = db.query(TABLE_PEOPLES, new String[] { PEOPLES_COLUMNS.ID, PEOPLES_COLUMNS.NAME, PEOPLES_COLUMNS.LAST_NAME, PEOPLES_COLUMNS.EMAIL,
-				PEOPLES_COLUMNS.PHONE, PEOPLES_COLUMNS.SKYPE, PEOPLES_COLUMNS.EMPLOYMENT_DATE, PEOPLES_COLUMNS.STATUS_ID }, PEOPLES_COLUMNS.ID + "=?",
-				new String[] { String.valueOf(id) }, null, null, null, null);
-		if (cursor != null)
-			cursor.moveToFirst();
-
-		People person = new People(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
-		person.setLastname(cursor.getString(2));
-		person.setEmail(cursor.getString(3));
-		person.setPhone(Integer.parseInt(cursor.getString(4)));
-		person.setSkype(cursor.getString(5));
-		person.setEmployment_date(cursor.getString(6));
-		person.setStatus_id(Integer.parseInt(cursor.getString(7)));
+			People person = new People(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+			person.setLastname(cursor.getString(2));
+			person.setEmail(cursor.getString(3));
+			person.setPhone(Integer.parseInt(cursor.getString(4)));
+			person.setSkype(cursor.getString(5));
+			person.setEmployment_date(cursor.getString(6));
+			person.setRole(cursor.getString(7));
+			person.setPosition(Integer.parseInt(cursor.getString(8)));
+			person.setStatus_id(Integer.parseInt(cursor.getString(9)));
+			cursor.close();
+			db.close();
+			return person;
+		}
 		// return person
-		return person;
+		return null;
 	}
 
 	// Getting All People
 	public List<People> getAllPeople() {
 		List<People> list = new ArrayList<People>();
 		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_PEOPLES;
+		String selectQuery = "SELECT  * FROM " + TABLE_PEOPLES + " ORDER BY " + PEOPLES_COLUMNS.LAST_NAME + " ASC";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -195,12 +203,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				person.setPhone(Integer.parseInt(cursor.getString(4)));
 				person.setSkype(cursor.getString(5));
 				person.setEmployment_date(cursor.getString(6));
-				person.setStatus_id(Integer.parseInt(cursor.getString(7)));
+				person.setRole(cursor.getString(7));
+				person.setPosition(Integer.parseInt(cursor.getString(8)));
+				person.setStatus_id(Integer.parseInt(cursor.getString(9)));
 				// Adding to list
 				list.add(person);
 			} while (cursor.moveToNext());
 		}
-
+		cursor.close();
+		db.close();
 		// return list
 		return list;
 	}
@@ -216,6 +227,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(PEOPLES_COLUMNS.PHONE, person.getPhone());
 		values.put(PEOPLES_COLUMNS.SKYPE, person.getSkype());
 		values.put(PEOPLES_COLUMNS.EMPLOYMENT_DATE, person.getEmployment_date());
+		values.put(PEOPLES_COLUMNS.ROLES, person.getRole());
+		values.put(PEOPLES_COLUMNS.POSITION, person.getPosition());
 		values.put(PEOPLES_COLUMNS.STATUS_ID, person.getStatus_id());
 
 		// updating row
@@ -237,6 +250,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
 		cursor.close();
+		db.close();
 		// return count
 		return cursor.getCount();
 	}
@@ -277,6 +291,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		project.setsData(cursor.getString(5));
 		project.seteData(cursor.getString(6));
 		project.setStatus_id(Integer.parseInt(cursor.getString(7)));
+		cursor.close();
+		db.close();
 		// return project
 		return project;
 	}
@@ -285,7 +301,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public List<Project> getAllProject() {
 		List<Project> list = new ArrayList<Project>();
 		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_PROJECTS;
+		String selectQuery = "SELECT  * FROM " + TABLE_PROJECTS + " ORDER BY " + PROJECT_COLUMNS.NAME + " ASC";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -306,7 +322,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				list.add(project);
 			} while (cursor.moveToNext());
 		}
-
+		cursor.close();
+		db.close();
 		// return list
 		return list;
 	}
@@ -343,6 +360,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
 		cursor.close();
+		db.close();
 		// return count
 		return cursor.getCount();
 	}
@@ -369,9 +387,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				POSITION_COLUMNS.ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
-		db.close();
 		Position position = new Position(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
 		position.setDescription(cursor.getString(2));
+		cursor.close();
+		db.close();
+		// return position
+		return position;
+	}
+
+	// Getting one Position by Name
+	public Position getPositionByName(String name) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.query(TABLE_POSITIONS, new String[] { POSITION_COLUMNS.ID, POSITION_COLUMNS.NAME, POSITION_COLUMNS.DESCRIPTION },
+				POSITION_COLUMNS.NAME + "=?", new String[] { name }, null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+		Position position = new Position(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+		position.setDescription(cursor.getString(2));
+		cursor.close();
+		db.close();
 		// return position
 		return position;
 	}
@@ -380,7 +415,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public List<Position> getAllPositions() {
 		List<Position> list = new ArrayList<Position>();
 		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_POSITIONS;
+		String selectQuery = "SELECT  * FROM " + TABLE_POSITIONS + " ORDER BY " + POSITION_COLUMNS.NAME + " ASC";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -397,6 +432,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				list.add(position);
 			} while (cursor.moveToNext());
 		}
+		cursor.close();
 		db.close();
 		// return list
 		return list;
@@ -429,6 +465,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
 		cursor.close();
+		db.close();
 		// return count
 		return cursor.getCount();
 	}
@@ -463,6 +500,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		interview.setDate(cursor.getString(2));
 		interview.setTime(cursor.getString(3));
 		interview.setDescription(cursor.getString(4));
+		cursor.close();
+		db.close();
 		// return project
 		return interview;
 	}
@@ -489,7 +528,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				list.add(interview);
 			} while (cursor.moveToNext());
 		}
-
+		cursor.close();
+		db.close();
 		// return list
 		return list;
 	}
@@ -523,6 +563,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
 		cursor.close();
+		db.close();
 		// return count
 		return cursor.getCount();
 	}
@@ -554,6 +595,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		Roles role = new Roles(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
 		role.setLoweredRoleName(cursor.getString(2));
 		role.setDescription(cursor.getString(3));
+		cursor.close();
+		db.close();
+		// return role
+		return role;
+	}
+
+	// Getting one Role by Name
+	public Roles getRoleByName(String name) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.query(TABLE_ROLES, new String[] { ROLES_COLUMNS.ID, ROLES_COLUMNS.NAME, ROLES_COLUMNS.LOWER_NAME, ROLES_COLUMNS.DESCRIPTION },
+				ROLES_COLUMNS.NAME + "=?", new String[] { name }, null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		Roles role = new Roles(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+		role.setLoweredRoleName(cursor.getString(2));
+		role.setDescription(cursor.getString(3));
+		cursor.close();
+		db.close();
 		// return role
 		return role;
 	}
@@ -579,7 +640,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				list.add(role);
 			} while (cursor.moveToNext());
 		}
-
+		cursor.close();
+		db.close();
 		// return list
 		return list;
 	}
@@ -612,6 +674,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
 		cursor.close();
+		db.close();
 		// return count
 		return cursor.getCount();
 	}

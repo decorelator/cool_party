@@ -4,7 +4,7 @@ import java.util.List;
 
 public class People extends BaseModel {
 	private String role;
-	private String position;
+	private int position;
 	private String lastname;
 	private String email;
 	private int phone;
@@ -22,7 +22,7 @@ public class People extends BaseModel {
 		this.lastname = lastname;
 	}
 	
-	public People(int id, String name, String position) {
+	public People(int id, String name, int position) {
 		super(id, name);
 		this.position = position;
 	}
@@ -95,12 +95,29 @@ public class People extends BaseModel {
 		this.projects = projects;
 	}
 
-	public String getPosition() {
+	public int getPosition() {
 		return position;
 	}
 
-	public void setPosition(String position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
+	
+	public void setPerson(People person){
+		setName(person.getName());
+		this.role = person.getRole();
+		this.position = person.getPosition();
+		this.lastname = person.getLastname();
+		this.email = person.getEmail();
+		this.phone = person.getPhone();
+		this.skype = person.getSkype();
+		this.employment_date = person.getEmployment_date();
+		this.status_id = person.getStatus_id();
+	}
 
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+	
 }

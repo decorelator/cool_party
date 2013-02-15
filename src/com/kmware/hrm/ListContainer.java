@@ -1,7 +1,6 @@
 package com.kmware.hrm;
 
 import java.util.ArrayList;
-
 import com.kmware.hrm.adapters.CustomContainerAdapter;
 import com.kmware.hrm.adapters.CustomInterviewerAdapter;
 import com.kmware.hrm.adapters.CustomPeopleAdapter;
@@ -94,7 +93,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	private void init() {
 
 		db = new DatabaseHandler(this);
-
+		
 		ll_NavigationButtons = (LinearLayout) findViewById(R.id.ll_NavigationButtons);
 
 		iv_People = (Button) findViewById(R.id.iv_People);
@@ -142,10 +141,14 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 		lv_Conteiner.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startActivity((Intent) checkingCategory(CHECK_CLASS));
+				Intent intent = (Intent) checkingCategory(CHECK_CLASS);
+				intent.putExtra("ID", t_people.get(position).getId());
+				startActivity(intent);
 			}
 		});
 		registerForContextMenu(lv_Conteiner);
+		
+		db.close();
 	}
 
 	private void getExtra() {
@@ -220,9 +223,10 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			extra = getResources().getString(R.string.cat_people);
 			// Filling of the list of peoples by random values
 			t_people = new ArrayList<People>();
-			for (int i = 0; i < 20; i++) {
-				People p = new People(i, "Man" + i, "p" + System.currentTimeMillis());
-				t_people.add(p);
+			try {
+				t_people.addAll(db.getAllPeople());
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 			listAdapter = new CustomPeopleAdapter(this, t_people, R.layout.list_container_row_people);
 			lv_Conteiner.setAdapter(listAdapter);
@@ -320,6 +324,8 @@ public class ListContainer extends ZActivity implements OnClickListener {
 				try {
 					switch ((Integer) checkingCategory(CHECK_R_ID)) {
 					case 1:
+						t_people.clear();
+						t_people.addAll(db.getAllPeople());
 						break;
 					case 2:
 
@@ -344,6 +350,8 @@ public class ListContainer extends ZActivity implements OnClickListener {
 				try {
 					switch ((Integer) checkingCategory(CHECK_R_ID)) {
 					case 1:
+						t_people.clear();
+						t_people.addAll(db.getAllPeople());
 						break;
 					case 2:
 
@@ -383,6 +391,8 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			intent = (Intent) checkingCategory(CHECK_INTENT_EDIT);
 			switch ((Integer) checkingCategory(CHECK_R_ID)) {
 			case 1:
+				intent.putExtra("ID", t_people.get(index).getId());
+				Log.i(LOGTAG, "Edit person - " + t_people.get(index).getId() + " " + t_people.get(index).getName());
 				break;
 			case 2:
 
@@ -400,6 +410,9 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		case R.id.lv_row_delete:
 			switch ((Integer) checkingCategory(CHECK_R_ID)) {
 			case 1:
+				
+				db.deletePerson(db.getPerson((t_people.get(index).getId())));
+				Log.i(LOGTAG, "Delete person - " + (index + 1) + " " + t_people.get(index).getName());
 				t_people.remove(index);
 				break;
 			case 2:
@@ -407,9 +420,10 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 				break;
 			case 3:
-				t_position.remove(index);
+				
 				db.deletePosition(db.getPosition(t_position.get(index).getId()));
 				Log.i(LOGTAG, "Delete position - " + (index + 1) + " " + t_position.get(index).getName());
+				t_position.remove(index);
 				break;
 			case 4:
 				t_interview.remove(index);
