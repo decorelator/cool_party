@@ -4,9 +4,9 @@ public class Interviewer extends BaseModel {
 
 	private String time;
 	private String date;
-	private String project;
-	private String position;
-	private String phone;
+	private int project;
+	private int position;
+	private int phone;
 	private String description;
 
 	public Interviewer() {
@@ -32,27 +32,27 @@ public class Interviewer extends BaseModel {
 		this.date = date;
 	}
 
-	public String getProject() {
+	public int getProject() {
 		return project;
 	}
 
-	public void setProject(String project) {
+	public void setProject(int project) {
 		this.project = project;
 	}
 
-	public String getPosition() {
+	public int getPosition() {
 		return position;
 	}
 
-	public void setPosition(String position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
 
-	public String getPhone() {
+	public int getPhone() {
 		return phone;
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(int phone) {
 		this.phone = phone;
 	}
 
@@ -62,6 +62,16 @@ public class Interviewer extends BaseModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public void setInterview(Interviewer interview) {
+		setName(interview.getName());
+		this.phone = interview.getPhone();
+		this.project = interview.getProject();
+		this.position = interview.getPosition();
+		this.date = interview.getDate();
+		this.time = interview.getTime();
+		this.description = interview.getDescription();
 	}
 
 }

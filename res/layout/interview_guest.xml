@@ -12,19 +12,44 @@
         android:weightSum="2" >
 
         <TextView
+            style="@style/text_size.small"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            style="@style/text_size.small"
             android:text="@string/guest_name" />
 
         <TextView
             android:id="@+id/tv_interviewer_name"
+            style="@style/text_size.small"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="@color/mane_orange" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <TextView
             style="@style/text_size.small"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Ivanov Ivan Ivanovich" />
+            android:text="@string/guest_phone" />
+
+        <TextView
+            android:id="@+id/tv_interviewer_phone"
+            style="@style/text_size.small"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,19 +70,18 @@
             android:weightSum="2" >
 
             <TextView
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_project" />
 
             <TextView
                 android:id="@+id/tv_interviewer_project"
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
-                android:layout_weight="1"
-                android:text="HRM mobile" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 
@@ -79,19 +103,18 @@
             android:weightSum="2" >
 
             <TextView
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_position" />
 
             <TextView
                 android:id="@+id/tv_interviewer_position"
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
-                android:layout_weight="1"
-                android:text="Developer" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 
@@ -113,19 +136,18 @@
             android:weightSum="2" >
 
             <TextView
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_date" />
 
             <TextView
                 android:id="@+id/tv_interviewer_date"
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
-                android:layout_weight="1"
-                android:text="21/12/2012" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 
@@ -147,19 +169,18 @@
             android:weightSum="2" >
 
             <TextView
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_time" />
 
             <TextView
                 android:id="@+id/tv_interviewer_time"
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
-                android:layout_weight="1"
-                android:text="12:00" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 
@@ -167,7 +188,8 @@
         android:id="@+id/ll_guest_address"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone" >
 
         <ImageView
             android:layout_width="fill_parent"
@@ -178,20 +200,20 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2" >
+            android:weightSum="2"       >
 
             <TextView
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_address" />
 
             <TextView
                 android:id="@+id/tv_interviewer_address"
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_testAddr" />
         </LinearLayout>
@@ -215,19 +237,18 @@
             android:weightSum="2" >
 
             <TextView
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
                 android:layout_weight="1"
                 android:text="@string/guest_description" />
 
             <TextView
                 android:id="@+id/tv_interviewer_description"
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
-                android:layout_weight="1"
-                android:text="Some usefull" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 

@@ -18,5 +18,10 @@ public class Position extends BaseModel {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public void setPosition(Position position){
+		setName(position.getName());
+		this.description = position.getDescription();
+	}
 
 }

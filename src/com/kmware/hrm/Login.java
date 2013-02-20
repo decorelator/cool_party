@@ -1,6 +1,7 @@
 package com.kmware.hrm;
 
 import com.kmware.hrm.R;
+import com.kmware.hrm.db.DatabaseHandler;
 import com.kmware.hrm.preferences.PrefActivity;
 
 import android.content.DialogInterface;
@@ -31,6 +32,7 @@ public class Login extends ZActivity implements OnClickListener {
 	private EditText et_Password;
 	private CheckBox chbx_save;
 	SharedPreferences prefs;
+	DatabaseHandler db;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class Login extends ZActivity implements OnClickListener {
 	}
 
 	private void init() {
+		db = new DatabaseHandler(this);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		et_Login = (EditText) findViewById(R.id.etLogin);
 		et_Password = (EditText) findViewById(R.id.etPassword);
@@ -82,12 +85,16 @@ public class Login extends ZActivity implements OnClickListener {
 				finish();
 				Log.i(LOGTAG, "Login like admin");
 			} else if (checkLogin().equals(LOGIN_GUEST)) {
+				if (db.getInterviewCount() > 0){
 				Intent intent = new Intent(this, InterviewGuest.class);
 				startActivity(intent);
 				Log.i(LOGTAG, "Login like guest");
 				finish();
 				et_Login.setText("");
 				et_Password.setText("");
+				}else {
+					getDialog().showWarning(this, "DB have not any interviewer");
+				}
 			}
 
 			break;

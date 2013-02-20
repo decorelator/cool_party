@@ -33,7 +33,7 @@ public class CustomPeopleAdapter extends CustomContainerAdapter<People> implemen
 
 		People p = (People) getItem(position);
 
-		((TextView) view.findViewById(R.id.tv_people_title)).setText(p.getLastname() + " " +p.getName());
+		((TextView) view.findViewById(R.id.tv_people_title)).setText((p.getLastname() + " " +p.getName()).trim());
 		((TextView) view.findViewById(R.id.tv_people_position)).setText(db.getPosition(p.getPosition()).getName());
 		TextView tv_Status = (TextView) view.findViewById(R.id.tv_people_status);
 		switch (p.getStatus_id()) {

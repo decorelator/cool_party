@@ -93,7 +93,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	private void init() {
 
 		db = new DatabaseHandler(this);
-		
+
 		ll_NavigationButtons = (LinearLayout) findViewById(R.id.ll_NavigationButtons);
 
 		iv_People = (Button) findViewById(R.id.iv_People);
@@ -142,12 +142,27 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		lv_Conteiner.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = (Intent) checkingCategory(CHECK_CLASS);
-				intent.putExtra("ID", t_people.get(position).getId());
+
+				switch ((Integer) checkingCategory(CHECK_R_ID)) {
+				case 1:
+					intent.putExtra("ID", t_people.get(position).getId());
+					break;
+				case 2:
+					intent.putExtra("ID", t_project.get(position).getId());
+					break;
+				case 3:
+					intent.putExtra("ID", t_position.get(position).getId());
+					break;
+				case 4:
+					intent.putExtra("ID", t_interview.get(position).getId());
+					break;
+				}
+
 				startActivity(intent);
 			}
 		});
 		registerForContextMenu(lv_Conteiner);
-		
+
 		db.close();
 	}
 
@@ -240,20 +255,26 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			extra = getResources().getString(R.string.cat_projects);
 			// Filling of the list of projects by random values
 			t_project = new ArrayList<Project>();
-			for (int i = 0; i < 20; i++) {
-				Project p = new Project(i, "Project" + i);
-				p.seteData(":" + (System.currentTimeMillis() / 1000));
-				p.setsData(":" + (System.currentTimeMillis() / 1000));
-				t_project.add(p);
+//			for (int i = 0; i < 20; i++) {
+//				Project p = new Project(i, "Project" + i);
+//				p.seteData(":" + (System.currentTimeMillis() / 1000));
+//				p.setsData(":" + (System.currentTimeMillis() / 1000));
+//				t_project.add(p);
+//			}
+			try {
+				t_project.addAll(db.getAllProject());
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
-
 			listAdapter = new CustomProjectAdapter(this, t_project, R.layout.list_container_row_project);
 			lv_Conteiner.setAdapter(listAdapter);
 
-			if (addButton) {
-				deleteBarBtn(1);
-				addButton = false;
-			}
+//			if (addButton) {
+//				deleteBarBtn(1);
+//				addButton = false;
+//			}
+			addButton();
+			addButton = true;
 			break;
 		case R.id.iv_Positions:
 			// iv_subTitle.setImageResource(R.drawable.cat_position);
@@ -279,14 +300,12 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			extra = getResources().getString(R.string.cat_interviews);
 			// Filling of the list of positions by random values
 			t_interview = new ArrayList<Interviewer>();
-			for (int i = 0; i < 20; i++) {
-				Interviewer p = new Interviewer(i, "Position" + i);
-				p.setPhone("" + i * 1234);
-				p.setPosition("position" + i * 2);
-				p.setProject("Project" + i * 5);
-				t_interview.add(p);
+			try {
+				t_interview.addAll(db.getAllInterviewer());
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
-
+			
 			listAdapter = new CustomInterviewerAdapter(this, t_interview, R.layout.list_container_row_interview);
 			lv_Conteiner.setAdapter(listAdapter);
 
@@ -328,13 +347,16 @@ public class ListContainer extends ZActivity implements OnClickListener {
 						t_people.addAll(db.getAllPeople());
 						break;
 					case 2:
-
+						t_project.clear();
+						t_project.addAll(db.getAllProject());
 						break;
 					case 3:
 						t_position.clear();
 						t_position.addAll(db.getAllPositions());
 						break;
 					case 4:
+						t_interview.clear();
+						t_interview.addAll(db.getAllInterviewer());
 						break;
 					}
 				} catch (Exception ex) {
@@ -354,13 +376,16 @@ public class ListContainer extends ZActivity implements OnClickListener {
 						t_people.addAll(db.getAllPeople());
 						break;
 					case 2:
-
+						t_project.clear();
+						t_project.addAll(db.getAllProject());
 						break;
 					case 3:
 						t_position.clear();
 						t_position.addAll(db.getAllPositions());
 						break;
 					case 4:
+						t_interview.clear();
+						t_interview.addAll(db.getAllInterviewer());
 						break;
 					}
 
@@ -395,13 +420,16 @@ public class ListContainer extends ZActivity implements OnClickListener {
 				Log.i(LOGTAG, "Edit person - " + t_people.get(index).getId() + " " + t_people.get(index).getName());
 				break;
 			case 2:
-
+				intent.putExtra("ID", t_project.get(index).getId());
+				Log.i(LOGTAG, "Edit project - " + t_project.get(index).getId() + " " + t_project.get(index).getName());
 				break;
 			case 3:
 				intent.putExtra("ID", t_position.get(index).getId());
 				Log.i(LOGTAG, "Edit position - " + t_position.get(index).getId() + " " + t_position.get(index).getName());
 				break;
 			case 4:
+				intent.putExtra("ID", t_interview.get(index).getId());
+				Log.i(LOGTAG, "Edit interview - " + t_interview.get(index).getId() + " " + t_interview.get(index).getName());
 				break;
 			}
 
@@ -410,22 +438,23 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		case R.id.lv_row_delete:
 			switch ((Integer) checkingCategory(CHECK_R_ID)) {
 			case 1:
-				
 				db.deletePerson(db.getPerson((t_people.get(index).getId())));
 				Log.i(LOGTAG, "Delete person - " + (index + 1) + " " + t_people.get(index).getName());
 				t_people.remove(index);
 				break;
 			case 2:
+				db.deleteProject(db.getProject((t_project.get(index).getId())));
+				Log.i(LOGTAG, "Delete project - " + (index + 1) + " " + t_project.get(index).getName());
 				t_project.remove(index);
-
 				break;
 			case 3:
-				
 				db.deletePosition(db.getPosition(t_position.get(index).getId()));
 				Log.i(LOGTAG, "Delete position - " + (index + 1) + " " + t_position.get(index).getName());
 				t_position.remove(index);
 				break;
 			case 4:
+				db.deleteInterview(db.getInterview(t_interview.get(index).getId()));
+				Log.i(LOGTAG, "Delete interview - " + (index + 1) + " " + t_interview.get(index).getName());
 				t_interview.remove(index);
 				break;
 			}

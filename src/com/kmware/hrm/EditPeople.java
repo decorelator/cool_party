@@ -120,6 +120,7 @@ public class EditPeople extends ZActivity {
 
 	private void init() {
 		db = new DatabaseHandler(this);
+		
 		role = new ArrayList<Roles>(db.getAllRoles());
 		position = new ArrayList<Position>(db.getAllPositions());
 
@@ -197,8 +198,6 @@ public class EditPeople extends ZActivity {
 			}
 		});
 		set_roles = new ArrayList<String>();
-
-		// set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
 
 		for (int i = 0; i < role.size(); i++) {
 			set_roles.add(role.get(i).getRoleName());
@@ -510,7 +509,6 @@ public class EditPeople extends ZActivity {
 		for (int i = 0; i < role.size(); i++) {
 			set_roles.add(role.get(i).getRoleName());
 		}
-		// set_roles.addAll(Arrays.asList(getResources().getStringArray(R.array.people_roles)));
 		set_roles.removeAll(roles);
 		if (!set_roles.isEmpty())
 			setSpinnerAdapter(R.id.sp_people_role, set_roles);

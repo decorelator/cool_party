@@ -1,9 +1,12 @@
 package com.kmware.hrm.adapters;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
 import com.kmware.hrm.R;
 import com.kmware.hrm.model.Project;
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filterable;
@@ -13,10 +16,12 @@ public class CustomProjectAdapter extends CustomContainerAdapter<Project> implem
 		Filterable {
 
 	public static String LOGTAG = CustomProjectAdapter.class.getSimpleName();
-
+	private Context context;
+	
 	public CustomProjectAdapter(Context context, ArrayList<Project> list,
 			int layout) {
 		super(context, list, layout);
+		this.context = context;
 	}
 
 	@Override
@@ -30,9 +35,22 @@ public class CustomProjectAdapter extends CustomContainerAdapter<Project> implem
 		Project p = (Project) getItem(position);
 
 		((TextView) view.findViewById(R.id.tv_project_title)).setText(p.getName());
-		((TextView) view.findViewById(R.id.tv_project_startdate)).setText(p.getsData());
-		((TextView) view.findViewById(R.id.tv_project_enddate)).setText(p.geteData());
-	//	((TextView) view.findViewById(R.id.tv_project_status)).setText(p.getCount());
+		String parser = "" + p.getsData();
+		String[] date = parser.split(":");
+		GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+		((TextView) view.findViewById(R.id.tv_project_startdate)).setText(": "+DateFormat.format("dd.MM.yyyy", calendar.getTime()));
+		parser = "" + p.geteData();
+		date = parser.split(":");
+		calendar = new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+		((TextView) view.findViewById(R.id.tv_project_enddate)).setText(": "+DateFormat.format("dd.MM.yyyy", calendar.getTime()));
+		
+		int i = 0;
+		String[] status = context.getResources().getStringArray(R.array.status_value); 
+		while (!status[i].equals(String.valueOf(p.getStatus_id())) && i < status.length){
+			i++;
+		}
+		String str = context.getResources().getStringArray(R.array.status)[i];
+		((TextView) view.findViewById(R.id.tv_project_status)).setText(str);
 
 		return view;
 	}
@@ -42,5 +60,5 @@ public class CustomProjectAdapter extends CustomContainerAdapter<Project> implem
 		
 		return ((String.valueOf(in.getName().toLowerCase()).contains(constraint)) || (in.getsData().contains(constraint)) || (in.getsData().contains(constraint)));
 	}
-
+	
 }

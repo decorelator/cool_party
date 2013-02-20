@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tv_interview_title"
-            android:text="@string/project_name" />
+            android:text="@string/project_name_title" />
 
         <TextView
             android:id="@+id/tv_interview_project"
@@ -53,7 +53,7 @@
             android:layout_alignBaseline="@+id/tv_interview_project_title"
             android:layout_alignBottom="@+id/tv_interview_project_title"
             android:layout_toRightOf="@+id/tv_interview_project_title"
-            android:text=": eFarmer" />
+            android:text=" eFarmer" />
 
         <TextView
             android:id="@+id/tv_interview_position_title"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tv_interview_project_title"
-            android:text="@string/position_name" />
+            android:text="@string/position_name_title" />
 
         <TextView
             android:id="@+id/tv_interview_position"
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_interview_project"
             android:layout_toRightOf="@+id/tv_interview_position_title"
-            android:text=": Developer" />
+            android:text=" Developer" />
          <TextView
             android:id="@+id/tv_interview_phone_title"
             style="@style/text_size.description"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tv_interview_position_title"
-            android:text="@string/people_tel" />
+            android:text="@string/people_tel_title" />
 
         <TextView
             android:id="@+id/tv_interview_phone"
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_interview_position"
             android:layout_toRightOf="@+id/tv_interview_phone_title"
-            android:text=": (050)2543210" />
+            android:text=" (050)2543210" />
     </RelativeLayout>
 
 </LinearLayout>

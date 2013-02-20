@@ -51,12 +51,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			// Creating Table Projects
 			db.execSQL("CREATE TABLE " + TABLE_PROJECTS + " ( " + PROJECT_COLUMNS.ID + " INTEGER PRIMARY KEY, " + PROJECT_COLUMNS.NAME + " TEXT,"
 					+ PROJECT_COLUMNS.EMAIL + " TEXT," + PROJECT_COLUMNS.PHONE + " LONG," + PROJECT_COLUMNS.SKYPE + " TEXT," + PROJECT_COLUMNS.START_DATE
-					+ " DATE," + PROJECT_COLUMNS.END_DATE + " DATE," + PROJECT_COLUMNS.STATUS_ID + " INTEGER" + ")");
+					+ " DATE," + PROJECT_COLUMNS.END_DATE + " DATE," + PROJECT_COLUMNS.DESCRIPTION + " TEXT," + PROJECT_COLUMNS.STATUS_ID + " INTEGER" + ")");
 			// Creating Table Positions
 			db.execSQL("CREATE TABLE " + TABLE_POSITIONS + " ( " + POSITION_COLUMNS.ID + " INTEGER PRIMARY KEY, " + POSITION_COLUMNS.NAME + " TEXT,"
 					+ POSITION_COLUMNS.DESCRIPTION + " TEXT" + ")");
 			// Creating Table Interview
 			db.execSQL("CREATE TABLE " + TABLE_INTERVIEWS + " ( " + INTERVIEW_COLUMNS.ID + " INTEGER PRIMARY KEY, " + INTERVIEW_COLUMNS.NAME + " TEXT,"
+					+ INTERVIEW_COLUMNS.PHONE + " LONG," + INTERVIEW_COLUMNS.PROJECT + " INTEGER," + INTERVIEW_COLUMNS.POSITION + " INTEGER,"
 					+ INTERVIEW_COLUMNS.DATE + " DATE," + INTERVIEW_COLUMNS.TIME + " TIME," + INTERVIEW_COLUMNS.DESCRIPTION + " TEXT" + ")");
 			// Creating Table Roles
 			db.execSQL("CREATE TABLE " + TABLE_ROLES + " ( " + ROLES_COLUMNS.ID + " INTEGER PRIMARY KEY, " + ROLES_COLUMNS.NAME + " TEXT,"
@@ -110,6 +111,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		public static String SKYPE = "skype";
 		public static String START_DATE = "start_date";
 		public static String END_DATE = "end_date";
+		public static String DESCRIPTION = "description";
 		public static String STATUS_ID = "statusID";
 	}
 
@@ -122,6 +124,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static class INTERVIEW_COLUMNS {
 		public static String ID = "_id";
 		public static String NAME = "name";
+		public static String PHONE = "phone";
+		public static String PROJECT = "project";
+		public static String POSITION = "position";
 		public static String DATE = "date";
 		public static String TIME = "time";
 		public static String DESCRIPTION = "description";
@@ -187,7 +192,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public List<People> getAllPeople() {
 		List<People> list = new ArrayList<People>();
 		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_PEOPLES + " ORDER BY " + PEOPLES_COLUMNS.LAST_NAME + " ASC";
+		String selectQuery = "SELECT  * FROM " + TABLE_PEOPLES + " ORDER BY " + PEOPLES_COLUMNS.LAST_NAME + " COLLATE NOCASE ASC;";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -268,6 +273,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(PROJECT_COLUMNS.SKYPE, project.getSkype());
 		values.put(PROJECT_COLUMNS.START_DATE, project.getsData());
 		values.put(PROJECT_COLUMNS.END_DATE, project.geteData());
+		values.put(PROJECT_COLUMNS.DESCRIPTION, project.getDescription());
 		values.put(PROJECT_COLUMNS.STATUS_ID, project.getStatus_id());
 		// Inserting Row
 		db.insert(TABLE_PROJECTS, null, values);
@@ -279,8 +285,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = db.query(TABLE_PROJECTS, new String[] { PROJECT_COLUMNS.ID, PROJECT_COLUMNS.NAME, PROJECT_COLUMNS.EMAIL, PROJECT_COLUMNS.PHONE,
-				PROJECT_COLUMNS.SKYPE, PROJECT_COLUMNS.START_DATE, PROJECT_COLUMNS.END_DATE, PROJECT_COLUMNS.STATUS_ID }, PROJECT_COLUMNS.ID + "=?",
-				new String[] { String.valueOf(id) }, null, null, null, null);
+				PROJECT_COLUMNS.SKYPE, PROJECT_COLUMNS.START_DATE, PROJECT_COLUMNS.END_DATE, PROJECT_COLUMNS.DESCRIPTION, PROJECT_COLUMNS.STATUS_ID },
+				PROJECT_COLUMNS.ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
 
@@ -290,7 +296,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		project.setSkype(cursor.getString(4));
 		project.setsData(cursor.getString(5));
 		project.seteData(cursor.getString(6));
-		project.setStatus_id(Integer.parseInt(cursor.getString(7)));
+		project.setDescription(cursor.getString(7));
+		project.setStatus_id(Integer.parseInt(cursor.getString(8)));
+		cursor.close();
+		db.close();
+		// return project
+		return project;
+	}
+
+	// Getting one Project
+	public Project getProjectByName(String name) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.query(TABLE_PROJECTS, new String[] { PROJECT_COLUMNS.ID, PROJECT_COLUMNS.NAME, PROJECT_COLUMNS.EMAIL, PROJECT_COLUMNS.PHONE,
+				PROJECT_COLUMNS.SKYPE, PROJECT_COLUMNS.START_DATE, PROJECT_COLUMNS.END_DATE, PROJECT_COLUMNS.DESCRIPTION, PROJECT_COLUMNS.STATUS_ID },
+				PROJECT_COLUMNS.NAME + "=?", new String[] { name }, null, null, null, null);
+		if (cursor != null)
+			cursor.moveToFirst();
+
+		Project project = new Project(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+		project.setEmail(cursor.getString(2));
+		project.setPhone(Integer.parseInt(cursor.getString(3)));
+		project.setSkype(cursor.getString(4));
+		project.setsData(cursor.getString(5));
+		project.seteData(cursor.getString(6));
+		project.setDescription(cursor.getString(7));
+		project.setStatus_id(Integer.parseInt(cursor.getString(8)));
 		cursor.close();
 		db.close();
 		// return project
@@ -301,7 +332,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public List<Project> getAllProject() {
 		List<Project> list = new ArrayList<Project>();
 		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_PROJECTS + " ORDER BY " + PROJECT_COLUMNS.NAME + " ASC";
+		String selectQuery = "SELECT  * FROM " + TABLE_PROJECTS + " ORDER BY " + PROJECT_COLUMNS.NAME + " COLLATE NOCASE ASC;";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -317,7 +348,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				project.setSkype(cursor.getString(4));
 				project.setsData(cursor.getString(5));
 				project.seteData(cursor.getString(6));
-				project.setStatus_id(Integer.parseInt(cursor.getString(7)));
+				project.setDescription(cursor.getString(7));
+				project.setStatus_id(Integer.parseInt(cursor.getString(8)));
 				// Adding to list
 				list.add(project);
 			} while (cursor.moveToNext());
@@ -339,6 +371,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(PROJECT_COLUMNS.SKYPE, project.getSkype());
 		values.put(PROJECT_COLUMNS.START_DATE, project.getsData());
 		values.put(PROJECT_COLUMNS.END_DATE, project.geteData());
+		values.put(PROJECT_COLUMNS.DESCRIPTION, project.getDescription());
 		values.put(PROJECT_COLUMNS.STATUS_ID, project.getStatus_id());
 
 		// updating row
@@ -415,7 +448,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public List<Position> getAllPositions() {
 		List<Position> list = new ArrayList<Position>();
 		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_POSITIONS + " ORDER BY " + POSITION_COLUMNS.NAME + " ASC";
+		String selectQuery = "SELECT  * FROM " + TABLE_POSITIONS + " ORDER BY " + POSITION_COLUMNS.NAME + " COLLATE NOCASE ASC;";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -478,6 +511,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 		values.put(INTERVIEW_COLUMNS.NAME, interview.getName());
+		values.put(INTERVIEW_COLUMNS.PHONE, interview.getPhone());
+		values.put(INTERVIEW_COLUMNS.PROJECT, interview.getProject());
+		values.put(INTERVIEW_COLUMNS.POSITION, interview.getPosition());
 		values.put(INTERVIEW_COLUMNS.DATE, interview.getDate());
 		values.put(INTERVIEW_COLUMNS.TIME, interview.getTime());
 		values.put(INTERVIEW_COLUMNS.DESCRIPTION, interview.getDescription());
@@ -491,15 +527,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public Interviewer getInterview(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor cursor = db.query(TABLE_INTERVIEWS, new String[] { INTERVIEW_COLUMNS.ID, INTERVIEW_COLUMNS.NAME, INTERVIEW_COLUMNS.DATE, INTERVIEW_COLUMNS.TIME,
-				INTERVIEW_COLUMNS.DESCRIPTION }, INTERVIEW_COLUMNS.ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+		Cursor cursor = db.query(TABLE_INTERVIEWS, new String[] { INTERVIEW_COLUMNS.ID, INTERVIEW_COLUMNS.NAME, INTERVIEW_COLUMNS.PHONE,
+				INTERVIEW_COLUMNS.PROJECT, INTERVIEW_COLUMNS.POSITION, INTERVIEW_COLUMNS.DATE, INTERVIEW_COLUMNS.TIME, INTERVIEW_COLUMNS.DESCRIPTION },
+				INTERVIEW_COLUMNS.ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor != null)
 			cursor.moveToFirst();
 
 		Interviewer interview = new Interviewer(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
-		interview.setDate(cursor.getString(2));
-		interview.setTime(cursor.getString(3));
-		interview.setDescription(cursor.getString(4));
+		interview.setPhone(cursor.getInt(2));
+		interview.setProject(cursor.getInt(3));
+		interview.setPosition(cursor.getInt(4));
+		interview.setDate(cursor.getString(5));
+		interview.setTime(cursor.getString(6));
+		interview.setDescription(cursor.getString(7));
 		cursor.close();
 		db.close();
 		// return project
@@ -510,7 +550,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public List<Interviewer> getAllInterviewer() {
 		List<Interviewer> list = new ArrayList<Interviewer>();
 		// Select All Query
-		String selectQuery = "SELECT  * FROM " + TABLE_INTERVIEWS;
+		String selectQuery = "SELECT  * FROM " + TABLE_INTERVIEWS + " ORDER BY " + INTERVIEW_COLUMNS.NAME + " COLLATE NOCASE ASC;";
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
@@ -521,9 +561,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				Interviewer interview = new Interviewer();
 				interview.setId(Integer.parseInt(cursor.getString(0)));
 				interview.setName(cursor.getString(1));
-				interview.setDate(cursor.getString(2));
-				interview.setTime(cursor.getString(3));
-				interview.setDescription(cursor.getString(4));
+				interview.setPhone(cursor.getInt(2));
+				interview.setProject(cursor.getInt(3));
+				interview.setPosition(cursor.getInt(4));
+				interview.setDate(cursor.getString(5));
+				interview.setTime(cursor.getString(6));
+				interview.setDescription(cursor.getString(7));
 				// Adding to list
 				list.add(interview);
 			} while (cursor.moveToNext());
@@ -540,6 +583,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 		values.put(INTERVIEW_COLUMNS.NAME, interview.getName());
+		values.put(INTERVIEW_COLUMNS.PHONE, interview.getPhone());
+		values.put(INTERVIEW_COLUMNS.PROJECT, interview.getProject());
+		values.put(INTERVIEW_COLUMNS.POSITION, interview.getPosition());
 		values.put(INTERVIEW_COLUMNS.DATE, interview.getDate());
 		values.put(INTERVIEW_COLUMNS.TIME, interview.getTime());
 		values.put(INTERVIEW_COLUMNS.DESCRIPTION, interview.getDescription());
@@ -562,10 +608,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		String countQuery = "SELECT  * FROM " + TABLE_INTERVIEWS;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
+		int count = cursor.getCount();
 		cursor.close();
 		db.close();
 		// return count
-		return cursor.getCount();
+		return count;
 	}
 
 	// ====ROLES====================================================================================================

@@ -27,6 +27,18 @@
                 android:inputType="textPersonName" >
             </EditText>
 
+             <TextView
+                android:id="@+id/tv_interviewer_phone"
+                style="@style/text.small"
+                android:text="@string/interview_phone" />
+
+            <EditText
+                android:id="@+id/edt_interview_phone"
+                style="@style/edit_text.singleline"
+                android:ems="10"
+                android:inputType="phone|textPersonName" >
+            </EditText>
+            
             <TextView
                 android:id="@+id/tv_interview_project"
                 style="@style/text.small"

@@ -10,6 +10,7 @@ public class Project extends BaseModel {
 	private String sData;
 	private String eData;
 	private int status_id;
+	private String description;
 	private List<People> people;
 
 	public Project() {
@@ -72,6 +73,15 @@ public class Project extends BaseModel {
 
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
+
+	}
+
 	public List<People> getPeople() {
 		return people;
 	}
@@ -80,4 +90,14 @@ public class Project extends BaseModel {
 		this.people = people;
 	}
 
+	public void setProject(Project project) {
+		setName(project.getName());
+		this.status_id = project.getStatus_id();
+		this.email = project.getEmail();
+		this.phone = project.getPhone();
+		this.skype = project.getSkype();
+		this.sData = project.getsData();
+		this.eData = project.geteData();
+
+	}
 }

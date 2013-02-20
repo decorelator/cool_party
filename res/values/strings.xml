@@ -104,6 +104,9 @@
     <string name="project_status">Status</string>
     <string name="project_add">Add project</string>
     <string name="project_edit">Edit project</string>
+    <string name="project_error_name">Fill in the fields</string>
+    <string name="project_error_date">End date is less than the start date</string>
+    
 
     <!-- STATUS OF PROJECT -->
     <string name="status_expected">Expected</string>
@@ -114,6 +117,7 @@
 
     <!-- POSITION -->
     <string name="position_name">Position name</string>
+    <string name="position_name_title">Position name:</string>
     <string name="position_enter_name">Enter a position name</string>
     <string name="position_description">Description</string>
     <string name="position_enter_description">Enter a description of position</string>
@@ -123,6 +127,7 @@
     <!-- INTERVIEW -->
     <string name="interview_project">Project</string>
     <string name="interview_interviewer">Name of interviewer</string>
+    <string name="interview_phone">Phone</string>
     <string name="interview_position">Position</string>
     <string name="interview_date">Date</string>
     <string name="interview_time">Time</string>
@@ -132,13 +137,14 @@
     <string name="interview_info">Information:</string>
 
     <!-- INTERVIEW GUEST -->
-    <string name="guest_name">Name</string>
-    <string name="guest_project">Project</string>
-    <string name="guest_position">Position</string>
-    <string name="guest_date">Date</string>
-    <string name="guest_time">Time</string>
-    <string name="guest_address">Address</string>
-    <string name="guest_description">Description</string>
+    <string name="guest_name">Name:</string>
+    <string name="guest_phone">Phone:</string>
+    <string name="guest_project">Project:</string>
+    <string name="guest_position">Position:</string>
+    <string name="guest_date">Date:</string>
+    <string name="guest_time">Time:</string>
+    <string name="guest_address">Address:</string>
+    <string name="guest_description">Description:</string>
     <string name="guest_testAddr">Ukraine\nOdessa\nPushkinska str. 32\nOffice №2</string>
 
     <!-- MENU -->

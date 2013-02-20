@@ -22,19 +22,18 @@
                 android:weightSum="2" >
 
                 <TextView
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
-                    android:text="@string/position_name" />
+                    android:text="@string/position_name_title" />
 
                 <TextView
                     android:id="@+id/tv_position_name"
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="Ivan Sverdlov" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <ImageView
@@ -43,18 +42,17 @@
                 android:background="@color/mane_orange" />
 
             <TextView
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
                 android:text="@string/people_info" />
 
             <TextView
                 android:id="@+id/tv_position_description"
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
-                android:maxLines="5"
-                android:text="Info" />
+                android:maxLines="5" />
         </LinearLayout>
     </ScrollView>
 

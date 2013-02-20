@@ -1,15 +1,16 @@
 package com.kmware.hrm;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import com.kmware.hrm.model.BaseModel;
+import com.kmware.hrm.db.DatabaseHandler;
+import com.kmware.hrm.model.Project;
 import com.kmware.hrm.view.CustomDatePickerDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -44,6 +45,9 @@ public class EditProject extends ZActivity implements OnClickListener {
 	private int e_month;
 	private int e_day;
 	private String extra;
+	private Project project;
+
+	DatabaseHandler db;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class EditProject extends ZActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		backHomeBar(R.drawable.actionbar_back_indicator, DashboardDesignActivity.createIntent(this));
 		getExtra();
-		if (extra.toString().length() != 0) {
+		if (extra != null) {
 			setTitle(getResources().getString(R.string.project_edit), android.R.drawable.ic_input_add);
 			addprefBarBtn(android.R.drawable.arrow_down_float, new OnClickListener() {
 				@Override
@@ -98,14 +102,17 @@ public class EditProject extends ZActivity implements OnClickListener {
 
 	private void init() {
 
-		Calendar c = Calendar.getInstance();
-		s_year = c.get(Calendar.YEAR);
-		s_month = c.get(Calendar.MONTH);
-		s_day = c.get(Calendar.DAY_OF_MONTH);
-		e_year = s_year;
-		e_month = s_month;
-		e_day = s_day;
+		db = new DatabaseHandler(this);
 
+		Calendar c = Calendar.getInstance();
+		if (!parseDate()) {
+			s_year = c.get(Calendar.YEAR);
+			s_month = c.get(Calendar.MONTH);
+			s_day = c.get(Calendar.DAY_OF_MONTH);
+			e_year = s_year;
+			e_month = s_month;
+			e_day = s_day;
+		}
 		sp_Status = (Spinner) findViewById(R.id.sp_project_status);
 		edt_Name = (EditText) findViewById(R.id.edt_project_name);
 		edt_Email = (EditText) findViewById(R.id.edt_project_email);
@@ -133,9 +140,41 @@ public class EditProject extends ZActivity implements OnClickListener {
 			}
 		});
 
-		ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
-		for (int i = 1; i <= 20; i++) {
-			dataList.add(new BaseModel(i, "" + i * 1000));
+		// ArrayList<BaseModel> dataList = new ArrayList<BaseModel>();
+		// for (int i = 1; i <= 20; i++) {
+		// dataList.add(new BaseModel(i, "" + i * 1000));
+		// }
+
+		if (getIntent().getIntExtra("ID", 0) != 0) {
+			enterField(getIntent().getIntExtra("ID", 0));
+		}
+
+	}
+
+	private void enterField(int id) {
+
+		project = new Project();
+		try {
+			project.setProject(db.getProject(id));
+
+			edt_Name.setText(project.getName());
+			String[] status = this.getResources().getStringArray(R.array.status_value);
+			int i = 0;
+			while (!status[i].equals(String.valueOf(project.getStatus_id())) && i < status.length) {
+				i++;
+			}
+			sp_Status.setSelection(i);
+			edt_Email.setText(project.getEmail());
+			if (project.getPhone() != 0) {
+				edt_Phone.setText("" + project.getPhone());
+			} else {
+				edt_Phone.setText("");
+			}
+			edt_Skype.setText(project.getSkype());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Log.w(LOGTAG, "DB have not ID = " + id);
 		}
 
 	}
@@ -179,8 +218,40 @@ public class EditProject extends ZActivity implements OnClickListener {
 	}
 
 	private void save() {
-		setResult(RESULT_OK);
-		finish();
+		GregorianCalendar startdate = new GregorianCalendar(s_year, s_month, s_day);
+		GregorianCalendar enddate = new GregorianCalendar(e_year, e_month, e_day);
+
+		if (edt_Name.getText().toString().trim().length() > 0) {
+			if (startdate.getTimeInMillis() <= enddate.getTimeInMillis()) {
+				project = new Project();
+				project.setName(edt_Name.getText().toString().trim());
+
+				sp_Status.getSelectedItemPosition();
+				project.setStatus_id(Integer.parseInt(this.getResources().getStringArray(R.array.status_value)[sp_Status.getSelectedItemPosition()]));
+				project.setEmail(edt_Email.getText().toString().trim());
+				if (edt_Phone.getText().toString().trim().length() != 0) {
+					project.setPhone(Integer.parseInt(edt_Phone.getText().toString().trim()));
+				}
+				project.setSkype(edt_Skype.getText().toString().trim());
+
+				project.setsData("" + s_day + ":" + s_month + ":" + s_year);
+
+				project.seteData("" + e_day + ":" + e_month + ":" + e_year);
+
+				if (getIntent().getIntExtra("ID", 0) == 0) {
+					db.addProject(project);
+				} else {
+					project.setId(getIntent().getIntExtra("ID", 0));
+					db.updateProject(project);
+				}
+				setResult(RESULT_OK);
+				finish();
+			} else {
+				getDialog().showWarning(this, getResources().getString(R.string.project_error_date));
+			}
+		} else {
+			getDialog().showWarning(this, getResources().getString(R.string.project_error_name));
+		}
 	}
 
 	@Override
@@ -208,7 +279,7 @@ public class EditProject extends ZActivity implements OnClickListener {
 			break;
 		}
 	}
-	
+
 	private DatePickerDialog.OnDateSetListener startDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int currentYear, int monthOfYear, int dayOfMonth) {
 			s_year = currentYear;
@@ -225,7 +296,7 @@ public class EditProject extends ZActivity implements OnClickListener {
 			setBtnDateText(btn_EndDate);
 		}
 	};
-	
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -238,5 +309,33 @@ public class EditProject extends ZActivity implements OnClickListener {
 		}
 	}
 
+	private boolean parseDate() {
+		try {
+			String parser;
+			if (db.getProject(getIntent().getIntExtra("ID", 0)) != null) {
+				parser = "" + db.getProject(getIntent().getIntExtra("ID", 0)).getsData();
+				String[] date = parser.split(":");
+				if (date.length > 1 && !parser.equals("null")) {
+					s_year = Integer.parseInt(date[2]);
+					s_month = Integer.parseInt(date[1]);
+					s_day = Integer.parseInt(date[0]);
+					parser = "" + db.getProject(getIntent().getIntExtra("ID", 0)).geteData();
+					date = parser.split(":");
+					if (date.length > 1 && !parser.equals("null")) {
+						e_year = Integer.parseInt(date[2]);
+						e_month = Integer.parseInt(date[1]);
+						e_day = Integer.parseInt(date[0]);
+						return true;
+					}
+				}
+				return false;
+			} else {
+				return false;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
 
 }

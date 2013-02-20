@@ -1,11 +1,8 @@
 package com.kmware.hrm;
 
 import java.util.GregorianCalendar;
-
 import com.kmware.hrm.db.DatabaseHandler;
 import com.kmware.hrm.model.People;
-import com.kmware.hrm.view.CustomDatePickerDialog;
-
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -26,7 +23,6 @@ public class PeopleInfo extends ZActivity {
 	TextView tv_People_Info;
 	ListView lv_People_Projects;
 
-	private String extra;
 	private DatabaseHandler db;
 	private People person;
 
@@ -46,6 +42,7 @@ public class PeopleInfo extends ZActivity {
 		db = new DatabaseHandler(this);
 
 		tv_People_Name = (TextView) findViewById(R.id.tv_people_name);
+		bar.setTitle(tv_People_Name.getText().toString());
 		tv_People_LastName = (TextView) findViewById(R.id.tv_people_lastname);
 		tv_People_Position = (TextView) findViewById(R.id.tv_people_position);
 		tv_People_Status = (TextView) findViewById(R.id.tv_people_status);
@@ -58,31 +55,29 @@ public class PeopleInfo extends ZActivity {
 		try {
 			person = new People();
 			person.setPerson(db.getPerson(getIntent().getIntExtra("ID", 0)));
+			tv_People_Name.setText(person.getName());
+			tv_People_LastName.setText(person.getLastname());
+			tv_People_Position.setText(db.getPosition(person.getPosition()).getName());
+			tv_People_Status.setText("" + this.getResources().getStringArray(R.array.people_status)[person.getStatus_id()]);
+			tv_People_Email.setText(person.getEmail());
+			if (person.getPhone() != 0) {
+				tv_People_Phone.setText("" + person.getPhone());
+			} else
+				tv_People_Phone.setText("");
+			tv_People_Skype.setText(person.getSkype());
+
+			String parser = person.getEmployment_date();// db.getPerson(getIntent().getIntExtra("ID",
+														// 0)).getEmployment_date();
+			if (parser != null) {
+
+				String[] date = parser.split(":");
+				GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+				tv_People_Info.setText("Employee day: " + DateFormat.format("dd MMMM yyyy", calendar.getTime()));
+			}
 		} catch (SQLiteException ex) {
 			ex.printStackTrace();
 			Log.w(LOGTAG, "People DB have not id = " + getIntent().getIntExtra("ID", 0));
 		}
-
-		tv_People_Name.setText(person.getName());
-		tv_People_LastName.setText(person.getLastname());
-		tv_People_Position.setText(db.getPosition(person.getPosition()).getName());
-		tv_People_Status.setText("" + this.getResources().getStringArray(R.array.people_status)[person.getStatus_id()]);
-		tv_People_Email.setText(person.getEmail());
-		if (person.getPhone() != 0) {
-			tv_People_Phone.setText("" + person.getPhone());
-		} else
-			tv_People_Phone.setText("");
-		tv_People_Skype.setText(person.getSkype());
-
-		String parser = db.getPerson(getIntent().getIntExtra("ID", 0)).getEmployment_date();
-		if (parser != null) {
-
-			String[] date = parser.split(":");
-			GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
-			tv_People_Info.setText("Employee day: " + DateFormat.format("dd MMMM yyyy", calendar.getTime()));
-		}
 		// lv_People_Projects.setText(person.getName());
-
 	}
-
 }
