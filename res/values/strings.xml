@@ -33,6 +33,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+     <!-- SPINNER -->
+    <string name="sp_none">None</string>
+    
     <!-- APPLICATION MENU -->
     <string name="menu_preferences">Preferences</string>
     <string name="menu_logout">Log Out</string>
@@ -58,12 +61,23 @@
     <string name="people_name_title">Name:</string>
     <string name="people_lastname">Lastname</string>
     <string name="people_lastname_title">Lastname:</string>
+    <string name="people_pr_mail">Primary email</string>
+    <string name="people_pr_mail_title">Primery email:</string>
+    <string name="people_facility">Facility</string>
+    <string name="people_facility_title">Facility:</string>
+    <string name="people_show_dialog">Show \"Create interview\" dialog?</string>
+    <string name="people_facility_od">KM-Ware OD</string>
+    <string name="people_facility_zp">KM-Ware ZP</string>
+    <string name="people_err_name">Enter a name</string>
+    <string name="people_err_enter">Fill in all fields</string>
+    
     <string name="people_position">Position</string>
     <string name="people_position_title">Position:</string>
     <string name="people_projects">Projects</string>
     <string name="people_projects_title">Projects:</string>
     <string name="people_date_in">Employment date</string>
     <string name="people_date_out">Termination date</string>
+    <string name="people_active_emp">Active employee</string>
     <string name="people_contacts">Contacts</string>
     <string name="people_email">E-mail</string>
     <string name="people_email_title">E-mail:</string>
@@ -73,6 +87,12 @@
     <string name="people_tel_title">Phone:</string>
     <string name="people_status">Status</string>
     <string name="people_status_title">Status:</string>
+    <string name="people_status_available">Available</string>
+    <string name="people_status_assigned">Assigned</string>
+    <string name="people_status_terminated">Terminated</string>
+    <string name="people_status_unavailable">Unavailable</string>
+    <string name="people_status_staff">Staff</string>
+    <string name="people_status_wait_int">Waiting for interview</string>
     <string name="people_info">Information:</string>
     <string name="people_candidate">Candidate</string>
     <string name="people_employee">Person</string>
@@ -84,8 +104,13 @@
     <string name="people_role_hrmanager">HR Manager</string>
     <string name="people_role_interviewer">Interviewer</string>
     <string name="people_role_add">Enter the role</string>
+    <string name="people_pswrd">Reset Password</string>
+    
 
     <!-- PROJECT -->
+    <string name="project_title">Title:</string>
+    <string name="project_customer_title">Customer:</string>
+    <string name="project_discription_title">Discription:</string>
     <string name="project_name">Project name</string>
     <string name="project_name_title">Project name:</string>
     <string name="project_contacts">Contact details</string>
@@ -116,23 +141,44 @@
     <string name="status_delayed">Delayed</string>
 
     <!-- POSITION -->
+    <string name="position_title">Title</string>
+    <string name="position_title_view">Title:</string>
+    <string name="position_work_load">Required work load</string>
+    <string name="position_work_load_view">Required work load:</string>
+    <string name="position_departments">Departments</string>
+    <string name="position_departments_view">Departments:</string>
+    <string name="position_projects">Projects</string>
+    <string name="position_project">Project:</string>
+    <string name="position_description">Description</string>
+    <string name="position_description_view">Description:</string>
+    
     <string name="position_name">Position name</string>
     <string name="position_name_title">Position name:</string>
     <string name="position_enter_name">Enter a position name</string>
-    <string name="position_description">Description</string>
     <string name="position_enter_description">Enter a description of position</string>
     <string name="position_add">Add position</string>
     <string name="position_edit">Edit position</string>
 
     <!-- INTERVIEW -->
+    <string name="interview_add">Arrange interview</string>
+    <string name="interview_title">Title</string>
+    <string name="interview_title_view">Title:</string>
+    <string name="interview_candidate">Candidate</string>
+    <string name="interview_candidate_view">Candidate:</string>
+    <string name="interview_status">Status</string>
+    <string name="interview_status_view">Status:</string>
+    <string name="interview_status_pending">Pending</string>
+    <string name="interview_status_approved">Approved</string>
+    <string name="interview_status_rejected">Rejected</string>
+    
+    <string name="interview_date">Date</string>
+    <string name="interview_time">Time</string>
+    <string name="interview_position">Position</string>
+    <string name="interview_description">Description</string>
+    
     <string name="interview_project">Project</string>
     <string name="interview_interviewer">Name of interviewer</string>
     <string name="interview_phone">Phone</string>
-    <string name="interview_position">Position</string>
-    <string name="interview_date">Date</string>
-    <string name="interview_time">Time</string>
-    <string name="interview_description">Description</string>
-    <string name="interview_add">Arrange interview</string>
     <string name="interview_edit">Edit Interview</string>
     <string name="interview_info">Information:</string>
 

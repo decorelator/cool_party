@@ -64,11 +64,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 					+ ROLES_COLUMNS.LOWER_NAME + " TEXT," + ROLES_COLUMNS.DESCRIPTION + " TEXT," + " UNIQUE( " + ROLES_COLUMNS.NAME + " ) ON CONFLICT REPLACE "
 					+ ")");
 
-			String[] roles = context.getResources().getStringArray(com.kmware.hrm.R.array.people_roles);
 
-			for (int i = 0; i < roles.length; i++) {
-				db.execSQL(String.format("INSERT INTO roles (name) " + "VALUES ('%s')", roles[i]));
-			}
 			Log.i(LOGTAG, "DataBase was Create");
 		} catch (SQLiteException ex) {
 			ex.printStackTrace();
@@ -149,12 +145,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(PEOPLES_COLUMNS.NAME, person.getName()); // Person Name
 		values.put(PEOPLES_COLUMNS.LAST_NAME, person.getLastname());
 		values.put(PEOPLES_COLUMNS.EMAIL, person.getEmail());
-		values.put(PEOPLES_COLUMNS.PHONE, person.getPhone());
-		values.put(PEOPLES_COLUMNS.SKYPE, person.getSkype());
-		values.put(PEOPLES_COLUMNS.EMPLOYMENT_DATE, person.getEmployment_date());
-		values.put(PEOPLES_COLUMNS.ROLES, person.getRole());
-		values.put(PEOPLES_COLUMNS.POSITION, person.getPosition());
-		values.put(PEOPLES_COLUMNS.STATUS_ID, person.getStatus_id());
+//		values.put(PEOPLES_COLUMNS.PHONE, person.getPhone());
+//		values.put(PEOPLES_COLUMNS.SKYPE, person.getSkype());
+//		values.put(PEOPLES_COLUMNS.EMPLOYMENT_DATE, person.getEmployment_date());
+//		values.put(PEOPLES_COLUMNS.ROLES, person.getRole());
+//		values.put(PEOPLES_COLUMNS.POSITION, person.getPosition());
+//		values.put(PEOPLES_COLUMNS.STATUS_ID, person.getStatus_id());
 
 		// Inserting Row
 		db.insert(TABLE_PEOPLES, null, values);
@@ -174,12 +170,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			People person = new People(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
 			person.setLastname(cursor.getString(2));
 			person.setEmail(cursor.getString(3));
-			person.setPhone(Integer.parseInt(cursor.getString(4)));
-			person.setSkype(cursor.getString(5));
-			person.setEmployment_date(cursor.getString(6));
-			person.setRole(cursor.getString(7));
-			person.setPosition(Integer.parseInt(cursor.getString(8)));
-			person.setStatus_id(Integer.parseInt(cursor.getString(9)));
+//			person.setPhone(Integer.parseInt(cursor.getString(4)));
+//			person.setSkype(cursor.getString(5));
+//			person.setEmployment_date(cursor.getString(6));
+//			person.setRole(cursor.getString(7));
+//			person.setPosition(Integer.parseInt(cursor.getString(8)));
+//			person.setStatus_id(Integer.parseInt(cursor.getString(9)));
 			cursor.close();
 			db.close();
 			return person;
@@ -205,12 +201,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				person.setName(cursor.getString(1));
 				person.setLastname(cursor.getString(2));
 				person.setEmail(cursor.getString(3));
-				person.setPhone(Integer.parseInt(cursor.getString(4)));
-				person.setSkype(cursor.getString(5));
-				person.setEmployment_date(cursor.getString(6));
-				person.setRole(cursor.getString(7));
-				person.setPosition(Integer.parseInt(cursor.getString(8)));
-				person.setStatus_id(Integer.parseInt(cursor.getString(9)));
+//				person.setPhone(Integer.parseInt(cursor.getString(4)));
+//				person.setSkype(cursor.getString(5));
+//				person.setEmployment_date(cursor.getString(6));
+//				person.setRole(cursor.getString(7));
+//				person.setPosition(Integer.parseInt(cursor.getString(8)));
+//				person.setStatus_id(Integer.parseInt(cursor.getString(9)));
 				// Adding to list
 				list.add(person);
 			} while (cursor.moveToNext());
@@ -229,12 +225,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(PEOPLES_COLUMNS.NAME, person.getName());
 		values.put(PEOPLES_COLUMNS.LAST_NAME, person.getLastname());
 		values.put(PEOPLES_COLUMNS.EMAIL, person.getEmail());
-		values.put(PEOPLES_COLUMNS.PHONE, person.getPhone());
-		values.put(PEOPLES_COLUMNS.SKYPE, person.getSkype());
-		values.put(PEOPLES_COLUMNS.EMPLOYMENT_DATE, person.getEmployment_date());
-		values.put(PEOPLES_COLUMNS.ROLES, person.getRole());
-		values.put(PEOPLES_COLUMNS.POSITION, person.getPosition());
-		values.put(PEOPLES_COLUMNS.STATUS_ID, person.getStatus_id());
+//		values.put(PEOPLES_COLUMNS.PHONE, person.getPhone());
+//		values.put(PEOPLES_COLUMNS.SKYPE, person.getSkype());
+//		values.put(PEOPLES_COLUMNS.EMPLOYMENT_DATE, person.getEmployment_date());
+//		values.put(PEOPLES_COLUMNS.ROLES, person.getRole());
+//		values.put(PEOPLES_COLUMNS.POSITION, person.getPosition());
+//		values.put(PEOPLES_COLUMNS.STATUS_ID, person.getStatus_id());
 
 		// updating row
 		int result = db.update(TABLE_PEOPLES, values, PEOPLES_COLUMNS.ID + " = ?", new String[] { String.valueOf(person.getId()) });
@@ -268,13 +264,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 		values.put(PROJECT_COLUMNS.NAME, project.getName());
-		values.put(PROJECT_COLUMNS.EMAIL, project.getEmail());
-		values.put(PROJECT_COLUMNS.PHONE, project.getPhone());
-		values.put(PROJECT_COLUMNS.SKYPE, project.getSkype());
+//		values.put(PROJECT_COLUMNS.EMAIL, project.getEmail());
+//		values.put(PROJECT_COLUMNS.PHONE, project.getPhone());
+//		values.put(PROJECT_COLUMNS.SKYPE, project.getSkype());
 		values.put(PROJECT_COLUMNS.START_DATE, project.getsData());
 		values.put(PROJECT_COLUMNS.END_DATE, project.geteData());
 		values.put(PROJECT_COLUMNS.DESCRIPTION, project.getDescription());
-		values.put(PROJECT_COLUMNS.STATUS_ID, project.getStatus_id());
+//		values.put(PROJECT_COLUMNS.STATUS_ID, project.getStatus_id());
 		// Inserting Row
 		db.insert(TABLE_PROJECTS, null, values);
 		db.close(); // Closing database connection
@@ -291,13 +287,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			cursor.moveToFirst();
 
 		Project project = new Project(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
-		project.setEmail(cursor.getString(2));
-		project.setPhone(Integer.parseInt(cursor.getString(3)));
-		project.setSkype(cursor.getString(4));
+//		project.setEmail(cursor.getString(2));
+//		project.setPhone(Integer.parseInt(cursor.getString(3)));
+//		project.setSkype(cursor.getString(4));
 		project.setsData(cursor.getString(5));
 		project.seteData(cursor.getString(6));
 		project.setDescription(cursor.getString(7));
-		project.setStatus_id(Integer.parseInt(cursor.getString(8)));
+//	project.setStatus_id(Integer.parseInt(cursor.getString(8)));
 		cursor.close();
 		db.close();
 		// return project
@@ -315,13 +311,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			cursor.moveToFirst();
 
 		Project project = new Project(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
-		project.setEmail(cursor.getString(2));
-		project.setPhone(Integer.parseInt(cursor.getString(3)));
-		project.setSkype(cursor.getString(4));
+//		project.setEmail(cursor.getString(2));
+//		project.setPhone(Integer.parseInt(cursor.getString(3)));
+//		project.setSkype(cursor.getString(4));
 		project.setsData(cursor.getString(5));
 		project.seteData(cursor.getString(6));
 		project.setDescription(cursor.getString(7));
-		project.setStatus_id(Integer.parseInt(cursor.getString(8)));
+//		project.setStatus_id(Integer.parseInt(cursor.getString(8)));
 		cursor.close();
 		db.close();
 		// return project
@@ -343,13 +339,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				Project project = new Project();
 				project.setId(Integer.parseInt(cursor.getString(0)));
 				project.setName(cursor.getString(1));
-				project.setEmail(cursor.getString(2));
-				project.setPhone(Integer.parseInt(cursor.getString(3)));
-				project.setSkype(cursor.getString(4));
+//				project.setEmail(cursor.getString(2));
+//				project.setPhone(Integer.parseInt(cursor.getString(3)));
+//				project.setSkype(cursor.getString(4));
 				project.setsData(cursor.getString(5));
 				project.seteData(cursor.getString(6));
 				project.setDescription(cursor.getString(7));
-				project.setStatus_id(Integer.parseInt(cursor.getString(8)));
+//				project.setStatus_id(Integer.parseInt(cursor.getString(8)));
 				// Adding to list
 				list.add(project);
 			} while (cursor.moveToNext());
@@ -366,13 +362,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 		values.put(PROJECT_COLUMNS.NAME, project.getName());
-		values.put(PROJECT_COLUMNS.EMAIL, project.getEmail());
-		values.put(PROJECT_COLUMNS.PHONE, project.getPhone());
-		values.put(PROJECT_COLUMNS.SKYPE, project.getSkype());
+//		values.put(PROJECT_COLUMNS.EMAIL, project.getEmail());
+//		values.put(PROJECT_COLUMNS.PHONE, project.getPhone());
+//		values.put(PROJECT_COLUMNS.SKYPE, project.getSkype());
 		values.put(PROJECT_COLUMNS.START_DATE, project.getsData());
 		values.put(PROJECT_COLUMNS.END_DATE, project.geteData());
 		values.put(PROJECT_COLUMNS.DESCRIPTION, project.getDescription());
-		values.put(PROJECT_COLUMNS.STATUS_ID, project.getStatus_id());
+//		values.put(PROJECT_COLUMNS.STATUS_ID, project.getStatus_id());
 
 		// updating row
 		int result = db.update(TABLE_PROJECTS, values, PROJECT_COLUMNS.ID + " = ?", new String[] { String.valueOf(project.getId()) });
@@ -511,12 +507,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 		values.put(INTERVIEW_COLUMNS.NAME, interview.getName());
-		values.put(INTERVIEW_COLUMNS.PHONE, interview.getPhone());
-		values.put(INTERVIEW_COLUMNS.PROJECT, interview.getProject());
+//		values.put(INTERVIEW_COLUMNS.PHONE, interview.getPhone());
+//		values.put(INTERVIEW_COLUMNS.PROJECT, interview.getProject());
 		values.put(INTERVIEW_COLUMNS.POSITION, interview.getPosition());
 		values.put(INTERVIEW_COLUMNS.DATE, interview.getDate());
 		values.put(INTERVIEW_COLUMNS.TIME, interview.getTime());
-		values.put(INTERVIEW_COLUMNS.DESCRIPTION, interview.getDescription());
+//		values.put(INTERVIEW_COLUMNS.DESCRIPTION, interview.getDescription());
 
 		// Inserting Row
 		db.insert(TABLE_INTERVIEWS, null, values);
@@ -534,12 +530,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			cursor.moveToFirst();
 
 		Interviewer interview = new Interviewer(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
-		interview.setPhone(cursor.getInt(2));
-		interview.setProject(cursor.getInt(3));
+//		interview.setPhone(cursor.getInt(2));
+//		interview.setProject(cursor.getInt(3));
 		interview.setPosition(cursor.getInt(4));
 		interview.setDate(cursor.getString(5));
 		interview.setTime(cursor.getString(6));
-		interview.setDescription(cursor.getString(7));
+//		interview.setDescription(cursor.getString(7));
 		cursor.close();
 		db.close();
 		// return project
@@ -561,12 +557,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				Interviewer interview = new Interviewer();
 				interview.setId(Integer.parseInt(cursor.getString(0)));
 				interview.setName(cursor.getString(1));
-				interview.setPhone(cursor.getInt(2));
-				interview.setProject(cursor.getInt(3));
+//				interview.setPhone(cursor.getInt(2));
+//				interview.setProject(cursor.getInt(3));
 				interview.setPosition(cursor.getInt(4));
 				interview.setDate(cursor.getString(5));
 				interview.setTime(cursor.getString(6));
-				interview.setDescription(cursor.getString(7));
+//				interview.setDescription(cursor.getString(7));
 				// Adding to list
 				list.add(interview);
 			} while (cursor.moveToNext());
@@ -583,12 +579,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 		values.put(INTERVIEW_COLUMNS.NAME, interview.getName());
-		values.put(INTERVIEW_COLUMNS.PHONE, interview.getPhone());
-		values.put(INTERVIEW_COLUMNS.PROJECT, interview.getProject());
+//		values.put(INTERVIEW_COLUMNS.PHONE, interview.getPhone());
+//		values.put(INTERVIEW_COLUMNS.PROJECT, interview.getProject());
 		values.put(INTERVIEW_COLUMNS.POSITION, interview.getPosition());
 		values.put(INTERVIEW_COLUMNS.DATE, interview.getDate());
 		values.put(INTERVIEW_COLUMNS.TIME, interview.getTime());
-		values.put(INTERVIEW_COLUMNS.DESCRIPTION, interview.getDescription());
+//		values.put(INTERVIEW_COLUMNS.DESCRIPTION, interview.getDescription());
 
 		// updating row
 		int result = db.update(TABLE_INTERVIEWS, values, INTERVIEW_COLUMNS.ID + " = ?", new String[] { String.valueOf(interview.getId()) });

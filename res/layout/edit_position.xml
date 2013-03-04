@@ -1,25 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:id="@+id/root" >
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/tv_position_name"
         style="@style/text.small"
-        android:text="@string/position_name" />
+        android:text="@string/position_title" />
 
     <EditText
         android:id="@+id/edt_position_name"
         style="@style/edit_text.singleline"
-        android:ems="10" 
+        android:ems="10"
         android:hint="@string/position_enter_name"
-        android:singleLine="true">
-
-        <requestFocus />
+        android:singleLine="true" >
     </EditText>
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_position_work_load"
+            style="@style/text.small"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            style="@style/text.small"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/position_work_load" />
+    </RelativeLayout>
+
+    <SeekBar
+        android:id="@+id/sb_position_work_load"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_position_departments"
+        style="@style/text.small"
+        android:text="@string/position_departments" />
+
+    <Spinner
+        android:id="@+id/sp_position_depoartments"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@android:layout/simple_spinner_item" />
+
+    <TextView
+        android:id="@+id/tv_position_projects"
+        style="@style/text.small"
+        android:text="@string/position_projects" />
+
+    <Spinner
+        android:id="@+id/sp_position_projects"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@android:layout/simple_spinner_item" />
+    
     <TextView
         android:id="@+id/tv_position_description"
         style="@style/text.small"

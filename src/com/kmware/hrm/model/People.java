@@ -1,18 +1,9 @@
 package com.kmware.hrm.model;
 
-import java.util.List;
-
 public class People extends BaseModel {
-	private String role;
-	private int position;
 	private String lastname;
 	private String email;
-	private int phone;
-	private String skype;
-	private String employment_date;
-	private int status_id;
-
-	private List<Project> projects;
+	private int facility;
 	
 	public People() {
 	}
@@ -22,13 +13,22 @@ public class People extends BaseModel {
 		this.lastname = lastname;
 	}
 	
-	public People(int id, String name, int position) {
-		super(id, name);
-		this.position = position;
-	}
-
 	public People(int id, String name) {
 		super(id, name);
+	}
+	
+	public People(int id, String name, String lastname, String email, int facility){
+		super(id, name);
+		this.lastname = lastname;
+		this.email = email;
+		this.facility = facility;
+	}
+	
+	public void setPerson(People person){
+		setName(person.getName());
+		this.lastname = person.getLastname();
+		this.email = person.getEmail();
+		this.facility = person.getFacility();
 	}
 	
 	public String getLastname() {
@@ -47,73 +47,15 @@ public class People extends BaseModel {
 		this.email = email;
 	}
 
-	public int getPhone() {
-		return phone;
+	public int getFacility() {
+		return facility;
 	}
 
-	public void setPhone(int phone) {
-		this.phone = phone;
+	public void setFacility(int facility) {
+		this.facility = facility;
 	}
 
-	public String getSkype() {
-		return skype;
-	}
 
-	public void setSkype(String skype) {
-		this.skype = skype;
-	}
-
-	public String getEmployment_date() {
-		return employment_date;
-	}
-
-	public void setEmployment_date(String employment_date) {
-		this.employment_date = employment_date;
-	}
-
-	public int getStatus_id() {
-		return status_id;
-	}
-
-	public void setStatus_id(int status_id) {
-		this.status_id = status_id;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public List<Project> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
-	
-	public void setPerson(People person){
-		setName(person.getName());
-		this.role = person.getRole();
-		this.position = person.getPosition();
-		this.lastname = person.getLastname();
-		this.email = person.getEmail();
-		this.phone = person.getPhone();
-		this.skype = person.getSkype();
-		this.employment_date = person.getEmployment_date();
-		this.status_id = person.getStatus_id();
-	}
 
 	@Override
 	public String toString() {

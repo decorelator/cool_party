@@ -27,7 +27,7 @@
                 android:id="@+id/tv_interview_time"
                 style="@style/text.small"
                 android:gravity="center_horizontal"
-                android:text="12:00" />
+                android:text="12:00 pm" />
 
             <TextView
                 android:id="@+id/tv_interview_date"
@@ -72,23 +72,6 @@
             android:layout_below="@+id/tv_interview_project"
             android:layout_toRightOf="@+id/tv_interview_position_title"
             android:text=" Developer" />
-         <TextView
-            android:id="@+id/tv_interview_phone_title"
-            style="@style/text_size.description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tv_interview_position_title"
-            android:text="@string/people_tel_title" />
-
-        <TextView
-            android:id="@+id/tv_interview_phone"
-            style="@style/text_size.description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_interview_position"
-            android:layout_toRightOf="@+id/tv_interview_phone_title"
-            android:text=" (050)2543210" />
     </RelativeLayout>
 
 </LinearLayout>

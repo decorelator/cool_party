@@ -1,55 +1,41 @@
 package com.kmware.hrm.model;
 
-import java.util.List;
-
 public class Project extends BaseModel {
 
-	private String email;
-	private int phone;
-	private String skype;
+	private String customer;
 	private String sData;
 	private String eData;
-	private int status_id;
 	private String description;
-	private List<People> people;
 
 	public Project() {
 	}
 
-	public Project(int id, String project) {
-		super(id, project);
+	public Project(int id, String name) {
+		super(id, name);
 	}
 
-	public String getEmail() {
-		return email;
+	public  Project(int id, String name, String customer, String sDate, String eDate, String description) {
+		super(id, name);
+		this.customer = customer;
+		this.sData = sDate;
+		this.eData = eDate;
+		this.description = description;
+	}
+	
+	public void setProject(Project project) {
+		setName(project.getName());
+		this.customer = project.getCustomer();
+		this.sData = project.getsData();
+		this.eData = project.geteData();
+		this.description = project.getDescription();
+	}
+	
+	public String getCustomer() {
+		return customer;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public int getPhone() {
-		return phone;
-	}
-
-	public void setPhone(int phone) {
-		this.phone = phone;
-	}
-
-	public String getSkype() {
-		return skype;
-	}
-
-	public void setSkype(String skype) {
-		this.skype = skype;
-	}
-
-	public int getStatus_id() {
-		return status_id;
-	}
-
-	public void setStatus_id(int status_id) {
-		this.status_id = status_id;
+	public void setCustomer(String customer) {
+		this.customer = customer;
 	}
 
 	public String getsData() {
@@ -68,11 +54,6 @@ public class Project extends BaseModel {
 		this.eData = eData;
 	}
 
-	public int getCount() {
-		return people.size();
-
-	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -81,23 +62,10 @@ public class Project extends BaseModel {
 		return description;
 
 	}
-
-	public List<People> getPeople() {
-		return people;
-	}
-
-	public void setPeople(List<People> people) {
-		this.people = people;
-	}
-
-	public void setProject(Project project) {
-		setName(project.getName());
-		this.status_id = project.getStatus_id();
-		this.email = project.getEmail();
-		this.phone = project.getPhone();
-		this.skype = project.getSkype();
-		this.sData = project.getsData();
-		this.eData = project.geteData();
-
+	
+	@Override
+	public String toString() {
+//		return super.toString();
+		return getName();
 	}
 }

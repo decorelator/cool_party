@@ -18,18 +18,6 @@
 
             <com.kmware.hrm.view.SimpleTextView
                 style="@style/text"
-                android:text="@string/people_status" />
-
-            <Spinner
-                android:id="@+id/sp_people_status"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/people_status"
-                android:prompt="@string/people_status"
-                tools:listitem="@android:layout/simple_spinner_item" />
-
-            <com.kmware.hrm.view.SimpleTextView
-                style="@style/text"
                 android:text="@string/people_name" />
 
             <EditText
@@ -37,11 +25,10 @@
                 style="@style/edit_text.singleline"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:singleLine="true" >
-
-                <requestFocus />
+                android:singleLine="true"
+                android:hint="@string/people_name" >
             </EditText>
-            
+
             <com.kmware.hrm.view.SimpleTextView
                 style="@style/text"
                 android:text="@string/people_lastname" />
@@ -51,170 +38,56 @@
                 style="@style/edit_text.singleline"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:singleLine="true" >
-
-                <requestFocus />
+                android:singleLine="true"
+                android:hint="@string/people_lastname" >
             </EditText>
-
-            <RelativeLayout
-                android:id="@+id/rl_people_role"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-
-                <com.kmware.hrm.view.SimpleTextView
-                    android:id="@+id/tv_people_role"
-                    style="@style/text"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:text="@string/people_role" />
-
-                <Button
-                    android:id="@+id/btn_people_add_role"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/sp_people_role"
-                    android:layout_alignParentRight="true"
-                    android:background="@android:drawable/ic_input_add" />
-
-                <Spinner
-                    android:id="@+id/sp_people_role"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/tv_people_role"
-                    android:layout_toLeftOf="@+id/btn_people_add_role"
-                    android:entries="@null"
-                    android:prompt="@string/people_role"
-                    tools:listitem="@android:layout/simple_spinner_item" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_people_roles"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-            </LinearLayout>
 
             <com.kmware.hrm.view.SimpleTextView
                 style="@style/text"
-                android:text="@string/people_position" />
+                android:text="@string/people_pr_mail" />
+
+            <EditText
+                android:id="@+id/edt_people_pr_mail"
+                style="@style/edit_text.singleline"
+                android:ems="10"
+                android:hint="@string/people_email"
+                android:inputType="textEmailAddress"
+                android:singleLine="true" >
+            </EditText>
+
+            <com.kmware.hrm.view.SimpleTextView
+                style="@style/text"
+                android:text="@string/people_facility" />
 
             <Spinner
-                android:id="@+id/sp_people_position"
+                android:id="@+id/sp_people_facility"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:prompt="@array/people_status_value"
                 tools:listitem="@android:layout/simple_spinner_item" />
 
             <RelativeLayout
-                android:id="@+id/rl_people"
+                android:id="@+id/rl_people_show_dialog"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
+                android:layout_height="fill_parent"
+                android:orientation="horizontal" >
 
-                <RelativeLayout
-                    android:id="@+id/rl_people_contacts"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
+                <CheckBox
+                    android:id="@+id/chb_people_show_dialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true" />
 
-                    <com.kmware.hrm.view.SimpleTextView
-                        android:id="@+id/tv_people_contacts"
-                        style="@style/text.small"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:text="@string/people_contacts" />
+                <com.kmware.hrm.view.SimpleTextView
+                    style="@style/text"
+                    android:layout_alignBaseline="@+id/chb_people_show_dialog"
+                    android:layout_alignBottom="@+id/chb_people_show_dialog"
+                    android:layout_toRightOf="@+id/chb_people_show_dialog"
+                    android:text="@string/people_show_dialog" />
 
-                    <EditText
-                        android:id="@+id/edt_people_tel"
-                        style="@style/edit_text.singleline"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/edt_people_email"
-                        android:ems="10"
-                        android:hint="@string/people_tel"
-                        android:inputType="phone"
-                        android:singleLine="true" />
-
-                    <EditText
-                        android:id="@+id/edt_people_email"
-                        style="@style/edit_text.singleline"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/tv_people_contacts"
-                        android:ems="10"
-                        android:hint="@string/people_email"
-                        android:inputType="textEmailAddress"
-                        android:singleLine="true" />
-
-                    <EditText
-                        android:id="@+id/edt_people_skype"
-                        style="@style/edit_text.singleline"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/edt_people_tel"
-                        android:ems="10"
-                        android:hint="@string/people_skype"
-                        android:singleLine="true" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_people_employee"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_below="@+id/rl_people_contacts" >
-
-                    <Button
-                        android:id="@+id/btn_people_date_in"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true" />
-
-                    <com.kmware.hrm.view.SimpleTextView
-                        style="@style/text"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/btn_people_date_in"
-                        android:text="@string/people_date_in" />
-                </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/ll_people_listview"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:background="@color/mane_orange" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <com.kmware.hrm.view.SimpleTextView
-                style="@style/text"
-                android:layout_weight="1"
-                android:text="@string/people_projects" />
-
-            <ImageView
-                android:id="@+id/ib_people_addproject"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_input_add" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/lv_people_projects"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-        </ListView>
-    </LinearLayout>
 
 </LinearLayout>

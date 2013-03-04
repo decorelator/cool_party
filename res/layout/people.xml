@@ -41,7 +41,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
                 android:background="@color/mane_orange" />
-            
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                     android:layout_weight="1"
                     android:text="Sverdlov" />
             </LinearLayout>
-            
+
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
@@ -76,72 +76,19 @@
                 android:weightSum="2" >
 
                 <TextView
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="@string/people_position_title" />
-
-                <TextView
-                    android:id="@+id/tv_people_position"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="Developer" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:background="@color/mane_orange" />
-            
-<LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="@string/people_status_title" />
-
-                <TextView
-                    android:id="@+id/tv_people_status"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="Employee" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:background="@color/mane_orange" />
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
                     android:text="@string/people_email_title" />
 
                 <TextView
                     android:id="@+id/tv_people_email"
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
-                    android:text="sverdlov@mail.com" />
+                    android:text="sv@mail.com" />
             </LinearLayout>
 
             <ImageView
@@ -156,92 +103,26 @@
                 android:weightSum="2" >
 
                 <TextView
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
-                    android:text="@string/people_tel_title" />
+                    android:text="@string/people_facility_title" />
 
                 <TextView
-                    android:id="@+id/tv_people_phone"
+                    android:id="@+id/tv_people_facility"
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
-                    android:text="(050)2454505" />
+                    android:text="KM-Ware OD" />
             </LinearLayout>
 
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
                 android:background="@color/mane_orange" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="@string/people_skype_title" />
-
-                <TextView
-                    android:id="@+id/tv_people_skype"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="ololo" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:background="@color/mane_orange" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                style="@style/text_size.small"
-                android:text="@string/people_info" />
-
-            <TextView
-                android:id="@+id/tv_people_description"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                style="@style/text_size.small"
-                android:maxLines="5"
-                android:text="Info" />
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:background="@color/mane_orange" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            style="@style/text_size.small"
-            android:text="@string/people_projects_title" />
-
-        <ListView
-            android:id="@+id/lv_people_projects"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:divider="@color/mane_blue"
-            tools:listitem="@android:layout/simple_list_item_1" >
-        </ListView>
-    </LinearLayout>
 
 </LinearLayout>

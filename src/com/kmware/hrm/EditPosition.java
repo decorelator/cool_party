@@ -1,35 +1,38 @@
 package com.kmware.hrm;
 
-import com.kmware.hrm.db.DatabaseHandler;
-import com.kmware.hrm.model.Position;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.content.Intent;
+import com.kmware.hrm.model.Department;
+import com.kmware.hrm.model.Position;
+import com.kmware.hrm.model.Project;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 public class EditPosition extends ZActivity {
 	public static String LOGTAG = EditPosition.class.getSimpleName();
 
-	EditText edt_PositionName;
+	EditText edt_PositionTitle;
+	TextView tv_workLoad;
+	SeekBar sb_workLoad;
+	Spinner sp_Departments;
+	Spinner sp_Projects;
 	EditText edt_PositionDescription;
-
-	private DatabaseHandler db;
-	private Intent extra;
+	List<Project> projects;
+	List<Department> departments;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.edit_position);
 		super.onCreate(savedInstanceState);
 		backHomeBar(R.drawable.actionbar_back_indicator, DashboardDesignActivity.createIntent(this));
-		if (extra != null) {
-			setTitle(getResources().getString(R.string.position_edit), android.R.drawable.ic_input_add);
-		} else {
-			setTitle(getResources().getString(R.string.position_add), android.R.drawable.ic_input_add);
-		}
-
+		setTitle(getResources().getString(R.string.position_add), android.R.drawable.ic_input_add);
 		addprefBarBtn(android.R.drawable.ic_menu_save, new OnClickListener() {
 
 			@Override
@@ -44,37 +47,70 @@ public class EditPosition extends ZActivity {
 
 	private void init() {
 
-		db = new DatabaseHandler(this);
-		extra = getIntent();
+		edt_PositionTitle = (EditText) findViewById(R.id.edt_position_name);
+		sb_workLoad = (SeekBar) findViewById(R.id.sb_position_work_load);
+		sb_workLoad.setMax(101);
+		sb_workLoad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-		edt_PositionName = (EditText) findViewById(R.id.edt_position_name);
-		edt_PositionDescription = (EditText) findViewById(R.id.edt_position_description);
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
 
-		if (extra.getIntExtra("ID", 0) != 0) {
-			edt_PositionName.setText((db.getPosition(extra.getIntExtra("ID", 0))).getName().toString());
-			edt_PositionDescription.setText((db.getPosition(extra.getIntExtra("ID", 0))).getDescription().toString());
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				tv_workLoad.setText("" + sb_workLoad.getProgress() + "%");
+			}
+		});
+
+		tv_workLoad = (TextView) findViewById(R.id.tv_position_work_load);
+		tv_workLoad.setText("" + sb_workLoad.getProgress() + "%");
+		sp_Departments = (Spinner) findViewById(R.id.sp_position_depoartments);
+
+		String[] str = this.getResources().getStringArray(R.array.people_facility);
+		departments = new ArrayList<Department>();
+		departments.add(new Department(0, getResources().getString(R.string.sp_none)));
+		for (int i = 1; i <= str.length; i++) {
+			departments.add(new Department(i, str[i - 1]));
 		}
+
+		ArrayAdapter<Department> dep_adapter = new ArrayAdapter<Department>(this, android.R.layout.simple_spinner_item, departments);
+		dep_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp_Departments.setAdapter(dep_adapter);
+
+		sp_Projects = (Spinner) findViewById(R.id.sp_position_projects);
+		projects = new ArrayList<Project>();
+		projects.add(new Project(0, getResources().getString(R.string.sp_none)));
+
+		projects.addAll(Test_Data.list_projects);
+		
+		ArrayAdapter<Project> project_adapter = new ArrayAdapter<Project>(this, android.R.layout.simple_spinner_item, projects);
+		project_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		sp_Projects.setAdapter(project_adapter);
+
+		edt_PositionDescription = (EditText) findViewById(R.id.edt_position_description);
 
 	}
 
 	private void save() {
 
-		if (edt_PositionName.getText().toString().trim().length() > 0) {
+		if (edt_PositionTitle.getText().toString().trim().length() > 0) {
 			Position position = new Position();
 
-			position.setName(edt_PositionName.getText().toString());
+			position.setName(edt_PositionTitle.getText().toString());
+			position.setWork_load(sb_workLoad.getProgress());
+			position.setDepartment(((Department) sp_Departments.getSelectedItem()).getId());
+			position.setProject(((Project) sp_Projects.getSelectedItem()).getId());
 			position.setDescription(edt_PositionDescription.getText().toString());
-			if (extra.getIntExtra("ID", 0) == 0) {
-				db.addPosition(position);
-			} else {
-				position.setId(extra.getIntExtra("ID", 0));
-				db.updatePosition(position);
-			}
+
+			Test_Data.list_position.add(position);
 			setResult(RESULT_OK);
 			finish();
 		} else {
-			Toast toast = Toast.makeText(getApplicationContext(), "Enter the name", Toast.LENGTH_SHORT);
-			toast.show();
+			getDialog().showWarning(this, "Enter the Title");
 		}
 
 	}

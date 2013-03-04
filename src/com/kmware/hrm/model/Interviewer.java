@@ -2,18 +2,35 @@ package com.kmware.hrm.model;
 
 public class Interviewer extends BaseModel {
 
-	private String time;
 	private String date;
-	private int project;
+	private String time;
+	private int candidate;
 	private int position;
-	private int phone;
-	private String description;
+	private int status;
 
 	public Interviewer() {
 	}
 
 	public Interviewer(int id, String name) {
 		super(id, name);
+	}
+	
+	public Interviewer(int id, String name, String date, String time, int candidate, int position, int status) {
+		super(id, name);
+		this.date = date;
+		this.time = time;
+		this.candidate = candidate;
+		this.position = position;
+		this.status = status;
+	}
+	
+	public void setInterview(Interviewer interview) {
+		setName(interview.getName());
+		this.date = interview.getDate();
+		this.time = interview.getTime();
+		this.candidate = interview.getCandidate();
+		this.position = interview.getPosition();
+		this.status = interview.getStatus();
 	}
 
 	public String getTime() {
@@ -32,14 +49,6 @@ public class Interviewer extends BaseModel {
 		this.date = date;
 	}
 
-	public int getProject() {
-		return project;
-	}
-
-	public void setProject(int project) {
-		this.project = project;
-	}
-
 	public int getPosition() {
 		return position;
 	}
@@ -48,30 +57,27 @@ public class Interviewer extends BaseModel {
 		this.position = position;
 	}
 
-	public int getPhone() {
-		return phone;
+	public int getCandidate() {
+		return candidate;
 	}
 
-	public void setPhone(int phone) {
-		this.phone = phone;
+	public void setCandidate(int candidate) {
+		this.candidate = candidate;
 	}
 
-	public String getDescription() {
-		return description;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
-	public void setInterview(Interviewer interview) {
-		setName(interview.getName());
-		this.phone = interview.getPhone();
-		this.project = interview.getProject();
-		this.position = interview.getPosition();
-		this.date = interview.getDate();
-		this.time = interview.getTime();
-		this.description = interview.getDescription();
-	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getName();
+	}
+	
 }

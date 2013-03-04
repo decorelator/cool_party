@@ -22,17 +22,17 @@
                 android:weightSum="2" >
 
                 <TextView
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
-                    android:text="@string/project_name_title" />
+                    android:text="@string/project_title" />
 
                 <TextView
-                    android:id="@+id/tv_project_name"
+                    android:id="@+id/tv_project_title"
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
                     android:text="eFarmer" />
             </LinearLayout>
@@ -49,21 +49,22 @@
                 android:weightSum="2" >
 
                 <TextView
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
-                    android:text="@string/project_status" />
+                    android:text="@string/project_customer_title" />
 
                 <TextView
-                    android:id="@+id/tv_project_status"
+                    android:id="@+id/tv_project_customer"
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
-                    android:text="Open" />
+                    android:text="Vasya" />
             </LinearLayout>
-<ImageView
+
+            <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
                 android:background="@color/mane_orange" />
@@ -75,20 +76,21 @@
                 android:weightSum="2" >
 
                 <TextView
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
                     android:text="@string/project_start_date_title" />
 
                 <TextView
                     android:id="@+id/tv_project_startdate"
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
                     android:text="12/12/12" />
             </LinearLayout>
+
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
@@ -101,100 +103,20 @@
                 android:weightSum="2" >
 
                 <TextView
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
                     android:text="@string/project_end_date_title" />
 
                 <TextView
                     android:id="@+id/tv_project_enddate"
+                    style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    style="@style/text_size.small"
                     android:layout_weight="1"
                     android:text="20/02/13" />
             </LinearLayout>
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:background="@color/mane_orange" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="@string/project_email_title" />
-
-                <TextView
-                    android:id="@+id/tv_project_email"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="sverdlov@mail.com" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:background="@color/mane_orange" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="@string/project_tel_title" />
-
-                <TextView
-                    android:id="@+id/tv_project_phone"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="(050)2454505" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:background="@color/mane_orange" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2" >
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="@string/project_skype_title" />
-
-                <TextView
-                    android:id="@+id/tv_project_skype"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/text_size.small"
-                    android:layout_weight="1"
-                    android:text="ololo" />
-            </LinearLayout>
 
             <ImageView
                 android:layout_width="fill_parent"
@@ -202,45 +124,25 @@
                 android:background="@color/mane_orange" />
 
             <TextView
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
-                android:text="@string/people_info" />
+                android:text="@string/project_discription_title" />
 
             <TextView
                 android:id="@+id/tv_project_description"
+                style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/text_size.small"
                 android:maxLines="5"
                 android:text="Info" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/mane_orange" />
+
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:background="@color/mane_orange" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            style="@style/text_size.small"
-            android:text="@string/project_employments_title" />
-
-        <ListView
-            android:id="@+id/lv_project_employees"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:divider="@color/mane_blue"
-            tools:listitem="@android:layout/simple_list_item_2" >
-
-        </ListView>
-    </LinearLayout>
 
 </LinearLayout>

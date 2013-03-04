@@ -6,7 +6,6 @@ import com.kmware.hrm.adapters.CustomInterviewerAdapter;
 import com.kmware.hrm.adapters.CustomPeopleAdapter;
 import com.kmware.hrm.adapters.CustomPositionAdapter;
 import com.kmware.hrm.adapters.CustomProjectAdapter;
-import com.kmware.hrm.db.DatabaseHandler;
 import com.kmware.hrm.model.BaseModel;
 import com.kmware.hrm.model.Interviewer;
 import com.kmware.hrm.model.People;
@@ -18,14 +17,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,12 +32,10 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 	public static String LOGTAG = ListContainer.class.getSimpleName();
 	private static final int RES_ADD = 0;
-	private static final int RES_EDIT = 1;
 	private final int CHECK_R_PERFORM_CLICK = 0;
 	private final int CHECK_R_ID = 1;
 	private final int CHECK_CLASS = 2;
-	private final int CHECK_INTENT_EDIT = 3;
-	private final int CHECK_INTENT_ADD = 4;
+	private final int CHECK_INTENT_ADD = 3;
 
 	private Button current;
 
@@ -59,14 +51,11 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	ListView lv_Conteiner;
 	private String extra;
 	private boolean addButton;
-	// private ArrayList<BaseModel> dataList;
 	private CustomContainerAdapter<? extends BaseModel> listAdapter;
 	private ArrayList<People> t_people;
 	private ArrayList<Project> t_project;
 	private ArrayList<Position> t_position;
 	private ArrayList<Interviewer> t_interview;
-
-	private DatabaseHandler db;
 
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,7 +71,6 @@ public class ListContainer extends ZActivity implements OnClickListener {
 					((LinearLayout) findViewById(R.id.filter_menu)).setVisibility(View.GONE);
 				else
 					((LinearLayout) findViewById(R.id.filter_menu)).setVisibility(View.VISIBLE);
-
 			}
 		});
 
@@ -91,8 +79,6 @@ public class ListContainer extends ZActivity implements OnClickListener {
 	}
 
 	private void init() {
-
-		db = new DatabaseHandler(this);
 
 		ll_NavigationButtons = (LinearLayout) findViewById(R.id.ll_NavigationButtons);
 
@@ -141,36 +127,58 @@ public class ListContainer extends ZActivity implements OnClickListener {
 
 		lv_Conteiner.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = (Intent) checkingCategory(CHECK_CLASS);
-
-				switch ((Integer) checkingCategory(CHECK_R_ID)) {
-				case 1:
-					intent.putExtra("ID", t_people.get(position).getId());
-					break;
-				case 2:
-					intent.putExtra("ID", t_project.get(position).getId());
-					break;
-				case 3:
-					intent.putExtra("ID", t_position.get(position).getId());
-					break;
-				case 4:
-					intent.putExtra("ID", t_interview.get(position).getId());
-					break;
+				if (getIntent().getStringExtra(Extras.DASHBOARD_INTENT) != null) {
+					Intent intent = (Intent) checkingCategory(CHECK_CLASS);
+					intent.putExtra("ID", position);
+					startActivity(intent);
 				}
+				if (getIntent().getStringExtra("Interview") != null /*extra.equals(getResources().getString(R.string.cat_people)) || (extra.equals(getResources().getString(R.string.cat_positions)))*/) {
+					Intent intent = new Intent();
+					switch ((Integer)checkingCategory(CHECK_R_ID)) {
+					case 1:
+						intent.putExtra("Candidate", Test_Data.list_people.get(position).getId());
+						break;
+					case 3:
+						intent.putExtra("Position", Test_Data.list_position.get(position).getId());
+						break;
+					}
+					setResult(RESULT_OK, intent);
+					finish();
+				}
+				// switch ((Integer) checkingCategory(CHECK_R_ID)) {
+				// case 1:
+				// intent.putExtra("ID", t_people.get(position).getId());
+				// break;
+				// case 2:
+				// intent.putExtra("ID", t_project.get(position).getId());
+				// break;
+				// case 3:
+				// intent.putExtra("ID", t_position.get(position).getId());
+				// break;
+				// case 4:
+				// intent.putExtra("ID", t_interview.get(position).getId());
+				// break;
+				// }
 
-				startActivity(intent);
 			}
 		});
-		registerForContextMenu(lv_Conteiner);
+		// registerForContextMenu(lv_Conteiner);
 
-		db.close();
 	}
 
 	private void getExtra() {
 		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
+		if (extras != null && extras.getString(Extras.DASHBOARD_INTENT) != null) {
 			try {
 				extra = extras.getString(Extras.DASHBOARD_INTENT);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (extras != null && extras.getString("Interview") != null) {
+			try {
+				extra = extras.getString("Interview");
+				findViewById(R.id.ll_buttons).setVisibility(View.GONE);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -214,8 +222,9 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		case 3:
 			if (extra.equals(getResources().getString(R.string.cat_people)))
 				o = new Intent(ListContainer.this, EditPeople.class);
-			if (extra.equals(getResources().getString(R.string.cat_projects)))
-				o = new Intent(ListContainer.this, EditProject.class);
+			// if
+			// (extra.equals(getResources().getString(R.string.cat_projects)))
+			// o = new Intent(ListContainer.this, EditProject.class);
 			if (extra.equals(getResources().getString(R.string.cat_positions)))
 				o = new Intent(ListContainer.this, EditPosition.class);
 			if (extra.equals(getResources().getString(R.string.cat_interviews)))
@@ -239,7 +248,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			// Filling of the list of peoples by random values
 			t_people = new ArrayList<People>();
 			try {
-				t_people.addAll(db.getAllPeople());
+				t_people.addAll(Test_Data.list_people);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -255,26 +264,20 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			extra = getResources().getString(R.string.cat_projects);
 			// Filling of the list of projects by random values
 			t_project = new ArrayList<Project>();
-//			for (int i = 0; i < 20; i++) {
-//				Project p = new Project(i, "Project" + i);
-//				p.seteData(":" + (System.currentTimeMillis() / 1000));
-//				p.setsData(":" + (System.currentTimeMillis() / 1000));
-//				t_project.add(p);
-//			}
 			try {
-				t_project.addAll(db.getAllProject());
+				t_project.addAll(Test_Data.list_projects);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 			listAdapter = new CustomProjectAdapter(this, t_project, R.layout.list_container_row_project);
 			lv_Conteiner.setAdapter(listAdapter);
 
-//			if (addButton) {
-//				deleteBarBtn(1);
-//				addButton = false;
-//			}
-			addButton();
-			addButton = true;
+			if (addButton) {
+				deleteBarBtn(1);
+				addButton = false;
+			}
+			// addButton();
+			// addButton = true;
 			break;
 		case R.id.iv_Positions:
 			// iv_subTitle.setImageResource(R.drawable.cat_position);
@@ -283,7 +286,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			// Filling of the list of positions by random values
 			t_position = new ArrayList<Position>();
 			try {
-				t_position.addAll(db.getAllPositions());
+				t_position.addAll(Test_Data.list_position);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -301,11 +304,11 @@ public class ListContainer extends ZActivity implements OnClickListener {
 			// Filling of the list of positions by random values
 			t_interview = new ArrayList<Interviewer>();
 			try {
-				t_interview.addAll(db.getAllInterviewer());
+				t_interview.addAll(Test_Data.list_interview);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			
+
 			listAdapter = new CustomInterviewerAdapter(this, t_interview, R.layout.list_container_row_interview);
 			lv_Conteiner.setAdapter(listAdapter);
 
@@ -324,7 +327,7 @@ public class ListContainer extends ZActivity implements OnClickListener {
 				public void onClick(View v) {
 					if (extra.length() > 0) {
 						Intent intent = new Intent();
-						intent = (Intent) checkingCategory(CHECK_INTENT_EDIT);
+						intent = (Intent) checkingCategory(CHECK_INTENT_ADD);
 						startActivityForResult(intent, RES_ADD);
 					}
 				}
@@ -337,35 +340,6 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
 
-		case RES_EDIT:
-
-			if (resultCode == RESULT_OK) {
-				try {
-					switch ((Integer) checkingCategory(CHECK_R_ID)) {
-					case 1:
-						t_people.clear();
-						t_people.addAll(db.getAllPeople());
-						break;
-					case 2:
-						t_project.clear();
-						t_project.addAll(db.getAllProject());
-						break;
-					case 3:
-						t_position.clear();
-						t_position.addAll(db.getAllPositions());
-						break;
-					case 4:
-						t_interview.clear();
-						t_interview.addAll(db.getAllInterviewer());
-						break;
-					}
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-				listAdapter.notifyDataSetChanged();
-			}
-			break;
-
 		case RES_ADD:
 			if (resultCode == RESULT_OK) {
 
@@ -373,19 +347,19 @@ public class ListContainer extends ZActivity implements OnClickListener {
 					switch ((Integer) checkingCategory(CHECK_R_ID)) {
 					case 1:
 						t_people.clear();
-						t_people.addAll(db.getAllPeople());
+						t_people.addAll(Test_Data.list_people);
 						break;
 					case 2:
 						t_project.clear();
-						t_project.addAll(db.getAllProject());
+						t_project.addAll(Test_Data.list_projects);
 						break;
 					case 3:
 						t_position.clear();
-						t_position.addAll(db.getAllPositions());
+						t_position.addAll(Test_Data.list_position);
 						break;
 					case 4:
 						t_interview.clear();
-						t_interview.addAll(db.getAllInterviewer());
+						t_interview.addAll(Test_Data.list_interview);
 						break;
 					}
 
@@ -398,70 +372,80 @@ public class ListContainer extends ZActivity implements OnClickListener {
 		}
 	}
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_list_conteiner, menu);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		int index = info.position;
-		switch (item.getItemId()) {
-		case R.id.lv_row_edit:
-			Intent intent = new Intent();
-			intent = (Intent) checkingCategory(CHECK_INTENT_EDIT);
-			switch ((Integer) checkingCategory(CHECK_R_ID)) {
-			case 1:
-				intent.putExtra("ID", t_people.get(index).getId());
-				Log.i(LOGTAG, "Edit person - " + t_people.get(index).getId() + " " + t_people.get(index).getName());
-				break;
-			case 2:
-				intent.putExtra("ID", t_project.get(index).getId());
-				Log.i(LOGTAG, "Edit project - " + t_project.get(index).getId() + " " + t_project.get(index).getName());
-				break;
-			case 3:
-				intent.putExtra("ID", t_position.get(index).getId());
-				Log.i(LOGTAG, "Edit position - " + t_position.get(index).getId() + " " + t_position.get(index).getName());
-				break;
-			case 4:
-				intent.putExtra("ID", t_interview.get(index).getId());
-				Log.i(LOGTAG, "Edit interview - " + t_interview.get(index).getId() + " " + t_interview.get(index).getName());
-				break;
-			}
-
-			startActivityForResult(intent, RES_EDIT);
-			return true;
-		case R.id.lv_row_delete:
-			switch ((Integer) checkingCategory(CHECK_R_ID)) {
-			case 1:
-				db.deletePerson(db.getPerson((t_people.get(index).getId())));
-				Log.i(LOGTAG, "Delete person - " + (index + 1) + " " + t_people.get(index).getName());
-				t_people.remove(index);
-				break;
-			case 2:
-				db.deleteProject(db.getProject((t_project.get(index).getId())));
-				Log.i(LOGTAG, "Delete project - " + (index + 1) + " " + t_project.get(index).getName());
-				t_project.remove(index);
-				break;
-			case 3:
-				db.deletePosition(db.getPosition(t_position.get(index).getId()));
-				Log.i(LOGTAG, "Delete position - " + (index + 1) + " " + t_position.get(index).getName());
-				t_position.remove(index);
-				break;
-			case 4:
-				db.deleteInterview(db.getInterview(t_interview.get(index).getId()));
-				Log.i(LOGTAG, "Delete interview - " + (index + 1) + " " + t_interview.get(index).getName());
-				t_interview.remove(index);
-				break;
-			}
-			listAdapter.notifyDataSetChanged();
-			return true;
-		}
-		return false;
-	}
+	// @Override
+	// public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo
+	// menuInfo) {
+	// super.onCreateContextMenu(menu, v, menuInfo);
+	// MenuInflater inflater = getMenuInflater();
+	// inflater.inflate(R.menu.menu_list_conteiner, menu);
+	// }
+	//
+	// @Override
+	// public boolean onContextItemSelected(MenuItem item) {
+	//
+	// AdapterContextMenuInfo info = (AdapterContextMenuInfo)
+	// item.getMenuInfo();
+	// int index = info.position;
+	// switch (item.getItemId()) {
+	// case R.id.lv_row_edit:
+	// Intent intent = new Intent();
+	// intent = (Intent) checkingCategory(CHECK_INTENT_EDIT);
+	// switch ((Integer) checkingCategory(CHECK_R_ID)) {
+	// case 1:
+	// intent.putExtra("ID", t_people.get(index).getId());
+	// Log.i(LOGTAG, "Edit person - " + t_people.get(index).getId() + " " +
+	// t_people.get(index).getName());
+	// break;
+	// case 2:
+	// intent.putExtra("ID", t_project.get(index).getId());
+	// Log.i(LOGTAG, "Edit project - " + t_project.get(index).getId() + " " +
+	// t_project.get(index).getName());
+	// break;
+	// case 3:
+	// intent.putExtra("ID", t_position.get(index).getId());
+	// Log.i(LOGTAG, "Edit position - " + t_position.get(index).getId() + " " +
+	// t_position.get(index).getName());
+	// break;
+	// case 4:
+	// intent.putExtra("ID", t_interview.get(index).getId());
+	// Log.i(LOGTAG, "Edit interview - " + t_interview.get(index).getId() + " "
+	// + t_interview.get(index).getName());
+	// break;
+	// }
+	//
+	// startActivityForResult(intent, RES_EDIT);
+	// return true;
+	// case R.id.lv_row_delete:
+	// switch ((Integer) checkingCategory(CHECK_R_ID)) {
+	// case 1:
+	// db.deletePerson(db.getPerson((t_people.get(index).getId())));
+	// Log.i(LOGTAG, "Delete person - " + (index + 1) + " " +
+	// t_people.get(index).getName());
+	// t_people.remove(index);
+	// break;
+	// case 2:
+	// db.deleteProject(db.getProject((t_project.get(index).getId())));
+	// Log.i(LOGTAG, "Delete project - " + (index + 1) + " " +
+	// t_project.get(index).getName());
+	// t_project.remove(index);
+	// break;
+	// case 3:
+	// db.deletePosition(db.getPosition(t_position.get(index).getId()));
+	// Log.i(LOGTAG, "Delete position - " + (index + 1) + " " +
+	// t_position.get(index).getName());
+	// t_position.remove(index);
+	// break;
+	// case 4:
+	// db.deleteInterview(db.getInterview(t_interview.get(index).getId()));
+	// Log.i(LOGTAG, "Delete interview - " + (index + 1) + " " +
+	// t_interview.get(index).getName());
+	// t_interview.remove(index);
+	// break;
+	// }
+	// listAdapter.notifyDataSetChanged();
+	// return true;
+	// }
+	// return false;
+	// }
 
 }

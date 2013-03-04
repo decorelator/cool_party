@@ -535,11 +535,11 @@ public class HrmProvider extends ContentProvider {
 
 			db.execSQL("CREATE TABLE roles (" + "_id INTEGER PRIMARY KEY AUTOINCREMENT," + "RoleName TEXT, " + "LoweredRoleName TEXT, " + "Description TEXT "
 					+ ");");
-			String[] roles = context.getResources().getStringArray(com.kmware.hrm.R.array.people_roles);
-			Log.e(LOGTAG, roles.toString());
-			for (int i = 0; i < roles.length; i++) {
-				db.execSQL(String.format("INSERT INTO roles (RoleName, LoweredRoleName, Description) " + "VALUES ('%s', 0, 0)", roles[i].replace("'", "''")));
-			}
+//			String[] roles = context.getResources().getStringArray(com.kmware.hrm.R.array.people_roles);
+//			Log.e(LOGTAG, roles.toString());
+//			for (int i = 0; i < roles.length; i++) {
+//				db.execSQL(String.format("INSERT INTO roles (RoleName, LoweredRoleName, Description) " + "VALUES ('%s', 0, 0)", roles[i].replace("'", "''")));
+//			}
 		}
 
 		@Override

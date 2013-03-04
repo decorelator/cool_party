@@ -1,12 +1,9 @@
 package com.kmware.hrm;
 
 import java.util.GregorianCalendar;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.widget.TextView;
-import com.kmware.hrm.db.DatabaseHandler;
 import com.kmware.hrm.model.Interviewer;
 import com.kmware.hrm.model.Position;
 import com.kmware.hrm.model.Project;
@@ -14,19 +11,18 @@ import com.kmware.hrm.model.Project;
 public class InterviewInfo extends ZActivity {
 	public static String LOGTAG = InterviewInfo.class.getSimpleName();
 
-	TextView tv_Name;
-	TextView tv_Phone;
-	TextView tv_Project;
-	TextView tv_Position;
-	TextView tv_Date;
-	TextView tv_Time;
-	TextView tv_Address;
-	TextView tv_Description;
+	TextView tv_interview_Name;
+	TextView tv_interview_Date;
+	TextView tv_interview_Time;
+	TextView tv_interview_Candidate;
+	TextView tv_interview_Position;
+	TextView tv_interview_Status;
 
-	DatabaseHandler db;
 	Interviewer interview;
 	Project project;
 	Position position;
+
+	private int position_id;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,57 +35,55 @@ public class InterviewInfo extends ZActivity {
 
 	private void init() {
 
-		db = new DatabaseHandler(this);
 		interview = new Interviewer();
+		position_id = getIntent().getIntExtra("ID", 0);
+		interview.setInterview(Test_Data.list_interview.get(position_id));
 
-		tv_Name = (TextView) findViewById(R.id.tv_interviewer_name);
-		tv_Phone = (TextView) findViewById(R.id.tv_interviewer_phone);
-		tv_Project = (TextView) findViewById(R.id.tv_interviewer_project);
-		tv_Position = (TextView) findViewById(R.id.tv_interviewer_position);
-		tv_Date = (TextView) findViewById(R.id.tv_interviewer_date);
-		tv_Time = (TextView) findViewById(R.id.tv_interviewer_time);
-		tv_Address = (TextView) findViewById(R.id.tv_interviewer_address);
-		tv_Description = (TextView) findViewById(R.id.tv_interviewer_description);
+		bar.setTitle(interview.getName());
+
+		tv_interview_Name = (TextView) findViewById(R.id.tv_interviewer_name);
+		tv_interview_Date = (TextView) findViewById(R.id.tv_interviewer_date);
+		tv_interview_Time = (TextView) findViewById(R.id.tv_interviewer_time);
+		tv_interview_Candidate = (TextView) findViewById(R.id.tv_interviewer_candidate);
+		tv_interview_Position = (TextView) findViewById(R.id.tv_interviewer_position);
+		tv_interview_Status = (TextView) findViewById(R.id.tv_interviewer_status);
 
 		enterData();
 	}
 
 	private void enterData() {
-		try {
-			interview.setInterview(db.getInterview(getIntent().getIntExtra("ID", 0)));
 
-			tv_Name.setText(interview.getName());
-			bar.setTitle(tv_Name.getText().toString());
+		tv_interview_Name.setText(interview.getName());
 
-			if (interview.getPhone() != 0)
-				tv_Phone.setText("" + interview.getPhone());
-			try {
-				tv_Project.setText(db.getProject(interview.getProject()).getName());
-			} catch (SQLiteException ex) {
-				ex.printStackTrace();
-				Log.w(LOGTAG, "Projetc DB have not project with id = " + interview.getProject());
-			}
-			try {
-				tv_Position.setText(db.getPosition(interview.getPosition()).getName());
-			} catch (SQLiteException ex) {
-				ex.printStackTrace();
-				Log.w(LOGTAG, "Position DB have not position with id = " + interview.getProject());
-			}
-
-			String parser = interview.getDate();
-			if (parser != null) {
-				String[] date = parser.split(":");
-				GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
-				tv_Date.setText("" + DateFormat.format("dd MMMM yyyy", calendar.getTime()));
-			}
-
-			tv_Time.setText(interview.getTime());
-			// tv_Address
-			tv_Description.setText(interview.getDescription());
-
-		} catch (SQLiteException ex) {
-			ex.printStackTrace();
-
+		String parser = interview.getDate();
+		if (parser != null) {
+			String[] date = parser.split(":");
+			GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+			tv_interview_Date.setText("" + DateFormat.format("dd MMMM yyyy", calendar.getTime()));
 		}
+
+		tv_interview_Time.setText(interview.getTime());
+
+		int i = 0;
+		while (Test_Data.list_people.get(i).getId() != interview.getCandidate() && i < Test_Data.list_people.size()) {
+			i++;
+		}
+	//	if (i != -1) {
+			tv_interview_Candidate.setText("" + Test_Data.list_people.get(i).getLastname() + " " + Test_Data.list_people.get(i).getName());
+//		} else {
+//			tv_interview_Candidate.setText(getResources().getString(R.string.sp_none));
+//		}
+
+		i = 0;
+		while (Test_Data.list_position.get(i).getId() != interview.getPosition() && i < Test_Data.list_position.size()) {
+			i++;
+		}
+//		if (i != -1) {
+			tv_interview_Position.setText("" + Test_Data.list_position.get(i).getName());
+//		} else {
+//			tv_interview_Position.setText(getResources().getString(R.string.sp_none));
+//		}
+		tv_interview_Status.setText(getResources().getStringArray(R.array.interview_status)[interview.getStatus()]);
+		
 	}
 }

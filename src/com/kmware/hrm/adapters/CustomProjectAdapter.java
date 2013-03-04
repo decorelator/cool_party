@@ -12,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-public class CustomProjectAdapter extends CustomContainerAdapter<Project> implements
-		Filterable {
+public class CustomProjectAdapter extends CustomContainerAdapter<Project> implements Filterable {
 
 	public static String LOGTAG = CustomProjectAdapter.class.getSimpleName();
 	private Context context;
-	
-	public CustomProjectAdapter(Context context, ArrayList<Project> list,
-			int layout) {
+
+	public CustomProjectAdapter(Context context, ArrayList<Project> list, int layout) {
 		super(context, list, layout);
 		this.context = context;
 	}
@@ -28,8 +26,7 @@ public class CustomProjectAdapter extends CustomContainerAdapter<Project> implem
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		if (view == null) {
-			view = lInflater
-					.inflate(R.layout.list_container_row_project, parent, false);
+			view = lInflater.inflate(R.layout.list_container_row_project, parent, false);
 		}
 
 		Project p = (Project) getItem(position);
@@ -38,27 +35,20 @@ public class CustomProjectAdapter extends CustomContainerAdapter<Project> implem
 		String parser = "" + p.getsData();
 		String[] date = parser.split(":");
 		GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
-		((TextView) view.findViewById(R.id.tv_project_startdate)).setText(": "+DateFormat.format("dd.MM.yyyy", calendar.getTime()));
+		((TextView) view.findViewById(R.id.tv_project_startdate)).setText(": " + DateFormat.format("dd.MM.yyyy", calendar.getTime()));
 		parser = "" + p.geteData();
 		date = parser.split(":");
 		calendar = new GregorianCalendar(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
-		((TextView) view.findViewById(R.id.tv_project_enddate)).setText(": "+DateFormat.format("dd.MM.yyyy", calendar.getTime()));
-		
-		int i = 0;
-		String[] status = context.getResources().getStringArray(R.array.status_value); 
-		while (!status[i].equals(String.valueOf(p.getStatus_id())) && i < status.length){
-			i++;
-		}
-		String str = context.getResources().getStringArray(R.array.status)[i];
-		((TextView) view.findViewById(R.id.tv_project_status)).setText(str);
+		((TextView) view.findViewById(R.id.tv_project_enddate)).setText(": " + DateFormat.format("dd.MM.yyyy", calendar.getTime()));
 
 		return view;
 	}
 
 	@Override
 	public boolean comparator(Project in, CharSequence constraint) {
-		
-		return ((String.valueOf(in.getName().toLowerCase()).contains(constraint)) || (in.getsData().contains(constraint)) || (in.getsData().contains(constraint)));
+
+		return ((String.valueOf(in.getName().toLowerCase()).contains(constraint)) || (in.getsData().contains(constraint)) || (in.getsData()
+				.contains(constraint)));
 	}
-	
+
 }

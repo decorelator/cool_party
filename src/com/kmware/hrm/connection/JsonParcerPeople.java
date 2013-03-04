@@ -81,8 +81,8 @@ public class JsonParcerPeople {
 			ArrayList<BaseModel> js_people = null;
 			for (int i = 0; i < contacts.length(); i++) {
 				JSONObject c = contacts.getJSONObject(i);
-				People p = new People(c.getInt(TAG_ID), c.getString(TAG_NAME), c.getInt(TAG_ID));
-				js_people.add(p);
+			//	People p = new People(c.getInt(TAG_ID), c.getString(TAG_NAME), c.getInt(TAG_ID));
+			//	js_people.add(p);
 			}
 			return js_people;
 		} catch (JSONException e) {

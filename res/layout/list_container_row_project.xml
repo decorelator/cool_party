@@ -11,14 +11,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
 
-    <TextView
-        android:id="@+id/tv_project_status"
-        style="@style/text_size.title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -69,4 +61,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout> <!-- </LinearLayout> -->
+</RelativeLayout>

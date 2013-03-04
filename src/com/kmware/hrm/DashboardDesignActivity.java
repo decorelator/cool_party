@@ -39,7 +39,7 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 
 			}
 		});
-
+		Test_Data test = new Test_Data();
 		init();
 
 	}

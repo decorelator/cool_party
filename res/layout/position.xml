@@ -26,10 +26,88 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/position_name_title" />
+                    android:text="@string/position_title_view" />
 
                 <TextView
                     android:id="@+id/tv_position_name"
+                    style="@style/text_size.small"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/mane_orange" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    style="@style/text_size.small"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/position_work_load_view" />
+
+                <TextView
+                    android:id="@+id/tv_position_work"
+                    style="@style/text_size.small"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/mane_orange" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    style="@style/text_size.small"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/position_departments_view" />
+
+                <TextView
+                    android:id="@+id/tv_position_department"
+                    style="@style/text_size.small"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/mane_orange" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    style="@style/text_size.small"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/position_project" />
+
+                <TextView
+                    android:id="@+id/tv_position_project"
                     style="@style/text_size.small"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -45,7 +123,7 @@
                 style="@style/text_size.small"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/people_info" />
+                android:text="@string/position_description" />
 
             <TextView
                 android:id="@+id/tv_position_description"

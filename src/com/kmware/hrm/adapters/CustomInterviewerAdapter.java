@@ -2,13 +2,14 @@ package com.kmware.hrm.adapters;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-
+import java.util.List;
 import com.kmware.hrm.R;
+import com.kmware.hrm.Test_Data;
 import com.kmware.hrm.db.DatabaseHandler;
 import com.kmware.hrm.model.Interviewer;
-
+import com.kmware.hrm.model.People;
+import com.kmware.hrm.model.Position;
 import android.content.Context;
-import android.database.sqlite.SQLiteException;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -19,14 +20,15 @@ import android.widget.TextView;
 public class CustomInterviewerAdapter extends CustomContainerAdapter<Interviewer> implements Filterable {
 
 	public static String LOGTAG = CustomInterviewerAdapter.class.getSimpleName();
-	private Context context;
-	String project;
-	String position;
+//	private Context context;
 	DatabaseHandler db;
+	Interviewer p;
+	List<People> candidates;
+	List<Position> positions;
 
 	public CustomInterviewerAdapter(Context context, ArrayList<Interviewer> list, int layout) {
 		super(context, list, layout);
-		this.context = context;
+//		this.context = context;
 	}
 
 	@Override
@@ -35,30 +37,38 @@ public class CustomInterviewerAdapter extends CustomContainerAdapter<Interviewer
 		if (view == null) {
 			view = lInflater.inflate(R.layout.list_container_row_interview, parent, false);
 		}
-		db = new DatabaseHandler(context);
-		Interviewer p = (Interviewer) getItem(position);
+		p = (Interviewer) getItem(position);
 
 		((TextView) view.findViewById(R.id.tv_interview_title)).setText(p.getName());
-		project = "";
+
+		int i = 0;
 		try {
-			project = (db.getProject(p.getProject())).getName();
-		} catch (SQLiteException ex) {
+			while (Test_Data.list_position.get(i).getId() != p.getPosition() && i < Test_Data.list_position.size()) {
+				i++;
+				
+			}
+
+			((TextView) view.findViewById(R.id.tv_interview_position)).setText(" " + Test_Data.list_position.get(i).getName());
+		} catch (Exception ex) {
+			((TextView) view.findViewById(R.id.tv_interview_position)).setText(" ");
 			ex.printStackTrace();
-			Log.w(LOGTAG, "Project DB have not position = " + p.getProject());
+			Log.w(LOGTAG, "OutOfBound in listpositiona");
 		}
-		((TextView) view.findViewById(R.id.tv_interview_project)).setText(" " + project);
-		this.position = "";
+
+		int j = 0;
 		try {
-			this.position = db.getPosition(p.getPosition()).getName();
-		} catch (SQLiteException ex) {
+			while (Test_Data.list_projects.get(j).getId() != Test_Data.list_position.get(i).getProject() && j < Test_Data.list_projects.size()) {
+				j++;
+			}
+
+			((TextView) view.findViewById(R.id.tv_interview_project)).setText(" " + Test_Data.list_projects.get(j).getName());
+		} catch (Exception ex) {
+			((TextView) view.findViewById(R.id.tv_interview_project)).setText(" ");
 			ex.printStackTrace();
-			Log.w(LOGTAG, "Position DB have not position = " + p.getPosition());
+			Log.w(LOGTAG, "OutOfBound in listprojects");
 		}
-		((TextView) view.findViewById(R.id.tv_interview_position)).setText(" " + this.position);
-		if (p.getPhone() != 0) {
-			((TextView) view.findViewById(R.id.tv_interview_phone)).setText(" " + p.getPhone());
-		}
-		((TextView) view.findViewById(R.id.tv_interview_time)).setText(p.getTime());
+
+		
 
 		String parser = "" + p.getDate();
 		String[] date = parser.split(":");
@@ -69,7 +79,17 @@ public class CustomInterviewerAdapter extends CustomContainerAdapter<Interviewer
 			GregorianCalendar calendar = new GregorianCalendar(year, month, day);
 			((TextView) view.findViewById(R.id.tv_interview_date)).setText(DateFormat.format("dd.MM.yy", calendar.getTime()));
 		}
-
+		
+		parser = "" + p.getTime();
+		 date = parser.split(":");
+		 if (date.length > 1 && !parser.equals("null")) {
+				int hour = Integer.parseInt(date[0]);
+				int minute = Integer.parseInt(date[1]);
+				
+				GregorianCalendar calendar = new GregorianCalendar(0, 0, 0, hour, minute);
+				((TextView) view.findViewById(R.id.tv_interview_time)).setText(DateFormat.format("hh:mm a", calendar.getTime()));
+			}
+		
 		return view;
 	}
 
