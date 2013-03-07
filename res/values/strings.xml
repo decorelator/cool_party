@@ -198,4 +198,9 @@
     <string name="menu_delete">Delete</string>
     <string name="menu_settings">Settings</string>
 
+    <!-- ABOUT -->
+    <string name="about_version">Version:</string>
+    <string name="about_developed">Developed:</string>
+    <string name="about_license">License agreement</string>
+    
 </resources>

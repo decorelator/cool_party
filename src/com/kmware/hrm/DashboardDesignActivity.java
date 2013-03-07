@@ -1,6 +1,5 @@
 package com.kmware.hrm;
 
-import com.kmware.hrm.preferences.PrefActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +12,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.kmware.hrm.preferences.PrefActivity;
+
 public class DashboardDesignActivity extends ZActivity implements OnClickListener {
 
 	public static String LOGTAG = DashboardDesignActivity.class.getSimpleName();
@@ -23,7 +24,7 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.dashboard_layout);
 		super.onCreate(savedInstanceState);
-		final Intent i = new Intent(this, PrefActivity.class);
+		final Intent i = new Intent(this, About.class);
 		if (getIntent().getBooleanExtra("LOGOUT", false)) 
 	    {
 	        Intent intent = new Intent(DashboardDesignActivity.this,Login.class);
@@ -31,7 +32,7 @@ public class DashboardDesignActivity extends ZActivity implements OnClickListene
 	        finish();
 	    }
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		addprefBarBtn(R.drawable.act_pref, new OnClickListener() {
+		addprefBarBtn(R.drawable.dlg_warning, new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
